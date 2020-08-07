@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <assert.h>
 #include <SFML/Graphics.hpp>
 
 #define X_RES 800

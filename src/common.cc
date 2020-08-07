@@ -1,7 +1,7 @@
 #include "../include/common.h"
 
 // return true if item in vector
-bool in(std::vector<int*> v, int* item) {
+bool in(std::vector<int*> v, int item[2]) {
   if (find(v.begin(), v.end(), item) != v.end())
     return true;
   return false;

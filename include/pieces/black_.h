@@ -19,7 +19,7 @@ public:
     turn = false;
   };
   void play();
-  void print_blocks();
+  inline void print_blocks();
   void show();
 };
 

@@ -50,13 +50,13 @@ void Game_Board::draw_board() {
 
 // Return (row, col) of pixel values
 std::vector<int> Game_Board::get_coords(int x, int y) {
-  return {x/UNIT, y/UNIT};
+  if (x >= 0 && y >= 0 && x <= X_RES && y <= Y_RES)
+    return {x/UNIT, y/UNIT};
 }
 
 // select (row, col) by clicking on the board
 void Game_Board::select(int row, int col) {
-  if (row < 0 || col < 0 || col > 7 || row > 7)
-    return;
+  assert(row >= 0 && col >= 0 && col < 8 && row < 8);
   int color[3] = {173, 199, 137};
   int x = col*UNIT;
   int y = row*UNIT;

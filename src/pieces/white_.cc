@@ -12,24 +12,24 @@ void White_Pieces::play() {
 }
 
 void White_Pieces::move_piece(std::string piece, int row, int col) {
-  if (row < 0 || row > 7 || col < 0 || col > 7)
-    return;
-  // if (piece == "K" && in(movelist, pos))
-  //   WKing.move(row, col);
-  // else if (piece == "Q")
-  //   WQueen.move(row, col);
-  // for (int i=0;i<8;i++) {
-  //   if (piece == "P" + std::to_string(i))
-  //     WPawn.move(i, row, col);
-  // }
-  // for (int i=0;i<2;i++) {
-  //   if (piece == "B" + std::to_string(i))
-  //     WBishop.move(i, row, col);
-  //   else if (piece == "N" + std::to_string(i))
-  //     WKnight.move(i, row, col);
-  //   else if (piece == "R" + std::to_string(i))
-  //     WRook.move(i, row, col);
-  // }
+  assert(row >= 0 && row < 8 && col >= 0 && col < 8);
+  int pos[2] = {row, col};
+  if (piece == "K" && in(movelist, pos))
+    WKing.move(row, col);
+  else if (piece == "Q")
+    WQueen.move(row, col);
+  for (int i=0;i<8;i++) {
+    if (piece == "P" + std::to_string(i))
+      WPawn.move(i, row, col);
+  }
+  for (int i=0;i<2;i++) {
+    if (piece == "B" + std::to_string(i))
+      WBishop.move(i, row, col);
+    else if (piece == "N" + std::to_string(i))
+      WKnight.move(i, row, col);
+    else if (piece == "R" + std::to_string(i))
+      WRook.move(i, row, col);
+  }
 }
 
 std::string White_Pieces::get_piece(int row, int col) {

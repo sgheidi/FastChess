@@ -3,7 +3,7 @@
 
 class Game_Board {
 private:
-  void drawRect(int*color, int x, int y, int width, int height);
+  inline void drawRect(int*color, int x, int y, int width, int height);
 public:
   int row, col;
   int pieces_paddingx, pieces_paddingy;
@@ -18,7 +18,7 @@ public:
   void arrow(int*start, int*end);
   void play();
   void draw_board();
-  std::vector<int> get_coords(int x, int y);
+  inline std::vector<int> get_coords(int x, int y);
   void select(int row, int col);
 };
 
