@@ -1,4 +1,5 @@
 # ♛ FastChess
+![40%](https://progress-bar.dev/40)
 A fully featured C++ Chess GUI + AI.
 
 ## Video
