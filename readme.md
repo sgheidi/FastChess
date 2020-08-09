@@ -1,4 +1,4 @@
-# FastChess
+# ♛ FastChess
 A fully featured C++ Chess GUI + AI.
 
 ## Video
