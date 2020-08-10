@@ -1,5 +1,20 @@
 #include "../include/common.h"
 
+void Game_Board::update_moves() {
+  // WKing.update_movelist();
+  WPawn.update_movelist();
+  // WQueen.update_movelist();
+  // WBishop.update_movelist();
+  // WKnight.update_movelist();
+  // WRook.update_movelist();
+  // BKing.update_movelist();
+  // BPawn.update_movelist();
+  // BQueen.update_movelist();
+  // BBishop.update_movelist();
+  // BKnight.update_movelist();
+  // BRook.update_movelist();
+}
+
 void Game_Board::arrow(int*start, int*end) {
 
 }
@@ -12,7 +27,7 @@ void Game_Board::play() {
 }
 
 // Draw a rectangle at (x, y) with 'width' and 'height'
-void Game_Board::drawRect(int*color, int x, int y, int width, int height){
+void Game_Board::drawRect(int*color, int x, int y, int width, int height) {
   sf::RectangleShape rectangle(sf::Vector2f(width, height));
   rectangle.setPosition(x, y);
   rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
@@ -56,7 +71,8 @@ std::vector<int> Game_Board::get_coords(int x, int y) {
 
 // select (row, col) by clicking on the board
 void Game_Board::select(int row, int col) {
-  assert(row >= 0 && col >= 0 && col < 8 && row < 8);
+  if (row < 0 || row > 7 || col > 7 || col < 0)
+    return;
   int color[3] = {173, 199, 137};
   int x = col*UNIT;
   int y = row*UNIT;

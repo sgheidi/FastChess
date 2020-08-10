@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void Black_King::update_movelist() {
+
+}
+
+
 void Black_King::show() {
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/blackKing.png"))

@@ -15,10 +15,11 @@ public:
     pieces_paddingy = 5;
     pieces_scale = 1.63;
   };
+  void update_moves();
   void arrow(int*start, int*end);
   void play();
   void draw_board();
-  inline std::vector<int> get_coords(int x, int y);
+  std::vector<int> get_coords(int x, int y);
   void select(int row, int col);
 };
 

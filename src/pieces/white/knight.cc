@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void White_Knight::update_movelist() {
+
+}
+
+
 void White_Knight::move(int i, int row_, int col_) {
   White.blocks[row[i]][col[i]] = 0;
   White.blocks[row_][col_] = 1;

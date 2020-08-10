@@ -1,5 +1,18 @@
 #include "../../../include/common.h"
 
+void White_Pawn::update_movelist() {
+  for (int i=0;i<8;i++) {
+    if (!movelist[i].empty())
+      movelist[i].erase(movelist[i].begin());
+    if (row[i] > 0 && Black.blocks[row[i]-1][col[i]] == 0 && White.blocks[row[i]-1][col[i]] == 0) {
+      movelist[i].push_back({row[i]-1, col[i]});
+      if (row[i] == 6)
+        movelist[i].push_back({row[i]-2, col[i]});
+    // if ()
+    }
+  }
+}
+
 void White_Pawn::move(int i, int row_, int col_) {
   White.blocks[row[i]][col[i]] = 0;
   White.blocks[row_][col_] = 1;

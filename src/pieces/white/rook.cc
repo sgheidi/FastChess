@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void White_Rook::update_movelist() {
+
+}
+
+
 void White_Rook::move(int i, int row_, int col_) {
   White.blocks[row[i]][col[i]] = 0;
   White.blocks[row_][col_] = 1;

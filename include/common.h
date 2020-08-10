@@ -32,6 +32,6 @@
 
 extern sf::RenderWindow window;
 
-bool in(std::vector<int*> v, int* item);
+bool in(std::vector<std::vector<int>> v, std::vector<int> item);
 
 #endif // COMMON_H

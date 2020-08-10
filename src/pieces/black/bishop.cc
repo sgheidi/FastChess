@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void Black_Bishop::update_movelist() {
+
+}
+
+
 void Black_Bishop::show() {
   for (int i=0;i<2;i++) {
     sf::Texture texture;

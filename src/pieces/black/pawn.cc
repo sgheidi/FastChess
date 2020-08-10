@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void Black_Pawn::update_movelist() {
+
+}
+
+
 void Black_Pawn::show() {
   for (int i=0;i<8;i++) {
     sf::Texture texture;

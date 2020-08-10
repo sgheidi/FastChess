@@ -6,6 +6,7 @@ private:
   std::vector<int> y;
   std::vector<int> x;
 public:
+  bool alive = true;
   std::vector<int> row;
   std::vector<int> col;
   Black_Pawn() {
@@ -16,6 +17,7 @@ public:
       x.push_back(col[i]*UNIT);
     }
   };
+  void update_movelist();
   void show();
 };
 

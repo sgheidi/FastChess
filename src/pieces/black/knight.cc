@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void Black_Knight::update_movelist() {
+
+}
+
+
 void Black_Knight::show() {
   for (int i=0;i<2;i++) {
     sf::Texture texture;

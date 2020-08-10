@@ -1,8 +1,12 @@
 #include "../../../include/common.h"
 
+void White_King::update_movelist() {
+  movelist.erase(movelist.begin());
+}
+
 void White_King::move(int row_, int col_) {
   White.blocks[row][col] = 0;
-  White.blocks[row_][col_] = 1;  
+  White.blocks[row_][col_] = 1;
   row = row_;
   col = col_;
   x = col*UNIT;

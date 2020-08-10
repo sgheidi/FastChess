@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void Black_Queen::update_movelist() {
+
+}
+
+
 void Black_Queen::show() {
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/blackQueen.png"))

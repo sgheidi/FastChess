@@ -1,5 +1,10 @@
 #include "../../../include/common.h"
 
+void White_Queen::update_movelist() {
+
+}
+
+
 void White_Queen::move(int row_, int col_) {
   White.blocks[row][col] = 0;
   White.blocks[row_][col_] = 1;
