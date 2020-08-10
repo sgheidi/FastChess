@@ -11,6 +11,7 @@ Game_Board Board;
 Black_Pieces Black;
 White_Pieces White;
 Click_Queue Queue;
+Game_Sound Sound;
 
 Black_Bishop BBishop;
 Black_Knight BKnight;
@@ -26,4 +27,4 @@ White_Rook WRook;
 White_King WKing;
 White_Queen WQueen;
 
-sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "CFish");
+sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");

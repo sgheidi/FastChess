@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <assert.h>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Window.hpp>
 
 #define X_RES 800
 #define Y_RES 800
@@ -13,6 +15,7 @@
 
 #include "board.h"
 #include "queue.h"
+#include "sound.h"
 #include "pieces/black_.h"
 #include "pieces/white_.h"
 
@@ -29,6 +32,7 @@
 #include "pieces/white/rook.h"
 #include "pieces/white/queen.h"
 #include "pieces/white/king.h"
+
 
 extern sf::RenderWindow window;
 

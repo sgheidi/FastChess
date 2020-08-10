@@ -3,6 +3,8 @@
 int main() {
   Board.update_moves();
   window.setPosition(sf::Vector2i(250, 120));
+  sf::SoundBuffer buffer;
+  sf::Sound sound;
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {

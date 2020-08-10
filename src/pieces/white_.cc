@@ -5,8 +5,8 @@ void White_Pieces::play() {
   White.blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
-    std::cout << "Moving " << piece << " to ";
-    printf("(%d, %d)\n", Queue.row[1], Queue.col[1]);
+    // std::cout << "Moving " << piece << " to ";
+    // printf("(%d, %d)\n", Queue.row[1], Queue.col[1]);
     // turn = false;
   }
 }
@@ -20,8 +20,13 @@ void White_Pieces::move_piece(std::string piece, int row, int col) {
   else if (piece == "Q")
     WQueen.move(row, col);
   for (int i=0;i<8;i++) {
-    if (piece == "P" + std::to_string(i) && in(WPawn.movelist[i], pos))
+    if (piece == "P" + std::to_string(i) && in(WPawn.movelist[i], pos)) {
       WPawn.move(i, row, col);
+      Sound.move();
+    }
+    else if (piece == "P" + std::to_string(i) && !in(WPawn.movelist[i], pos)) {
+      Sound.error();
+    }
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i))
