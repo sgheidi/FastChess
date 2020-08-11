@@ -1,6 +1,7 @@
 #include "../../include/common.h"
 
 void White_Pieces::play() {
+  WPawn.print_movelist();
   if (Queue.row.size() >= 2 && White.blocks[Queue.row[0]][Queue.col[0]] == 1 &&
   White.blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);

@@ -13,6 +13,19 @@ void White_Pawn::update_movelist() {
   }
 }
 
+void White_Pawn::print_movelist() {
+  for (int i=0;i<8;i++) {
+    printf("P%d: ", i);
+    for (int k=0;k<movelist[i].size();k++) {
+      for (int j=0;j<movelist[i][k].size();j++)
+        printf("%d ", movelist[i][k][j]);
+      printf("  ");
+    }
+    printf("\n");
+  }
+  printf("\n");
+}
+
 void White_Pawn::move(int i, int row_, int col_) {
   White.blocks[row[i]][col[i]] = 0;
   White.blocks[row_][col_] = 1;
