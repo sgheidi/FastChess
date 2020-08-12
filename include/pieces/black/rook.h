@@ -1,15 +1,16 @@
 #ifndef BLACK_ROOK_H
 #define BLACK_ROOK_H
 
-class Black_Rook {
+class Black_Rook : public Piece {
 private:
 public:
-  bool alive = true;
-  std::vector<int> row = {0, 0};
-  std::vector<int> col = {0, 7};
-  std::vector<int> y = {row[0]*UNIT, row[1]*UNIT};
-  std::vector<int> x = {col[0]*UNIT, col[1]*UNIT};
-  Black_Rook() {};
+  Black_Rook() {
+    alive = true;
+    row = {0, 0};
+    col = {0, 7};
+    y = {row[0]*UNIT, row[1]*UNIT};
+    x = {col[0]*UNIT, col[1]*UNIT};
+  };
   void update_movelist();
   void show();
 };

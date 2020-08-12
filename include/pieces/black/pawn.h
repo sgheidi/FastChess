@@ -1,15 +1,11 @@
 #ifndef BLACK_PAWN_H
 #define BLACK_PAWN_H
 
-class Black_Pawn {
+class Black_Pawn : public Piece {
 private:
-  std::vector<int> y;
-  std::vector<int> x;
 public:
-  bool alive = true;
-  std::vector<int> row;
-  std::vector<int> col;
   Black_Pawn() {
+    alive = true;
     for (int i=0;i<8;i++) {
       row.push_back(1);
       col.push_back(i);

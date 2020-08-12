@@ -4,7 +4,7 @@ void Game_Board::update_moves() {
   // WKing.update_movelist();
   WPawn.update_movelist();
   // WQueen.update_movelist();
-  // WBishop.update_movelist();
+  WBishop.update_movelist();
   // WKnight.update_movelist();
   // WRook.update_movelist();
   // BKing.update_movelist();

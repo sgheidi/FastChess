@@ -1,14 +1,9 @@
 #ifndef WHITE_PAWN_H
 #define WHITE_PAWN_H
 
-class White_Pawn {
+class White_Pawn : public Piece {
 private:
-  std::vector<int> y;
-  std::vector<int> x;
 public:
-  bool alive = true;
-  std::vector<int> row;
-  std::vector<int> col;
   std::vector<std::vector<std::vector<int>>> movelist;
   White_Pawn() {
     for (int i=0;i<8;i++) {
@@ -17,6 +12,7 @@ public:
       y.push_back(row[i]*UNIT);
       x.push_back(col[i]*UNIT);
     }
+    alive = true;
     movelist.resize(8);
   };
   void print_movelist();

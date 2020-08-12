@@ -1,15 +1,18 @@
 #ifndef WHITE_QUEEN_H
 #define WHITE_QUEEN_H
 
-class White_Queen {
+class White_Queen : public Piece {
 private:
+  int x, y;
 public:
-  bool alive = true;
-  int row = 7;
-  int col = 4;
-  int y = row*UNIT;
-  int x = col*UNIT;
-  White_Queen() {};
+  int row, col;
+  White_Queen() {
+    row = 7;
+    col = 4;
+    y = row*UNIT;
+    x = col*UNIT;
+    alive = true;
+  };
   void update_movelist();
   void move(int row_, int col_);
   void show();

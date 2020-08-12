@@ -1,11 +1,9 @@
 #ifndef WHITE__H
 #define WHITE__H
 
-class White_Pieces {
+class White_Pieces : public Color {
 private:
 public:
-  bool turn;
-  std::vector<std::vector<int>> blocks;
   White_Pieces() {
     for (int i=0;i<8;i++) {
       blocks.push_back(std::vector<int>());
@@ -18,6 +16,8 @@ public:
     }
     turn = true;
   };
+  virtual ~White_Pieces() {};
+  void check_kill(int row, int col);
   void move_piece(std::string piece, int row, int col);
   std::string get_piece(int row_, int col_);
   void play();

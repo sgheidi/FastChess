@@ -1,11 +1,9 @@
 #ifndef BLACK__H
 #define BLACK__H
 
-class Black_Pieces {
+class Black_Pieces : public Color {
 private:
 public:
-  bool turn;
-  std::vector<std::vector<int>> blocks;
   Black_Pieces() {
     for (int i=0;i<8;i++) {
       blocks.push_back(std::vector<int>());
@@ -16,8 +14,10 @@ public:
           blocks[i].push_back(0);
       }
     }
-    turn = false;
+    turn = true;
   };
+  void move_piece(std::string piece, int row, int col);
+  std::string get_piece(int row_, int col_);
   void play();
   void print_blocks();
   void show();

@@ -1,15 +1,16 @@
 #ifndef BLACK_KNIGHT_H
 #define BLACK_KNIGHT_H
 
-class Black_Knight {
+class Black_Knight : public Piece {
 private:
 public:
-  bool alive = true;
-  std::vector<int> row = {0, 0};
-  std::vector<int> col = {1, 6};
-  std::vector<int> y = {row[0]*UNIT, row[1]*UNIT};
-  std::vector<int> x = {col[0]*UNIT, col[1]*UNIT};
-  Black_Knight() {};
+  Black_Knight() {
+    alive = true;
+    row = {0, 0};
+    col = {1, 6};
+    y = {row[0]*UNIT, row[1]*UNIT};
+    x = {col[0]*UNIT, col[1]*UNIT};
+  };
   void update_movelist();
   void show();
 };

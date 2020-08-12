@@ -1,7 +1,6 @@
 #include "../../include/common.h"
 
 void White_Pieces::play() {
-  WPawn.print_movelist();
   if (Queue.row.size() >= 2 && White.blocks[Queue.row[0]][Queue.col[0]] == 1 &&
   White.blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
@@ -15,29 +14,49 @@ void White_Pieces::play() {
 void White_Pieces::move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
   std::vector<int> pos = {row, col};
+  bool moved = false;
   if (piece == "K") {
     WKing.move(row, col);
+    moved = true;
   }
-  else if (piece == "Q")
+  else if (piece == "Q") {
     WQueen.move(row, col);
+    moved = true;
+  }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(WPawn.movelist[i], pos)) {
       WPawn.move(i, row, col);
-      Sound.move();
+      moved = true;
     }
     else if (piece == "P" + std::to_string(i) && !in(WPawn.movelist[i], pos)) {
       Sound.error();
     }
   }
   for (int i=0;i<2;i++) {
-    if (piece == "B" + std::to_string(i))
+    if (piece == "B" + std::to_string(i) && !in(WBishop.movelist[i], pos)) {
       WBishop.move(i, row, col);
-    else if (piece == "N" + std::to_string(i))
+      moved = true;
+    }
+    else if (piece == "N" + std::to_string(i)) {
       WKnight.move(i, row, col);
-    else if (piece == "R" + std::to_string(i))
+      moved = true;
+    }
+    else if (piece == "R" + std::to_string(i)) {
       WRook.move(i, row, col);
+      moved = true;
+    }
   }
-  Board.update_moves();
+  if (moved) {
+    Board.update_moves();
+    Sound.move();
+    // check_kill(row, col);
+  }
+}
+
+void check_kill(int row, int col) {
+  // if (Black.blocks[row][col] == 1) {
+  //   std::string piece = Black.get_piece(row, col);
+  // }
 }
 
 std::string White_Pieces::get_piece(int row, int col) {

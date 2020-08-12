@@ -1,7 +1,10 @@
 #include "../../../include/common.h"
 
 void White_Bishop::update_movelist() {
-  
+  for (int i=0;i<2;i++) {
+    if (!movelist[i].empty())
+      movelist[i].clear();
+  }
 }
 
 void White_Bishop::move(int i, int row_, int col_) {

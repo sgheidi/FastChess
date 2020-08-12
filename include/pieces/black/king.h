@@ -1,15 +1,18 @@
 #ifndef BLACK_KING_H
 #define BLACK_KING_H
 
-class Black_King {
+class Black_King : public Piece {
 private:
+  int x, y;
 public:
-  bool alive = true;
-  int row = 0;
-  int col = 3;
-  int y = row*UNIT;
-  int x = col*UNIT;
-  Black_King() {};
+  int row, col;
+  Black_King() {
+    alive = true;
+    row = 0;
+    col = 3;
+    y = row*UNIT;
+    x = col*UNIT;
+  };
   void update_movelist();
   void show();
 };

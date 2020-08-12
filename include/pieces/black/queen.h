@@ -1,15 +1,18 @@
 #ifndef BLACK_QUEEN_H
 #define BLACK_QUEEN_H
 
-class Black_Queen {
+class Black_Queen : public Piece {
 private:
+  int x, y;
 public:
-  bool alive = true;
-  int row = 0;
-  int col = 4;
-  int y = row*UNIT;
-  int x = col*UNIT;
-  Black_Queen() {};
+  int row, col;
+  Black_Queen() {
+    alive = true;
+    row = 0;
+    col = 4;
+    y = row*UNIT;
+    x = col*UNIT;
+  };
   void update_movelist();
   void show();
 };
