@@ -1,11 +1,11 @@
 #include "../include/common.h"
 
 void Game_Board::update_moves() {
-  // WKing.update_movelist();
+  // King::update_movelist();
   White::Pawn.update_movelist();
   // WQueen.update_movelist();
   White::Bishop.update_movelist();
-  // WKnight.update_movelist();
+  White::Knight.update_movelist();
   // WRook.update_movelist();
   // BKing.update_movelist();
   // BPawn.update_movelist();

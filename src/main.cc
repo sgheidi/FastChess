@@ -18,9 +18,9 @@ int main() {
       else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         White::print_blocks();
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (sf::Mouse::getPosition(window).x >= 0 && sf::Mouse::getPosition(window).x <= X_RES
-        && sf::Mouse::getPosition(window).y >= 0 && sf::Mouse::getPosition(window).y <= Y_RES) {
-          sf::Vector2i position = sf::Mouse::getPosition(window);
+        sf::Vector2i position = sf::Mouse::getPosition(window);
+        if (position.x >= 0 && position.x <= X_RES
+        && position.y >= 0 && position.y <= Y_RES) {
           std::vector<int> pos = Board.get_coords(position.x, position.y);
           Board.row = pos[1];
           Board.col = pos[0];

@@ -38,15 +38,21 @@ void move_piece(std::string piece, int row, int col) {
     }
   }
   for (int i=0;i<2;i++) {
-    if (piece == "B" + std::to_string(i) && !in(Bishop.movelist[i], pos)) {
+    if (piece == "B" + std::to_string(i) && in(Bishop.movelist[i], pos)) {
       Bishop.move(i, row, col);
       moved = true;
     }
-    else if (piece == "N" + std::to_string(i)) {
+    else if (piece == "B" + std::to_string(i) && !in(Bishop.movelist[i], pos)) {
+      Sound.error();
+    }
+    if (piece == "N" + std::to_string(i) && in(Knight.movelist[i], pos)) {
       Knight.move(i, row, col);
       moved = true;
     }
-    else if (piece == "R" + std::to_string(i)) {
+    else if (piece == "N" + std::to_string(i) && !in(Knight.movelist[i], pos)) {
+      Sound.error();
+    }
+    if (piece == "R" + std::to_string(i)) {
       Rook.move(i, row, col);
       moved = true;
     }

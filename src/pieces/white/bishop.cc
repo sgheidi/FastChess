@@ -6,6 +6,50 @@ void Bishop_Piece::update_movelist() {
   for (int i=0;i<2;i++) {
     if (!movelist[i].empty())
       movelist[i].clear();
+    int row_ = row[i]+1;
+    int col_ = col[i]+1;
+    while (row_ <= 7 && col_ <= 7) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (Black::blocks[row_][col_])
+        break;
+      row_ ++;
+      col_ ++;
+    }
+    row_ = row[i]-1;
+    col_ = col[i]+1;
+    while (row_ >= 0 && col_ <= 7) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (Black::blocks[row_][col_])
+        break;
+      row_ --;
+      col_ ++;
+    }
+    row_ = row[i]+1;
+    col_ = col[i]-1;
+    while (row_ <= 7 && col_ >= 0) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (Black::blocks[row_][col_])
+        break;
+      row_ ++;
+      col_ --;
+    }
+    row_ = row[i]-1;
+    col_ = col[i]-1;
+    while (row_ >= 0 && col_ >= 0) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (Black::blocks[row_][col_])
+        break;
+      row_ --;
+      col_ --;
+    }
   }
 }
 
