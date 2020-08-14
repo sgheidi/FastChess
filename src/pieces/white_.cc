@@ -1,8 +1,13 @@
 #include "../../include/common.h"
 
-void White_Pieces::play() {
-  if (Queue.row.size() >= 2 && White.blocks[Queue.row[0]][Queue.col[0]] == 1 &&
-  White.blocks[Queue.row[1]][Queue.col[1]] == 0) {
+namespace White {
+
+std::vector<std::vector<int>> blocks(8);
+bool turn = true;
+
+void play() {
+  if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
+  blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
     // std::cout << "Moving " << piece << " to ";
@@ -11,38 +16,38 @@ void White_Pieces::play() {
   }
 }
 
-void White_Pieces::move_piece(std::string piece, int row, int col) {
+void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
   std::vector<int> pos = {row, col};
   bool moved = false;
   if (piece == "K") {
-    WKing.move(row, col);
+    King.move(row, col);
     moved = true;
   }
   else if (piece == "Q") {
-    WQueen.move(row, col);
+    Queen.move(row, col);
     moved = true;
   }
   for (int i=0;i<8;i++) {
-    if (piece == "P" + std::to_string(i) && in(WPawn.movelist[i], pos)) {
-      WPawn.move(i, row, col);
+    if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
+      Pawn.move(i, row, col);
       moved = true;
     }
-    else if (piece == "P" + std::to_string(i) && !in(WPawn.movelist[i], pos)) {
+    else if (piece == "P" + std::to_string(i) && !in(Pawn.movelist[i], pos)) {
       Sound.error();
     }
   }
   for (int i=0;i<2;i++) {
-    if (piece == "B" + std::to_string(i) && !in(WBishop.movelist[i], pos)) {
-      WBishop.move(i, row, col);
+    if (piece == "B" + std::to_string(i) && !in(Bishop.movelist[i], pos)) {
+      Bishop.move(i, row, col);
       moved = true;
     }
     else if (piece == "N" + std::to_string(i)) {
-      WKnight.move(i, row, col);
+      Knight.move(i, row, col);
       moved = true;
     }
     else if (piece == "R" + std::to_string(i)) {
-      WRook.move(i, row, col);
+      Rook.move(i, row, col);
       moved = true;
     }
   }
@@ -54,31 +59,32 @@ void White_Pieces::move_piece(std::string piece, int row, int col) {
 }
 
 void check_kill(int row, int col) {
-  // if (Black.blocks[row][col] == 1) {
-  //   std::string piece = Black.get_piece(row, col);
-  // }
+  if (Black::blocks[row][col] == 1) {
+    // std::string piece = Black.get_piece(row, col);
+    // Black.kill(piece);
+  }
 }
 
-std::string White_Pieces::get_piece(int row, int col) {
-  if (WKing.row == row && WKing.col == col)
+std::string get_piece(int row, int col) {
+  if (King.row == row && King.col == col)
     return "K";
-  else if (WQueen.row == row && WQueen.col == col)
+  else if (Queen.row == row && Queen.col == col)
     return "Q";
   for (int i=0;i<8;i++) {
-    if (WPawn.row[i] == row && WPawn.col[i] == col)
+    if (Pawn.row[i] == row && Pawn.col[i] == col)
       return "P" + std::to_string(i);
   }
   for (int i=0;i<2;i++) {
-    if (WBishop.row[i] == row && WBishop.col[i] == col)
+    if (Bishop.row[i] == row && Bishop.col[i] == col)
       return "B" + std::to_string(i);
-    else if (WKnight.row[i] == row && WKnight.col[i] == col)
+    else if (Knight.row[i] == row && Knight.col[i] == col)
       return "N" + std::to_string(i);
-    else if (WRook.row[i] == row && WRook.col[i] == col)
+    else if (Rook.row[i] == row && Rook.col[i] == col)
       return "R" + std::to_string(i);
   }
 }
 
-void White_Pieces::print_blocks() {
+void print_blocks() {
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
       printf("%d", blocks[i][k]);
@@ -86,11 +92,25 @@ void White_Pieces::print_blocks() {
   }
 }
 
-void White_Pieces::show() {
-  WBishop.show();
-  WKnight.show();
-  WPawn.show();
-  WRook.show();
-  WKing.show();
-  WQueen.show();
+void show() {
+  Bishop.show();
+  Knight.show();
+  Pawn.show();
+  Rook.show();
+  King.show();
+  Queen.show();
 }
+
+void init() {
+  for (int i=0;i<8;i++) {
+    blocks.push_back(std::vector<int>());
+    for (int k=0;k<8;k++) {
+      if (i == 6 || i == 7)
+        blocks[i].push_back(1);
+      else
+        blocks[i].push_back(0);
+    }
+  }
+}
+
+} // namespace White

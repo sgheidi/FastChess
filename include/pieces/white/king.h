@@ -1,13 +1,15 @@
 #ifndef WHITE_KING_H
 #define WHITE_KING_H
 
-class White_King : public Piece {
+namespace White {
+
+class King_Piece : public Piece {
 private:
   int x, y;
 public:
   std::vector<std::vector<int>> movelist;
   int row, col;
-  White_King() {
+  King_Piece() {
     row = 7;
     col = 3;
     y = row*UNIT;
@@ -20,6 +22,6 @@ public:
   void show();
 };
 
-extern White_King WKing;
+} // namespace White
 
 #endif // WHITE_KING_H

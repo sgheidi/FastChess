@@ -1,10 +1,12 @@
 #ifndef BLACK_ROOK_H
 #define BLACK_ROOK_H
 
-class Black_Rook : public Piece {
+namespace Black {
+
+class Rook_Piece : public Piece {
 private:
 public:
-  Black_Rook() {
+  Rook_Piece() {
     alive = true;
     row = {0, 0};
     col = {0, 7};
@@ -15,6 +17,6 @@ public:
   void show();
 };
 
-extern Black_Rook BRook;
+} // namespace Black
 
 #endif // BLACK_ROOK_H

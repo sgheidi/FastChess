@@ -1,20 +1,21 @@
 #include "../../../include/common.h"
 
-void White_Rook::update_movelist() {
+namespace White {
+
+void Rook_Piece::update_movelist() {
 
 }
 
-
-void White_Rook::move(int i, int row_, int col_) {
-  White.blocks[row[i]][col[i]] = 0;
-  White.blocks[row_][col_] = 1;
+void Rook_Piece::move(int i, int row_, int col_) {
+  blocks[row[i]][col[i]] = 0;
+  blocks[row_][col_] = 1;
   row[i] = row_;
   col[i] = col_;
   x[i] = col[i]*UNIT;
   y[i] = row[i]*UNIT;
 }
 
-void White_Rook::show() {
+void Rook_Piece::show() {
   for (int i=0;i<2;i++) {
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/whiteRook.png"))
@@ -26,3 +27,5 @@ void White_Rook::show() {
     window.draw(sprite);
   }
 }
+
+} // namespace White

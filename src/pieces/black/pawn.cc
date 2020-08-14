@@ -1,11 +1,13 @@
 #include "../../../include/common.h"
 
-void Black_Pawn::update_movelist() {
+namespace Black {
+
+void Pawn_Piece::update_movelist() {
 
 }
 
 
-void Black_Pawn::show() {
+void Pawn_Piece::show() {
   for (int i=0;i<8;i++) {
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/blackPawn.png"))
@@ -17,3 +19,5 @@ void Black_Pawn::show() {
     window.draw(sprite);
   }
 }
+
+} // namespace Black

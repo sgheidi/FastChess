@@ -16,9 +16,6 @@
 #include "board.h"
 #include "queue.h"
 #include "sound.h"
-#include "pieces/color.h"
-#include "pieces/black_.h"
-#include "pieces/white_.h"
 #include "pieces/piece.h"
 
 #include "pieces/black/bishop.h"
@@ -35,6 +32,8 @@
 #include "pieces/white/queen.h"
 #include "pieces/white/king.h"
 
+#include "pieces/white_.h"
+#include "pieces/black_.h"
 
 extern sf::RenderWindow window;
 

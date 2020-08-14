@@ -1,6 +1,8 @@
 #include "../include/common.h"
 
 int main() {
+  Black::init();
+  White::init();
   Board.update_moves();
   window.setPosition(sf::Vector2i(250, 120));
   sf::SoundBuffer buffer;
@@ -12,9 +14,9 @@ int main() {
       || (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)))
         window.close();
       else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-        Black.print_blocks();
+        Black::print_blocks();
       else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        White.print_blocks();
+        White::print_blocks();
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         if (sf::Mouse::getPosition(window).x >= 0 && sf::Mouse::getPosition(window).x <= X_RES
         && sf::Mouse::getPosition(window).y >= 0 && sf::Mouse::getPosition(window).y <= Y_RES) {
@@ -30,8 +32,8 @@ int main() {
     window.clear();
     Board.draw_board();
     Board.select(Board.row, Board.col);
-    White.show();
-    Black.show();
+    White::show();
+    Black::show();
     window.display();
   }
   return 0;

@@ -1,10 +1,12 @@
 #ifndef BLACK_PAWN_H
 #define BLACK_PAWN_H
 
-class Black_Pawn : public Piece {
+namespace Black {
+
+class Pawn_Piece : public Piece {
 private:
 public:
-  Black_Pawn() {
+  Pawn_Piece() {
     alive = true;
     for (int i=0;i<8;i++) {
       row.push_back(1);
@@ -17,6 +19,6 @@ public:
   void show();
 };
 
-extern Black_Pawn BPawn;
+} // namespace Black
 
 #endif // BLACK_PAWN_H

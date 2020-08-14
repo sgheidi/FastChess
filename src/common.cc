@@ -8,23 +8,25 @@ bool in(std::vector<std::vector<int>> v, std::vector<int> item) {
 }
 
 Game_Board Board;
-Black_Pieces Black;
-White_Pieces White;
 Click_Queue Queue;
 Game_Sound Sound;
 
-Black_Bishop BBishop;
-Black_Knight BKnight;
-Black_Pawn BPawn;
-Black_Rook BRook;
-Black_King BKing;
-Black_Queen BQueen;
+namespace Black {
+Bishop_Piece Bishop;
+Knight_Piece Knight;
+Pawn_Piece Pawn;
+Rook_Piece Rook;
+King_Piece King;
+Queen_Piece Queen;
+}
 
-White_Bishop WBishop;
-White_Knight WKnight;
-White_Pawn WPawn;
-White_Rook WRook;
-White_King WKing;
-White_Queen WQueen;
+namespace White {
+Bishop_Piece Bishop;
+Knight_Piece Knight;
+Pawn_Piece Pawn;
+Rook_Piece Rook;
+King_Piece King;
+Queen_Piece Queen;
+}
 
 sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");

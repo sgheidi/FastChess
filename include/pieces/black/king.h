@@ -1,12 +1,14 @@
 #ifndef BLACK_KING_H
 #define BLACK_KING_H
 
-class Black_King : public Piece {
+namespace Black {
+
+class King_Piece : public Piece {
 private:
   int x, y;
 public:
   int row, col;
-  Black_King() {
+  King_Piece() {
     alive = true;
     row = 0;
     col = 3;
@@ -17,6 +19,6 @@ public:
   void show();
 };
 
-extern Black_King BKing;
+} // namespace Black
 
 #endif // BLACK_KING_H

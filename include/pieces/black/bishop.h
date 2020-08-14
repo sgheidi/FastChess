@@ -1,10 +1,12 @@
 #ifndef BLACK_BISHOP_H
 #define BLACK_BISHOP_H
 
-class Black_Bishop : public Piece {
+namespace Black {
+
+class Bishop_Piece : public Piece {
 private:
 public:
-  Black_Bishop() {
+  Bishop_Piece() {
     alive = true;
     row = {0, 0};
     col = {2, 5};
@@ -15,6 +17,6 @@ public:
   void show();
 };
 
-extern Black_Bishop BBishop;
+} // namespace Black
 
 #endif // BLACK_BISHOP_H

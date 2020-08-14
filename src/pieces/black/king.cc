@@ -1,11 +1,13 @@
 #include "../../../include/common.h"
 
-void Black_King::update_movelist() {
+namespace Black {
+
+void King_Piece::update_movelist() {
 
 }
 
 
-void Black_King::show() {
+void King_Piece::show() {
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/blackKing.png"))
     return;
@@ -15,3 +17,5 @@ void Black_King::show() {
   sprite.setPosition(x + Board.pieces_paddingx, y + Board.pieces_paddingy);
   window.draw(sprite);
 }
+
+} // namespace Black

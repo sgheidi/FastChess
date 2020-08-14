@@ -1,30 +1,24 @@
 #ifndef WHITE__H
 #define WHITE__H
 
-class White_Pieces : public Color {
-private:
-public:
-  White_Pieces() {
-    for (int i=0;i<8;i++) {
-      blocks.push_back(std::vector<int>());
-      for (int k=0;k<8;k++) {
-        if (i == 6 || i == 7)
-          blocks[i].push_back(1);
-        else
-          blocks[i].push_back(0);
-      }
-    }
-    turn = true;
-  };
-  virtual ~White_Pieces() {};
-  void check_kill(int row, int col);
-  void move_piece(std::string piece, int row, int col);
-  std::string get_piece(int row_, int col_);
-  void play();
-  void print_blocks();
-  void show();
-};
+namespace White {
+extern Bishop_Piece Bishop;
+extern Knight_Piece Knight;
+extern Pawn_Piece Pawn;
+extern Rook_Piece Rook;
+extern King_Piece King;
+extern Queen_Piece Queen;
+extern std::vector<std::vector<int>> blocks;
+extern bool turn;
 
-extern White_Pieces White;
+void init();
+void check_kill(int row, int col);
+void move_piece(std::string piece, int row, int col);
+std::string get_piece(int row_, int col_);
+void play();
+void print_blocks();
+void show();
+
+} // namespace White
 
 #endif // WHITE__H

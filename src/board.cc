@@ -2,9 +2,9 @@
 
 void Game_Board::update_moves() {
   // WKing.update_movelist();
-  WPawn.update_movelist();
+  White::Pawn.update_movelist();
   // WQueen.update_movelist();
-  WBishop.update_movelist();
+  White::Bishop.update_movelist();
   // WKnight.update_movelist();
   // WRook.update_movelist();
   // BKing.update_movelist();
@@ -20,10 +20,10 @@ void Game_Board::arrow(int*start, int*end) {
 }
 
 void Game_Board::play() {
-  if (Black.turn)
-    Black.play();
-  else if (White.turn)
-    White.play();
+  if (Black::turn)
+    Black::play();
+  else if (White::turn)
+    White::play();
 }
 
 // Draw a rectangle at (x, y) with 'width' and 'height'

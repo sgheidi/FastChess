@@ -1,11 +1,13 @@
 #include "../../../include/common.h"
 
-void Black_Knight::update_movelist() {
+namespace Black {
+
+void Knight_Piece::update_movelist() {
 
 }
 
 
-void Black_Knight::show() {
+void Knight_Piece::show() {
   for (int i=0;i<2;i++) {
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/blackKnight.png"))
@@ -17,3 +19,5 @@ void Black_Knight::show() {
     window.draw(sprite);
   }
 }
+
+} // namespace Black

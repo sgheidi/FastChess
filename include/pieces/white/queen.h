@@ -1,12 +1,14 @@
 #ifndef WHITE_QUEEN_H
 #define WHITE_QUEEN_H
 
-class White_Queen : public Piece {
+namespace White {
+
+class Queen_Piece : public Piece {
 private:
   int x, y;
 public:
   int row, col;
-  White_Queen() {
+  Queen_Piece() {
     row = 7;
     col = 4;
     y = row*UNIT;
@@ -18,6 +20,6 @@ public:
   void show();
 };
 
-extern White_Queen WQueen;
+} // namespace White
 
 #endif // WHITE_QUEEN_H

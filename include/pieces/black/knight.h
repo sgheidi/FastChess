@@ -1,10 +1,12 @@
 #ifndef BLACK_KNIGHT_H
 #define BLACK_KNIGHT_H
 
-class Black_Knight : public Piece {
+namespace Black {
+
+class Knight_Piece : public Piece {
 private:
 public:
-  Black_Knight() {
+  Knight_Piece() {
     alive = true;
     row = {0, 0};
     col = {1, 6};
@@ -15,6 +17,6 @@ public:
   void show();
 };
 
-extern Black_Knight BKnight;
+} // namespace Black
 
 #endif // BLACK_KNIGHT_H

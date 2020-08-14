@@ -1,28 +1,23 @@
 #ifndef BLACK__H
 #define BLACK__H
 
-class Black_Pieces : public Color {
-private:
-public:
-  Black_Pieces() {
-    for (int i=0;i<8;i++) {
-      blocks.push_back(std::vector<int>());
-      for (int k=0;k<8;k++) {
-        if (i == 0 || i == 1)
-          blocks[i].push_back(1);
-        else
-          blocks[i].push_back(0);
-      }
-    }
-    turn = true;
-  };
-  void move_piece(std::string piece, int row, int col);
-  std::string get_piece(int row_, int col_);
-  void play();
-  void print_blocks();
-  void show();
-};
+namespace Black {
+extern Bishop_Piece Bishop;
+extern Knight_Piece Knight;
+extern Pawn_Piece Pawn;
+extern Rook_Piece Rook;
+extern King_Piece King;
+extern Queen_Piece Queen;
+extern std::vector<std::vector<int>> blocks;
+extern bool turn;
 
-extern Black_Pieces Black;
+void init();
+void move_piece(std::string piece, int row, int col);
+std::string get_piece(int row_, int col_);
+void play();
+void print_blocks();
+void show();
+
+} // namespace Black
 
 #endif // BLACK__H

@@ -1,19 +1,21 @@
 #include "../../../include/common.h"
 
-void White_King::update_movelist() {
-  movelist.erase(movelist.begin());
+namespace White {
+
+void King_Piece::update_movelist() {
+  movelist.clear();
 }
 
-void White_King::move(int row_, int col_) {
-  White.blocks[row][col] = 0;
-  White.blocks[row_][col_] = 1;
+void King_Piece::move(int row_, int col_) {
+  blocks[row][col] = 0;
+  blocks[row_][col_] = 1;
   row = row_;
   col = col_;
   x = col*UNIT;
   y = row*UNIT;
 }
 
-void White_King::show() {
+void King_Piece::show() {
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/whiteKing.png"))
     return;
@@ -23,3 +25,5 @@ void White_King::show() {
   sprite.setPosition(x + Board.pieces_paddingx, y + Board.pieces_paddingy);
   window.draw(sprite);
 }
+
+} // namespace White
