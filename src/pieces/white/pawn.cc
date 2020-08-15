@@ -4,8 +4,7 @@ namespace White {
 
 void Pawn_Piece::update_movelist() {
   for (int i=0;i<8;i++) {
-    if (!movelist[i].empty())
-      movelist[i].clear();
+    movelist[i].clear();
     if (row[i] > 0 && Black::blocks[row[i]-1][col[i]] == 0 && blocks[row[i]-1][col[i]] == 0) {
       movelist[i].push_back({row[i]-1, col[i]});
       if (row[i] == 6)
@@ -46,6 +45,8 @@ void Pawn_Piece::print_movelist() {
 
 void Pawn_Piece::show() {
   for (int i=0;i<8;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/whitePawn.png"))
       return;

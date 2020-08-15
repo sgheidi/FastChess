@@ -7,7 +7,7 @@ class Rook_Piece : public Piece {
 private:
 public:
   Rook_Piece() {
-    alive = true;
+    alive = {1, 1};
     row = {0, 0};
     col = {0, 7};
     y = {row[0]*UNIT, row[1]*UNIT};

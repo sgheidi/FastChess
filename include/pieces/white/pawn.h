@@ -13,8 +13,8 @@ public:
       col.push_back(i);
       y.push_back(row[i]*UNIT);
       x.push_back(col[i]*UNIT);
+      alive.push_back(1);
     }
-    alive = true;
     movelist.resize(8);
   };
   void move(int i, int row_, int col_);

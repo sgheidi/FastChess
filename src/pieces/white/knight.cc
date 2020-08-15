@@ -28,6 +28,8 @@ void Knight_Piece::move(int i, int row_, int col_) {
 
 void Knight_Piece::show() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/whiteKnight.png"))
       return;

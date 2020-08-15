@@ -9,6 +9,8 @@ void Bishop_Piece::update_movelist() {
 
 void Bishop_Piece::show() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/blackBishop.png"))
       return;

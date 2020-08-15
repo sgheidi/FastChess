@@ -7,7 +7,7 @@ class Knight_Piece : public Piece {
 private:
 public:
   Knight_Piece() {
-    alive = true;
+    alive = {1, 1};
     row = {0, 0};
     col = {1, 6};
     y = {row[0]*UNIT, row[1]*UNIT};

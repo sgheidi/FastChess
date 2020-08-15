@@ -5,9 +5,10 @@ namespace White {
 
 class Queen_Piece : public Piece {
 private:
-  int x, y;
 public:
-  int row, col;
+  std::vector<std::vector<int>> movelist;
+  int row, col, y, x;
+  bool alive;
   Queen_Piece() {
     row = 7;
     col = 4;

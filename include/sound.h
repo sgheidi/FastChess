@@ -8,8 +8,8 @@ private:
 public:
   Game_Sound() {
     sound.setBuffer(buffer);
-    sound.setVolume(120.f);
   };
+  void kill();
   void error();
   void move();
 };

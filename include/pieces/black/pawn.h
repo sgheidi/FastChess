@@ -6,14 +6,16 @@ namespace Black {
 class Pawn_Piece : public Piece {
 private:
 public:
+  std::vector<std::vector<std::vector<int>>> movelist;
   Pawn_Piece() {
-    alive = true;
     for (int i=0;i<8;i++) {
       row.push_back(1);
       col.push_back(i);
       y.push_back(row[i]*UNIT);
       x.push_back(col[i]*UNIT);
+      alive.push_back(1);
     }
+    movelist.resize(8);
   };
   void update_movelist();
   void show();

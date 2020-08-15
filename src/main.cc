@@ -19,8 +19,7 @@ int main() {
         White::print_blocks();
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
-        if (position.x >= 0 && position.x <= X_RES
-        && position.y >= 0 && position.y <= Y_RES) {
+        if (position.x >= 0 && position.x <= X_RES && position.y >= 0 && position.y <= Y_RES) {
           std::vector<int> pos = Board.get_coords(position.x, position.y);
           Board.row = pos[1];
           Board.col = pos[0];

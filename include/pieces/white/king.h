@@ -5,18 +5,19 @@ namespace White {
 
 class King_Piece : public Piece {
 private:
-  int x, y;
 public:
   std::vector<std::vector<int>> movelist;
-  int row, col;
+  int row, col, y, x;
+  bool alive;
   King_Piece() {
     row = 7;
     col = 3;
     y = row*UNIT;
     x = col*UNIT;
-    movelist = {};
     alive = true;
   };
+  void filter_king_pos();
+  void filter_check_pos();
   void update_movelist();
   void move(int row_, int col_);
   void show();

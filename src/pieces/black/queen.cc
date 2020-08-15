@@ -8,6 +8,8 @@ void Queen_Piece::update_movelist() {
 
 
 void Queen_Piece::show() {
+  if (!alive)
+    return;
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/blackQueen.png"))
     return;

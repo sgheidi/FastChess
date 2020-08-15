@@ -9,6 +9,8 @@ void Pawn_Piece::update_movelist() {
 
 void Pawn_Piece::show() {
   for (int i=0;i<8;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/blackPawn.png"))
       return;

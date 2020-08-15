@@ -1,7 +1,6 @@
 #include "../../include/common.h"
 
 namespace White {
-
 std::vector<std::vector<int>> blocks(8);
 bool turn = true;
 
@@ -20,13 +19,19 @@ void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
   std::vector<int> pos = {row, col};
   bool moved = false;
-  if (piece == "K") {
+  if (piece == "K" && in(King.movelist, pos)) {
     King.move(row, col);
     moved = true;
   }
-  else if (piece == "Q") {
+  else if (piece == "K" && !in(King.movelist, pos)) {
+    Sound.error();
+  }
+  if (piece == "Q" && in(Queen.movelist, pos)) {
     Queen.move(row, col);
     moved = true;
+  }
+  else if (piece == "Q" && !in(Queen.movelist, pos)) {
+    Sound.error();
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
@@ -52,22 +57,26 @@ void move_piece(std::string piece, int row, int col) {
     else if (piece == "N" + std::to_string(i) && !in(Knight.movelist[i], pos)) {
       Sound.error();
     }
-    if (piece == "R" + std::to_string(i)) {
+    if (piece == "R" + std::to_string(i) && in(Rook.movelist[i], pos)) {
       Rook.move(i, row, col);
       moved = true;
+    }
+    else if (piece == "R" + std::to_string(i) && !in(Rook.movelist[i], pos)) {
+      Sound.error();
     }
   }
   if (moved) {
     Board.update_moves();
     Sound.move();
-    // check_kill(row, col);
+    check_kill(row, col);
   }
 }
 
 void check_kill(int row, int col) {
   if (Black::blocks[row][col] == 1) {
-    // std::string piece = Black.get_piece(row, col);
-    // Black.kill(piece);
+    Black::blocks[row][col] = 0;
+    std::string piece = Black::get_piece(row, col);
+    Black::kill(piece);
   }
 }
 

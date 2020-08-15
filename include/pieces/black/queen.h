@@ -5,9 +5,9 @@ namespace Black {
 
 class Queen_Piece : public Piece {
 private:
-  int x, y;
 public:
-  int row, col;
+  int row, col, y, x;
+  bool alive;
   Queen_Piece() {
     alive = true;
     row = 0;

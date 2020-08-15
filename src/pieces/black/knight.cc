@@ -9,6 +9,8 @@ void Knight_Piece::update_movelist() {
 
 void Knight_Piece::show() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/blackKnight.png"))
       return;

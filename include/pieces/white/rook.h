@@ -7,7 +7,7 @@ class Rook_Piece : public Piece {
 private:
 public:
   Rook_Piece() {
-    alive = true;
+    alive = {1, 1};
     movelist.resize(2);
     row = {7, 7};
     col = {0, 7};

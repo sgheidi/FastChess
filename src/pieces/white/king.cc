@@ -4,6 +4,29 @@ namespace White {
 
 void King_Piece::update_movelist() {
   movelist.clear();
+  std::vector<std::vector<int>> pos = {
+  {row-1, col-1}, {row-1, col}, {row-1, col+1},
+  {row, col-1}, {row, col}, {row, col+1},
+  {row+1, col-1}, {row+1, col}, {row+1, col+1},
+  };
+  for (int k=0;k<9;k++) {
+    if (pos[k][0] >= 0 && pos[k][0] < 8 && pos[k][1] >= 0 && pos[k][1] < 8) {
+      if (!blocks[pos[k][0]][pos[k][1]])
+        movelist.push_back({pos[k][0], pos[k][1]});
+    }
+  }
+  filter_king_pos();
+  // filter_check_pos();
+}
+
+void King_Piece::filter_king_pos() {
+  std::vector<std::vector<int>> opposite_pos = {
+  {Black::King.row-1, Black::King.col-1}, {Black::King.row-1, Black::King.col},
+  {Black::King.row-1, Black::King.col+1}, {Black::King.row, Black::King.col-1},
+  {Black::King.row-1, Black::King.col}, {Black::King.row-1, Black::King.col+1},
+  {Black::King.row+1, Black::King.col-1}, {Black::King.row+1, Black::King.col},
+  {Black::King.row+1, Black::King.col+1}
+  };
 }
 
 void King_Piece::move(int row_, int col_) {
@@ -16,6 +39,8 @@ void King_Piece::move(int row_, int col_) {
 }
 
 void King_Piece::show() {
+  if (!alive)
+    return;
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/whiteKing.png"))
     return;

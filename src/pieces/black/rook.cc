@@ -9,6 +9,8 @@ void Rook_Piece::update_movelist() {
 
 void Rook_Piece::show() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/blackRook.png"))
       return;

@@ -4,8 +4,7 @@ namespace White {
 
 void Bishop_Piece::update_movelist() {
   for (int i=0;i<2;i++) {
-    if (!movelist[i].empty())
-      movelist[i].clear();
+    movelist[i].clear();
     int row_ = row[i]+1;
     int col_ = col[i]+1;
     while (row_ <= 7 && col_ <= 7) {
@@ -64,6 +63,8 @@ void Bishop_Piece::move(int i, int row_, int col_) {
 
 void Bishop_Piece::show() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     sf::Texture texture;
     if (!texture.loadFromFile("assets/sprites/whiteBishop.png"))
       return;

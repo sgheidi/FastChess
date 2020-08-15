@@ -8,6 +8,8 @@ void King_Piece::update_movelist() {
 
 
 void King_Piece::show() {
+  if (!alive)
+    return;
   sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/blackKing.png"))
     return;
