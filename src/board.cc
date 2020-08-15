@@ -7,12 +7,12 @@ void Game_Board::update_moves() {
   White::Bishop.update_movelist();
   White::Knight.update_movelist();
   White::Rook.update_movelist();
-  // Black::King.update_movelist();
-  // Black::Pawn.update_movelist();
-  // Black::Queen.update_movelist();
-  // Black::Bishop.update_movelist();
-  // Black::Knight.update_movelist();
-  // Black::Rook.update_movelist();
+  Black::King.update_movelist();
+  Black::Pawn.update_movelist();
+  Black::Queen.update_movelist();
+  Black::Bishop.update_movelist();
+  Black::Knight.update_movelist();
+  Black::Rook.update_movelist();
 }
 
 void Game_Board::arrow(int*start, int*end) {
@@ -22,7 +22,7 @@ void Game_Board::arrow(int*start, int*end) {
 void Game_Board::play() {
   if (Black::turn)
     Black::play();
-  else if (White::turn)
+  if (White::turn)
     White::play();
 }
 

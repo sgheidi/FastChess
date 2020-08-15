@@ -11,13 +11,14 @@ extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 
+void check_kill(int row, int col);
 void kill(std::string piece);
-void init();
 void move_piece(std::string piece, int row, int col);
 std::string get_piece(int row_, int col_);
 void play();
 void print_blocks();
 void show();
+void init();
 
 } // namespace Black
 

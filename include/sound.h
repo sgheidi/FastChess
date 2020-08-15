@@ -9,6 +9,7 @@ public:
   Game_Sound() {
     sound.setBuffer(buffer);
   };
+  void check();
   void kill();
   void error();
   void move();

@@ -23,7 +23,7 @@ void King_Piece::filter_king_pos() {
   std::vector<std::vector<int>> opposite_pos = {
   {Black::King.row-1, Black::King.col-1}, {Black::King.row-1, Black::King.col},
   {Black::King.row-1, Black::King.col+1}, {Black::King.row, Black::King.col-1},
-  {Black::King.row-1, Black::King.col}, {Black::King.row-1, Black::King.col+1},
+  {Black::King.row, Black::King.col}, {Black::King.row, Black::King.col+1},
   {Black::King.row+1, Black::King.col-1}, {Black::King.row+1, Black::King.col},
   {Black::King.row+1, Black::King.col+1}
   };
