@@ -3,113 +3,119 @@
 namespace Black {
 
 void Queen_Piece::update_movelist() {
-  movelist.clear();
-  int row_ = row+1;
-  int col_ = col+1;
-  while (row_ <= 7 && col_ <= 7) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    row_ ++;
-    col_ ++;
-  }
-  row_ = row-1;
-  col_ = col+1;
-  while (row_ >= 0 && col_ <= 7) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    row_ --;
-    col_ ++;
-  }
-  row_ = row+1;
-  col_ = col-1;
-  while (row_ <= 7 && col_ >= 0) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    row_ ++;
-    col_ --;
-  }
-  row_ = row-1;
-  col_ = col-1;
-  while (row_ >= 0 && col_ >= 0) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    row_ --;
-    col_ --;
-  }
-  row_ = row-1;
-  col_ = col;
-  while (row_ >= 0) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    row_ --;
-  }
-  row_ = row+1;
-  col_ = col;
-  while (row_ < 8) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    row_ ++;
-  }
-  row_ = row;
-  col_ = col+1;
-  while (col_ < 8) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    col_ ++;
-  }
-  row_ = row;
-  col_ = col-1;
-  while (col_ >= 0) {
-    if (blocks[row_][col_])
-      break;
-    movelist.push_back({row_, col_});
-    if (White::blocks[row_][col_])
-      break;
-    col_ --;
+  for (int i=0;i<num_queens;i++) {
+    if (!alive[i])
+      continue;
+    movelist[i].clear();
+    int row_ = row[i]+1;
+    int col_ = col[i]+1;
+    while (row_ <= 7 && col_ <= 7) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      row_ ++;
+      col_ ++;
+    }
+    row_ = row[i]-1;
+    col_ = col[i]+1;
+    while (row_ >= 0 && col_ <= 7) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      row_ --;
+      col_ ++;
+    }
+    row_ = row[i]+1;
+    col_ = col[i]-1;
+    while (row_ <= 7 && col_ >= 0) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      row_ ++;
+      col_ --;
+    }
+    row_ = row[i]-1;
+    col_ = col[i]-1;
+    while (row_ >= 0 && col_ >= 0) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      row_ --;
+      col_ --;
+    }
+    row_ = row[i]-1;
+    col_ = col[i];
+    while (row_ >= 0) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      row_ --;
+    }
+    row_ = row[i]+1;
+    col_ = col[i];
+    while (row_ < 8) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      row_ ++;
+    }
+    row_ = row[i];
+    col_ = col[i]+1;
+    while (col_ < 8) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      col_ ++;
+    }
+    row_ = row[i];
+    col_ = col[i]-1;
+    while (col_ >= 0) {
+      if (blocks[row_][col_])
+        break;
+      movelist[i].push_back({row_, col_});
+      if (White::blocks[row_][col_])
+        break;
+      col_ --;
+    }
   }
 }
 
-void Queen_Piece::move(int row_, int col_) {
-  blocks[row][col] = 0;
+void Queen_Piece::move(int i, int row_, int col_) {
+  blocks[row[i]][col[i]] = 0;
   blocks[row_][col_] = 1;
-  row = row_;
-  col = col_;
-  x = col*UNIT;
-  y = row*UNIT;
+  row[i] = row_;
+  col[i] = col_;
+  x[i] = col[i]*UNIT;
+  y[i] = row[i]*UNIT;
 }
 
 void Queen_Piece::show() {
-  if (!alive)
-    return;
-  sf::Texture texture;
-  if (!texture.loadFromFile("assets/sprites/blackQueen.png"))
-    return;
-  sf::Sprite sprite;
-  sprite.setTexture(texture);
-  sprite.setScale(Board.pieces_scale, Board.pieces_scale);
-  sprite.setPosition(x + Board.pieces_paddingx, y + Board.pieces_paddingy);
-  window.draw(sprite);
+  for (int i=0;i<num_queens;i++) {
+    if (!alive[i])
+      continue;
+    sf::Texture texture;
+    if (!texture.loadFromFile("assets/sprites/blackQueen.png"))
+      return;
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprite.setScale(Board.pieces_scale, Board.pieces_scale);
+    sprite.setPosition(x[i] + Board.pieces_paddingx, y[i] + Board.pieces_paddingy);
+    window.draw(sprite);
+  }
 }
 
 } // namespace Black

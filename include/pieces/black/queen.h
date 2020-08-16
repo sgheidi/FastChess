@@ -6,18 +6,16 @@ namespace Black {
 class Queen_Piece : public Piece {
 private:
 public:
-  std::vector<std::vector<int>> movelist;
-  int row, col, y, x;
-  bool alive;
   Queen_Piece() {
-    alive = true;
-    row = 0;
-    col = 4;
-    y = row*UNIT;
-    x = col*UNIT;
+    row = {0};
+    col = {4};
+    y = {row[0]*UNIT};
+    x = {col[0]*UNIT};
+    alive = {true};
+    movelist.resize(1);
   };
-  void move(int row_, int col_);
   void update_movelist();
+  void move(int i, int row_, int col_);
   void show();
 };
 

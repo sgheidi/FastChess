@@ -1,7 +1,10 @@
 #include "../include/common.h"
 
 void Game_Sound::check() {
-  
+  buffer.loadFromFile("assets/check.wav");
+  sound.setVolume(100.f);
+  sound.setPlayingOffset(sf::milliseconds(95));
+  sound.play();
 }
 
 void Game_Sound::kill() {

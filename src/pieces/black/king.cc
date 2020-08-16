@@ -3,6 +3,8 @@
 namespace Black {
 
 void King_Piece::update_movelist() {
+  if (!alive)
+    return;
   movelist.clear();
   std::vector<std::vector<int>> pos = {
   {row-1, col-1}, {row-1, col}, {row-1, col+1},

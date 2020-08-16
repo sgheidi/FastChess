@@ -10,6 +10,7 @@ extern King_Piece King;
 extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
+extern int num_queens;
 
 void check_kill(int row, int col);
 void kill(std::string piece);

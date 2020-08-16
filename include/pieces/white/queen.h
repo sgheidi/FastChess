@@ -6,18 +6,16 @@ namespace White {
 class Queen_Piece : public Piece {
 private:
 public:
-  std::vector<std::vector<int>> movelist;
-  int row, col, y, x;
-  bool alive;
   Queen_Piece() {
-    row = 7;
-    col = 4;
-    y = row*UNIT;
-    x = col*UNIT;
-    alive = true;
+    row = {7};
+    col = {4};
+    y = {row[0]*UNIT};
+    x = {col[0]*UNIT};
+    alive = {true};
+    movelist.resize(1);
   };
   void update_movelist();
-  void move(int row_, int col_);
+  void move(int i, int row_, int col_);
   void show();
 };
 

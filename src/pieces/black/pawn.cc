@@ -4,6 +4,8 @@ namespace Black {
 
 void Pawn_Piece::update_movelist() {
   for (int i=0;i<8;i++) {
+    if (!alive[i])
+      continue;
     movelist[i].clear();
     if (row[i] < 8 && White::blocks[row[i]+1][col[i]] == 0 && blocks[row[i]+1][col[i]] == 0) {
       movelist[i].push_back({row[i]+1, col[i]});

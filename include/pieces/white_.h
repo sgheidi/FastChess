@@ -10,7 +10,11 @@ extern King_Piece King;
 extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
+extern int num_queens;
 
+void update_opp_movelists();
+bool check_opp_checked();
+void promote(int i);
 void kill(std::string piece);
 void move_piece(std::string piece, int row, int col);
 void check_kill(int row, int col);

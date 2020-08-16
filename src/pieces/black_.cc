@@ -3,6 +3,7 @@
 namespace Black {
 std::vector<std::vector<int>> blocks(8);
 bool turn = true;
+int num_queens = 1;
 
 void play() {
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
@@ -26,12 +27,14 @@ void move_piece(std::string piece, int row, int col) {
   else if (piece == "K" && !in(King.movelist, pos)) {
     Sound.error();
   }
-  if (piece == "Q" && in(Queen.movelist, pos)) {
-    Queen.move(row, col);
-    moved = true;
-  }
-  else if (piece == "Q" && !in(Queen.movelist, pos)) {
-    Sound.error();
+  for (int i=0;i<num_queens;i++) {
+    if (piece == "Q" + std::to_string(i) && in(Queen.movelist[i], pos)) {
+      Queen.move(i, row, col);
+      moved = true;
+    }
+    else if (piece == "Q" + std::to_string(i) && !in(Queen.movelist[i], pos)) {
+      Sound.error();
+    }
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
@@ -83,8 +86,10 @@ void check_kill(int row, int col) {
 std::string get_piece(int row, int col) {
   if (King.row == row && King.col == col)
     return "K";
-  else if (Queen.row == row && Queen.col == col)
-    return "Q";
+  for (int i=0;i<num_queens;i++) {
+    if (Queen.row[i] == row && Queen.col[i] == col)
+      return "Q" + std::to_string(i);
+  }
   for (int i=0;i<8;i++) {
     if (Pawn.row[i] == row && Pawn.col[i] == col)
       return "P" + std::to_string(i);
@@ -137,13 +142,15 @@ void kill(std::string piece) {
     King.alive = false;
     King.movelist.clear();
   }
-  else if (piece == "Q") {
-    Queen.row = -1;
-    Queen.col = -1;
-    Queen.x = -1;
-    Queen.y = -1;
-    Queen.alive = false;
-    Queen.movelist.clear();
+  for (int i=0;i<num_queens;i++) {
+    if (piece == "Q" + std::to_string(i)) {
+      Queen.row[i] = -1;
+      Queen.col[i] = -1;
+      Queen.x[i] = -1;
+      Queen.y[i] = -1;
+      Queen.alive[i] = false;
+      Queen.movelist[i].clear();
+    }
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i)) {

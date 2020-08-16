@@ -4,6 +4,8 @@ namespace Black {
 
 void Bishop_Piece::update_movelist() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     movelist[i].clear();
     int row_ = row[i]+1;
     int col_ = col[i]+1;

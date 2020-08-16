@@ -4,6 +4,8 @@ namespace Black {
 
 void Knight_Piece::update_movelist() {
   for (int i=0;i<2;i++) {
+    if (!alive[i])
+      continue;
     movelist[i].clear();
     std::vector<std::vector<int>> pos = {{row[i]-2, col[i]+1}, {row[i]-2, col[i]-1},
     {row[i]+2, col[i]+1}, {row[i]+2, col[i]-1}, {row[i]-1, col[i]-2}, {row[i]-1, col[i]+2},

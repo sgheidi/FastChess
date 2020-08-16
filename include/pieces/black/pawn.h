@@ -6,7 +6,6 @@ namespace Black {
 class Pawn_Piece : public Piece {
 private:
 public:
-  std::vector<std::vector<std::vector<int>>> movelist;
   Pawn_Piece() {
     for (int i=0;i<8;i++) {
       row.push_back(1);
