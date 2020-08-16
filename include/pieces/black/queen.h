@@ -13,6 +13,7 @@ public:
     x = {col[0]*UNIT};
     alive = {true};
     movelist.resize(1);
+    protecting_movelist.resize(1);
   };
   void update_movelist();
   void move(int i, int row_, int col_);

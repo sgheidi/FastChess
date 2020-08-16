@@ -7,11 +7,14 @@ void Bishop_Piece::update_movelist() {
     if (!alive[i])
       continue;
     movelist[i].clear();
+    protecting_movelist[i].clear();
     int row_ = row[i]+1;
     int col_ = col[i]+1;
     while (row_ <= 7 && col_ <= 7) {
-      if (blocks[row_][col_])
+      if (blocks[row_][col_]) {
+        protecting_movelist[i].push_back({row_, col_});
         break;
+      }
       movelist[i].push_back({row_, col_});
       if (White::blocks[row_][col_])
         break;
@@ -21,8 +24,10 @@ void Bishop_Piece::update_movelist() {
     row_ = row[i]-1;
     col_ = col[i]+1;
     while (row_ >= 0 && col_ <= 7) {
-      if (blocks[row_][col_])
+      if (blocks[row_][col_]) {
+        protecting_movelist[i].push_back({row_, col_});
         break;
+      }
       movelist[i].push_back({row_, col_});
       if (White::blocks[row_][col_])
         break;
@@ -32,8 +37,10 @@ void Bishop_Piece::update_movelist() {
     row_ = row[i]+1;
     col_ = col[i]-1;
     while (row_ <= 7 && col_ >= 0) {
-      if (blocks[row_][col_])
+      if (blocks[row_][col_]) {
+        protecting_movelist[i].push_back({row_, col_});
         break;
+      }
       movelist[i].push_back({row_, col_});
       if (White::blocks[row_][col_])
         break;
@@ -43,8 +50,10 @@ void Bishop_Piece::update_movelist() {
     row_ = row[i]-1;
     col_ = col[i]-1;
     while (row_ >= 0 && col_ >= 0) {
-      if (blocks[row_][col_])
+      if (blocks[row_][col_]) {
+        protecting_movelist[i].push_back({row_, col_});
         break;
+      }
       movelist[i].push_back({row_, col_});
       if (White::blocks[row_][col_])
         break;

@@ -6,7 +6,7 @@ namespace White {
 class King_Piece : public Piece {
 private:
 public:
-  std::vector<std::vector<int>> movelist;
+  std::vector<std::vector<int>> movelist, protecting_movelist;
   int row, col, y, x;
   bool alive;
   King_Piece() {

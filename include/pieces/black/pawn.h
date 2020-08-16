@@ -15,6 +15,7 @@ public:
       alive.push_back(1);
     }
     movelist.resize(8);
+    hit_movelist.resize(8);
   };
   void move(int i, int row_, int col_);
   void update_movelist();

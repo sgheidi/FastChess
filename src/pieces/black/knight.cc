@@ -7,6 +7,7 @@ void Knight_Piece::update_movelist() {
     if (!alive[i])
       continue;
     movelist[i].clear();
+    protecting_movelist[i].clear();
     std::vector<std::vector<int>> pos = {{row[i]-2, col[i]+1}, {row[i]-2, col[i]-1},
     {row[i]+2, col[i]+1}, {row[i]+2, col[i]-1}, {row[i]-1, col[i]-2}, {row[i]-1, col[i]+2},
     {row[i]+1, col[i]-2}, {row[i]+1, col[i]+2}};
@@ -14,6 +15,8 @@ void Knight_Piece::update_movelist() {
       if (pos[k][0] >= 0 && pos[k][0] < 8 && pos[k][1] >= 0 && pos[k][1] < 8) {
         if (!blocks[pos[k][0]][pos[k][1]])
           movelist[i].push_back({pos[k][0], pos[k][1]});
+        else if (blocks[pos[k][0]][pos[k][1]])
+          protecting_movelist[i].push_back({pos[k][0], pos[k][1]});
       }
     }
   }

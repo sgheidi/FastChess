@@ -12,6 +12,7 @@ extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 extern int num_queens;
 
+void promote(int i);
 void check_kill(int row, int col);
 void kill(std::string piece);
 void move_piece(std::string piece, int row, int col);

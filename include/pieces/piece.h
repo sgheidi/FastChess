@@ -5,7 +5,7 @@ class Piece {
 protected:
 public:
   std::vector<int> row, col, y, x;
-  std::vector<std::vector<std::vector<int>>> movelist;
+  std::vector<std::vector<std::vector<int>>> movelist, protecting_movelist, hit_movelist;
   std::vector<bool> alive;
 };
 

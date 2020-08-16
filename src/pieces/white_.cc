@@ -20,6 +20,7 @@ void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
   std::vector<int> pos = {row, col};
   bool moved = false;
+  Pawn.en_passant.clear();
   if (piece == "K" && in(King.movelist, pos)) {
     King.move(row, col);
     moved = true;
@@ -122,6 +123,7 @@ void promote(int i) {
   Queen.y.push_back(row*UNIT);
   Queen.alive.push_back(1);
   Queen.movelist.resize(num_queens);
+  Queen.protecting_movelist.resize(num_queens);
 }
 
 void check_kill(int row, int col) {
@@ -199,6 +201,7 @@ void kill(std::string piece) {
       Queen.y[i] = -1;
       Queen.alive[i] = false;
       Queen.movelist[i].clear();
+      Queen.protecting_movelist[i].clear();
     }
   }
   for (int i=0;i<8;i++) {
@@ -209,6 +212,7 @@ void kill(std::string piece) {
       Pawn.y[i] = -1;
       Pawn.alive[i] = false;
       Pawn.movelist[i].clear();
+      Pawn.hit_movelist[i].clear();
     }
   }
   for (int i=0;i<2;i++) {
@@ -219,6 +223,7 @@ void kill(std::string piece) {
       Bishop.y[i] = -1;
       Bishop.alive[i] = false;
       Bishop.movelist[i].clear();
+      Bishop.protecting_movelist[i].clear();
     }
     if (piece == "N" + std::to_string(i)) {
       Knight.row[i] = -1;
@@ -227,6 +232,7 @@ void kill(std::string piece) {
       Knight.y[i] = -1;
       Knight.alive[i] = false;
       Knight.movelist[i].clear();
+      Knight.protecting_movelist[i].clear();
     }
     if (piece == "R" + std::to_string(i)) {
       Rook.row[i] = -1;
@@ -235,6 +241,7 @@ void kill(std::string piece) {
       Rook.y[i] = -1;
       Rook.alive[i] = false;
       Rook.movelist[i].clear();
+      Rook.protecting_movelist[i].clear();
     }
   }
   Sound.kill();

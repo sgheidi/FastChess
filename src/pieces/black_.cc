@@ -39,6 +39,9 @@ void move_piece(std::string piece, int row, int col) {
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
       Pawn.move(i, row, col);
+      if (row == 7) {
+        promote(i);
+      }
       moved = true;
     }
     else if (piece == "P" + std::to_string(i) && !in(Pawn.movelist[i], pos)) {
@@ -73,6 +76,20 @@ void move_piece(std::string piece, int row, int col) {
     Sound.move();
     check_kill(row, col);
   }
+}
+
+void promote(int i) {
+  int row = Pawn.row[i];
+  int col = Pawn.col[i];
+  kill("P" + std::to_string(i));
+  num_queens ++;
+  Queen.row.push_back(row);
+  Queen.col.push_back(col);
+  Queen.x.push_back(col*UNIT);
+  Queen.y.push_back(row*UNIT);
+  Queen.alive.push_back(1);
+  Queen.movelist.resize(num_queens);
+  Queen.protecting_movelist.resize(num_queens);
 }
 
 void check_kill(int row, int col) {
@@ -150,6 +167,7 @@ void kill(std::string piece) {
       Queen.y[i] = -1;
       Queen.alive[i] = false;
       Queen.movelist[i].clear();
+      Queen.protecting_movelist[i].clear();
     }
   }
   for (int i=0;i<8;i++) {
@@ -160,6 +178,7 @@ void kill(std::string piece) {
       Pawn.y[i] = -1;
       Pawn.alive[i] = false;
       Pawn.movelist[i].clear();
+      Pawn.hit_movelist[i].clear();
     }
   }
   for (int i=0;i<2;i++) {
@@ -170,6 +189,7 @@ void kill(std::string piece) {
       Bishop.y[i] = -1;
       Bishop.alive[i] = false;
       Bishop.movelist[i].clear();
+      Bishop.protecting_movelist[i].clear();
     }
     if (piece == "N" + std::to_string(i)) {
       Knight.row[i] = -1;
@@ -178,6 +198,7 @@ void kill(std::string piece) {
       Knight.y[i] = -1;
       Knight.alive[i] = false;
       Knight.movelist[i].clear();
+      Knight.protecting_movelist[i].clear();
     }
     if (piece == "R" + std::to_string(i)) {
       Rook.row[i] = -1;
@@ -186,6 +207,7 @@ void kill(std::string piece) {
       Rook.y[i] = -1;
       Rook.alive[i] = false;
       Rook.movelist[i].clear();
+      Rook.protecting_movelist[i].clear();
     }
   }
   Sound.kill();

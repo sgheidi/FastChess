@@ -7,6 +7,7 @@ void Pawn_Piece::update_movelist() {
     if (!alive[i])
       continue;
     movelist[i].clear();
+    hit_movelist[i].clear();
     if (row[i] > 0 && Black::blocks[row[i]-1][col[i]] == 0 && blocks[row[i]-1][col[i]] == 0) {
       movelist[i].push_back({row[i]-1, col[i]});
       if (row[i] == 6)
@@ -15,15 +16,19 @@ void Pawn_Piece::update_movelist() {
     if (row[i] > 0 && col[i] > 0) {
       if (Black::blocks[row[i]-1][col[i]-1] == 1)
         movelist[i].push_back({row[i]-1, col[i]-1});
+      hit_movelist[i].push_back({row[i]-1, col[i]-1});
     }
     if (row[i] > 0 && col[i] < 7) {
       if (Black::blocks[row[i]-1][col[i]+1] == 1)
         movelist[i].push_back({row[i]-1, col[i]+1});
+      hit_movelist[i].push_back({row[i]-1, col[i]+1});
     }
   }
 }
 
 void Pawn_Piece::move(int i, int row_, int col_) {
+  if (abs(row_-row[i]) == 2)
+    en_passant[i] = 1;
   blocks[row[i]][col[i]] = 0;
   blocks[row_][col_] = 1;
   row[i] = row_;

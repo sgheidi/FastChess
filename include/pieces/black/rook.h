@@ -13,6 +13,7 @@ public:
     col = {0, 7};
     y = {row[0]*UNIT, row[1]*UNIT};
     x = {col[0]*UNIT, col[1]*UNIT};
+    protecting_movelist.resize(2);
   };
   void move(int i, int row_, int col_);
   void update_movelist();

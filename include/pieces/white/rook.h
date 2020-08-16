@@ -9,6 +9,7 @@ public:
   Rook_Piece() {
     alive = {1, 1};
     movelist.resize(2);
+    protecting_movelist.resize(2);
     row = {7, 7};
     col = {0, 7};
     y = {row[0]*UNIT, row[1]*UNIT};

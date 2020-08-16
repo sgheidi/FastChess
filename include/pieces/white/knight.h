@@ -9,6 +9,7 @@ public:
   Knight_Piece() {
     alive = {1, 1};
     movelist.resize(2);
+    protecting_movelist.resize(2);
     row = {7, 7};
     col = {1, 6};
     x = {col[0]*UNIT, col[1]*UNIT};
