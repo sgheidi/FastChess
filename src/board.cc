@@ -1,18 +1,18 @@
 #include "../include/common.h"
 
 void Game_Board::update_moves() {
-  White::King.update_movelist();
   White::Pawn.update_movelist();
   White::Queen.update_movelist();
   White::Bishop.update_movelist();
   White::Knight.update_movelist();
   White::Rook.update_movelist();
-  Black::King.update_movelist();
   Black::Pawn.update_movelist();
   Black::Queen.update_movelist();
   Black::Bishop.update_movelist();
   Black::Knight.update_movelist();
   Black::Rook.update_movelist();
+  White::King.update_movelist();
+  Black::King.update_movelist();
 }
 
 void Game_Board::arrow(int*start, int*end) {

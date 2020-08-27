@@ -15,6 +15,8 @@ public:
     y = {row[0]*UNIT, row[1]*UNIT};
     x = {col[0]*UNIT, col[1]*UNIT};
   };
+  std::vector<int> get_avoid_move(int i);
+  std::vector<std::vector<int>> get_check_movelist(int i);
   void move(int i, int row_, int col_);
   void update_movelist();
   void show();

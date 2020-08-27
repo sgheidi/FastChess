@@ -5,6 +5,7 @@ class Game_Board {
 private:
   inline void drawRect(int*color, int x, int y, int width, int height);
 public:
+  struct undo;
   int row, col;
   int pieces_paddingx, pieces_paddingy;
   float pieces_scale;

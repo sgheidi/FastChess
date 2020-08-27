@@ -15,6 +15,8 @@ public:
     x = {col[0]*UNIT, col[1]*UNIT};
     protecting_movelist.resize(2);
   };
+  std::vector<int> get_avoid_move(int i);
+  std::vector<std::vector<int>> get_check_movelist(int i);
   void move(int i, int row_, int col_);
   void update_movelist();
   void show();

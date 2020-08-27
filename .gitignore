@@ -5,3 +5,4 @@ other
 src/test.cc
 test.sh
 src/test.h
+py.sh

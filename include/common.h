@@ -9,6 +9,16 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 
+extern bool testing;
+std::vector<std::vector<int>>
+filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2);
+std::vector<std::vector<int>>
+filter(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2);
+void print_v1(std::vector<int> v);
+void print_v3(std::vector<std::vector<std::vector<int>>> v);
+bool in(std::vector<std::vector<int>> v, std::vector<int> item);
+void print_v2(std::vector<std::vector<int>> v);
+
 #define X_RES 800
 #define Y_RES 800
 #define UNIT (X_RES/8)
@@ -36,7 +46,5 @@
 #include "pieces/black_.h"
 
 extern sf::RenderWindow window;
-
-bool in(std::vector<std::vector<int>> v, std::vector<int> item);
 
 #endif // COMMON_H

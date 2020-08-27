@@ -15,6 +15,8 @@ public:
     movelist.resize(1);
     protecting_movelist.resize(1);
   };
+  std::vector<int> get_avoid_move(int i);
+  std::vector<std::vector<int>> get_check_movelist(int i);
   void update_movelist();
   void move(int i, int row_, int col_);
   void show();

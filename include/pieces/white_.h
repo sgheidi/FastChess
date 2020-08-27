@@ -11,7 +11,10 @@ extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 extern int num_queens;
+extern std::string checker;
 
+void check_avoid_move();
+void check_pin();
 void update_opp_movelists();
 bool check_opp_checked();
 void promote(int i);

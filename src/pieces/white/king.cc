@@ -22,75 +22,20 @@ void King_Piece::update_movelist() {
 }
 
 void King_Piece::filter_check_pos() {
-  std::vector<std::vector<int>> pos;
   for (int i=0;i<Black::num_queens;i++) {
-    for (int k=0;k<Black::Queen.movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Queen.movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
-    for (int k=0;k<Black::Queen.protecting_movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Queen.protecting_movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
+    movelist = filter2(movelist, Black::Queen.movelist[i]);
+    movelist = filter2(movelist, Black::Queen.protecting_movelist[i]);
   }
   for (int i=0;i<8;i++) {
-    for (int k=0;k<Black::Pawn.hit_movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Pawn.hit_movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
+    movelist = filter2(movelist, Black::Pawn.hit_movelist[i]);
   }
   for (int i=0;i<2;i++) {
-    for (int k=0;k<Black::Bishop.movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Bishop.movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
-    for (int k=0;k<Black::Bishop.protecting_movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Bishop.protecting_movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
-    for (int k=0;k<Black::Knight.movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Knight.movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
-    for (int k=0;k<Black::Knight.protecting_movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Knight.protecting_movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
-    for (int k=0;k<Black::Rook.movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Rook.movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
-    for (int k=0;k<Black::Rook.protecting_movelist[i].size();k++) {
-      for (int j=0;j<movelist.size();j++) {
-        if (movelist[j] == Black::Rook.protecting_movelist[i][k]) {
-          movelist[j].clear();
-        }
-      }
-    }
+    movelist = filter2(movelist, Black::Bishop.movelist[i]);
+    movelist = filter2(movelist, Black::Bishop.protecting_movelist[i]);
+    movelist = filter2(movelist, Black::Knight.movelist[i]);
+    movelist = filter2(movelist, Black::Knight.protecting_movelist[i]);
+    movelist = filter2(movelist, Black::Rook.movelist[i]);
+    movelist = filter2(movelist, Black::Rook.protecting_movelist[i]);
   }
 }
 
@@ -102,12 +47,7 @@ void King_Piece::filter_king_pos() {
   {Black::King.row+1, Black::King.col-1}, {Black::King.row+1, Black::King.col},
   {Black::King.row+1, Black::King.col+1}
   };
-  for (int i=0;i<opposite_pos.size();i++) {
-    for (int k=0;k<movelist.size();k++) {
-      if (movelist[k] == opposite_pos[i])
-        movelist[k].clear();
-    }
-  }
+  movelist = filter2(movelist, opposite_pos);
 }
 
 void King_Piece::move(int row_, int col_) {
@@ -122,10 +62,8 @@ void King_Piece::move(int row_, int col_) {
 void King_Piece::show() {
   if (!alive)
     return;
-  sf::Texture texture;
   if (!texture.loadFromFile("assets/sprites/whiteKing.png"))
     return;
-  sf::Sprite sprite;
   sprite.setTexture(texture);
   sprite.setScale(Board.pieces_scale, Board.pieces_scale);
   sprite.setPosition(x + Board.pieces_paddingx, y + Board.pieces_paddingy);
