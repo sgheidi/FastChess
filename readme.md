@@ -2,7 +2,7 @@
 A fully featured C++ Chess GUI + AI.
 
 ## Screenshots
-![Alt text](assets/1.jpg?raw=true "Screenshot 1")
+![Alt text](assets/1r.jpg?raw=true "Screenshot 1")
 
 ## Video
 
