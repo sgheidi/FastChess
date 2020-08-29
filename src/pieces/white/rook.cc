@@ -101,7 +101,7 @@ int Rook_Piece::num_pieces(int i) {
       row_ --;
     }
   }
-  else if (pos[1] > row[i]) {
+  else if (pos[1] > col[i]) {
     row_ = row[i];
     col_ = col[i]+1;
     while (pos[1] > col_) {
@@ -112,7 +112,7 @@ int Rook_Piece::num_pieces(int i) {
       col_ ++;
     }
   }
-  else if (pos[1] < row[i]) {
+  else if (pos[1] < col[i]) {
     row_ = row[i];
     col_ = col[i]-1;
     while (pos[1] < col_) {

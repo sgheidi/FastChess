@@ -40,6 +40,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
+      undo.moved_from = {Pawn.row[i], Pawn.col[i]};
       Pawn.move(i, row, col);
       if (row == 0) {
         promote(i);
@@ -66,6 +67,7 @@ void move_piece(std::string piece, int row, int col) {
       Sound.error();
     }
     if (piece == "R" + std::to_string(i) && in(Rook.movelist[i], pos)) {
+      undo.moved_from = {Rook.row[i], Rook.col[i]};
       Rook.move(i, row, col);
       moved = true;
     }
@@ -75,6 +77,9 @@ void move_piece(std::string piece, int row, int col) {
   }
   if (moved) {
     Sound.move();
+    undo.piece = piece;
+    undo.piece = "W";
+    Board.arrow({undo.moved_from[0], undo.moved_from[1]}, {row, col});
     check_kill(row, col);
     Board.update_moves();
     if (check_opp_checked()) {

@@ -1,6 +1,11 @@
 #include "../include/common.h"
 
 bool testing = true;
+struct undo_stack undo = {
+  {-1, -1},
+  "",
+  ""
+};
 
 // This function removes any elements in v1 that are in v2
 std::vector<std::vector<int>>

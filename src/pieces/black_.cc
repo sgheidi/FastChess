@@ -80,11 +80,18 @@ void move_piece(std::string piece, int row, int col) {
       Sound.check();
       update_opp_movelists();
     }
+    check_pin();
     if (!testing) {
       turn = false;
       White::turn = true;
     }
   }
+}
+
+void check_pin() {
+  Bishop.check_pin();
+  Rook.check_pin();
+  Queen.check_pin();
 }
 
 void check_avoid_move() {

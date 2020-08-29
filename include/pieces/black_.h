@@ -13,6 +13,7 @@ extern bool turn;
 extern int num_queens;
 extern std::string checker;
 
+void check_pin();
 void check_avoid_move();
 void update_opp_movelists();
 bool check_opp_checked();

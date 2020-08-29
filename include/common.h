@@ -9,6 +9,12 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 
+struct undo_stack {
+  std::vector<int> moved_from;
+  std::string piece;
+  std::string color;
+};
+extern struct undo_stack undo;
 extern bool testing;
 std::vector<std::vector<int>>
 filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2);

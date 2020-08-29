@@ -1,5 +1,15 @@
 #include "../include/common.h"
 
+void Game_Board::pop() {
+  if (undo.color[Board.total_moves] == "W") {
+    for (int i=0;i<8;i++) {
+      if (undo.piece == "P" + std::to_string(i)) {
+        White::Pawn.move(i, undo.moved_from[0], undo.moved_from[1]);
+      }
+    }
+  }
+}
+
 void Game_Board::update_moves() {
   White::Pawn.update_movelist();
   White::Queen.update_movelist();
@@ -15,7 +25,7 @@ void Game_Board::update_moves() {
   Black::King.update_movelist();
 }
 
-void Game_Board::arrow(int*start, int*end) {
+void Game_Board::arrow(std::vector<int> start, std::vector<int> end) {
 
 }
 

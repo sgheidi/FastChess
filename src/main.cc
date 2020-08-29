@@ -17,12 +17,14 @@ int main() {
         Black::print_blocks();
       else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         White::print_blocks();
+      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+        Board.pop();
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
           std::vector<int> pos = Board.get_coords(position.x, position.y);
-          Board.row = pos[1];
-          Board.col = pos[0];
+          Board.selected_row = pos[1];
+          Board.selected_col = pos[0];
           Queue.enqueue(pos[1], pos[0]);
           Board.play();
         }
@@ -30,7 +32,7 @@ int main() {
     }
     window.clear();
     Board.draw_board();
-    Board.select(Board.row, Board.col);
+    Board.select(Board.selected_row, Board.selected_col);
     White::show();
     Black::show();
     window.display();
