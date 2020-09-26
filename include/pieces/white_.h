@@ -13,6 +13,9 @@ extern bool turn;
 extern int num_queens;
 extern std::string checker;
 
+bool castle_condition_Q();
+bool castle_condition_K();
+bool opp_no_moves();
 void check_avoid_move();
 void check_pin();
 void update_opp_movelists();

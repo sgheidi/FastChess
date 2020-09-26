@@ -5,8 +5,6 @@ int main() {
   White::init();
   Board.update_moves();
   window.setPosition(sf::Vector2i(250, 120));
-  sf::SoundBuffer buffer;
-  sf::Sound sound;
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -35,6 +33,7 @@ int main() {
     Board.select(Board.selected_row, Board.selected_col);
     White::show();
     Black::show();
+    Board.check_end();
     window.display();
   }
   return 0;

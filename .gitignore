@@ -6,3 +6,4 @@ src/test.cc
 test.sh
 src/test.h
 py.sh
+test_namespace

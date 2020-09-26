@@ -6,10 +6,12 @@ namespace White {
 class King_Piece : public Piece {
 private:
 public:
+  bool moved;
   std::vector<std::vector<int>> movelist, protecting_movelist;
   int row, col, y, x;
   bool alive;
   King_Piece() {
+    moved = 0;
     row = 7;
     col = 3;
     y = row*UNIT;

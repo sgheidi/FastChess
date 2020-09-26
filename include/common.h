@@ -10,9 +10,9 @@
 #include <SFML/Window.hpp>
 
 struct undo_stack {
-  std::vector<int> moved_from;
-  std::string piece;
-  std::string color;
+  std::vector<std::vector<int>> moved_from;
+  std::vector<std::string> piece;
+  std::vector<std::string> color;
 };
 extern struct undo_stack undo;
 extern bool testing;
@@ -33,6 +33,7 @@ void print_v2(std::vector<std::vector<int>> v);
 #include "queue.h"
 #include "sound.h"
 #include "pieces/piece.h"
+#include "text.h"
 
 #include "pieces/black/bishop.h"
 #include "pieces/black/knight.h"

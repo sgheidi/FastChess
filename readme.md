@@ -9,4 +9,7 @@ A fully featured C++ Chess GUI + AI.
 ## Setup
 Use ```setup.sh``` to install necessary dependencies and ```run.sh``` to run the program.
 
+
+
+Threaded search (specify num. threads for AI search).
 <!-- ## The AI -->

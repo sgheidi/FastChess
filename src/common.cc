@@ -2,9 +2,9 @@
 
 bool testing = true;
 struct undo_stack undo = {
-  {-1, -1},
-  "",
-  ""
+  {},
+  {""},
+  {""}
 };
 
 // This function removes any elements in v1 that are in v2
@@ -12,7 +12,8 @@ std::vector<std::vector<int>>
 filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
   for (int i=0;i<v1.size();i++) {
     if (in(v2, v1[i])) {
-      v1[i].clear();
+      v1.erase(v1.begin() + i);
+      i--;
     }
   }
   return v1;
@@ -23,7 +24,8 @@ std::vector<std::vector<int>>
 filter(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
   for (int i=0;i<v1.size();i++) {
     if (!in(v2, v1[i])) {
-      v1[i].clear();
+      v1.erase(v1.begin() + i);
+      i--;
     }
   }
   return v1;
@@ -72,6 +74,7 @@ bool in(std::vector<std::vector<int>> v, std::vector<int> item) {
 Game_Board Board;
 Click_Queue Queue;
 Game_Sound Sound;
+Game_Text Text;
 
 namespace Black {
 Bishop_Piece Bishop;

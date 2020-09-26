@@ -9,7 +9,10 @@ public:
   int selected_row, selected_col;
   int pieces_paddingx, pieces_paddingy;
   float pieces_scale;
+  bool checkmate, stalemate;
   Game_Board() {
+    checkmate = false;
+    stalemate = false;
     total_moves = 0;
     selected_row = -1;
     selected_col = -1;
@@ -17,6 +20,7 @@ public:
     pieces_paddingy = 5;
     pieces_scale = 1.63;
   };
+  void check_end();
   void pop();
   void update_moves();
   void arrow(std::vector<int> start, std::vector<int> end);

@@ -1,18 +1,12 @@
 #include "../../include/common.h"
 
 namespace Black {
-std::vector<std::vector<int>> blocks(8);
-bool turn = true;
-int num_queens = 1;
-std::string checker = "";
 
 void play() {
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
   blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
-    // std::cout << "Moving " << piece << " to ";
-    // printf("(%d, %d)\n", Queue.row[1], Queue.col[1]);
   }
 }
 
@@ -111,7 +105,7 @@ void check_avoid_move() {
   }
   for (int i=0;i<White::King.movelist.size();i++) {
     if (White::King.movelist[i] == avoid_move)
-      White::King.movelist[i].clear();
+      White::King.movelist.erase(White::King.movelist.begin() + i);
   }
 }
 
@@ -311,5 +305,8 @@ void kill(std::string piece) {
   }
   Sound.kill();
 }
-
+std::vector<std::vector<int>> blocks(8);
+bool turn = true;
+int num_queens = 1;
+std::string checker = "";
 } // namespace Black

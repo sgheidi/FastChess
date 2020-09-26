@@ -1,20 +1,67 @@
 #include "../../include/common.h"
 
 namespace White {
-std::vector<std::vector<int>> blocks(8);
-bool turn = true;
-int num_queens = 1;
-std::string checker = "";
 
 void play() {
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
   blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
-    // std::cout << "Moving " << piece << " to ";
-    // printf("(%d, %d)\n", Queue.row[1], Queue.col[1]);
   }
+  // else if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
+  // blocks[Queue.row[1]][Queue.col[1]] == 1) {
+  //   std::string piece1 = get_piece(Queue.row[0], Queue.col[0]);
+  //   std::string piece2 = get_piece(Queue.row[1], Queue.col[1]);
+  //   if (piece1 == "K" && piece2 == "R1" && castle_condition_K()) {
+  //     castle_K();
+  //   }
+  //   // else if (piece1 == "K" && piece2 == "R0" && castle_condition_Q()) {
+  //   //   castle_Q();
+  //   // }
+  // }
 }
+
+bool in_movelist(int row, int col) {
+  // std::vector<int> pos = {row, col};
+  // if in(Black::King.movelist, pos)
+  //   return true;
+  // for (int i=0;i<Black::num_queens;i++) {
+  //   if in(Black::Queen.movelist[i], pos)
+  //     return true;
+  // }
+  // for (int i=0;i<8;i++) {
+  //   if in(Black::Pawn.movelist[i], pos)
+  //     return true;
+  // }
+  // for (int i=0;i<2;i++) {
+  //   if in(Black::Bishop.movelist[i], pos)
+  //     return true;
+  //   if in(Black::Knight.movelist[i], pos)
+  //     return true;
+  //   if in(Black::Rook.movelist[i], pos)
+  //     return true;
+  // }
+  return false;
+}
+
+// void castle_k():
+//   WhiteKing.Move(7, 6)
+//   WhiteRook.Move(1, 7, 5)
+//   self.valid_move(False, sound)
+//   White.castled = 1
+//   Board.moves["piece"].append("CK")
+//   Board.moves["killed"].append(False)
+
+// bool castle_condition_K():
+//   if (King.moved || Rook.moved[1])
+//     return false;
+//   if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])
+//     return false;
+//   if (Black::checker != "")
+//     return false;
+//   if (in_movelist(7, 6) || in_movelist(7, 5))
+//     return false;
+//   return true;
 
 void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
@@ -23,6 +70,7 @@ void move_piece(std::string piece, int row, int col) {
   Pawn.en_passant.clear();
   checker = "";
   if (piece == "K" && in(King.movelist, pos)) {
+    undo.moved_from.push_back({King.row, King.col});
     King.move(row, col);
     moved = true;
   }
@@ -31,6 +79,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + std::to_string(i) && in(Queen.movelist[i], pos)) {
+      undo.moved_from.push_back({Queen.row[i], Queen.col[i]});
       Queen.move(i, row, col);
       moved = true;
     }
@@ -40,7 +89,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
-      undo.moved_from = {Pawn.row[i], Pawn.col[i]};
+      undo.moved_from.push_back({Pawn.row[i], Pawn.col[i]});
       Pawn.move(i, row, col);
       if (row == 0) {
         promote(i);
@@ -53,6 +102,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i) && in(Bishop.movelist[i], pos)) {
+      undo.moved_from.push_back({Bishop.row[i], Bishop.col[i]});
       Bishop.move(i, row, col);
       moved = true;
     }
@@ -60,6 +110,7 @@ void move_piece(std::string piece, int row, int col) {
       Sound.error();
     }
     if (piece == "N" + std::to_string(i) && in(Knight.movelist[i], pos)) {
+      undo.moved_from.push_back({Knight.row[i], Knight.col[i]});
       Knight.move(i, row, col);
       moved = true;
     }
@@ -67,7 +118,7 @@ void move_piece(std::string piece, int row, int col) {
       Sound.error();
     }
     if (piece == "R" + std::to_string(i) && in(Rook.movelist[i], pos)) {
-      undo.moved_from = {Rook.row[i], Rook.col[i]};
+      undo.moved_from.push_back({Rook.row[i], Rook.col[i]});
       Rook.move(i, row, col);
       moved = true;
     }
@@ -76,22 +127,49 @@ void move_piece(std::string piece, int row, int col) {
     }
   }
   if (moved) {
+    Board.total_moves ++;
     Sound.move();
-    undo.piece = piece;
-    undo.piece = "W";
-    Board.arrow({undo.moved_from[0], undo.moved_from[1]}, {row, col});
+    undo.piece.push_back(piece);
+    undo.color.push_back("W");
+    Board.arrow({undo.moved_from[Board.total_moves-1][0], undo.moved_from[Board.total_moves-1][1]}, {row, col});
     check_kill(row, col);
     Board.update_moves();
     if (check_opp_checked()) {
       Sound.check();
       update_opp_movelists();
+      if (opp_no_moves())
+        Board.checkmate = true;
     }
+    if (opp_no_moves())
+      Board.stalemate = true;
     check_pin();
     if (!testing) {
       turn = false;
       Black::turn = true;
     }
   }
+}
+
+bool opp_no_moves() {
+  if (!Black::King.movelist.empty())
+    return false;
+  for (int i=0;i<num_queens;i++) {
+    if (!Black::Queen.movelist[i].empty())
+      return false;
+  }
+  for (int i=0;i<8;i++) {
+    if (!Black::Pawn.movelist[i].empty())
+      return false;
+  }
+  for (int i=0;i<2;i++) {
+    if (!Black::Bishop.movelist[i].empty())
+      return false;
+    if (!Black::Knight.movelist[i].empty())
+      return false;
+    if (!Black::Rook.movelist[i].empty())
+      return false;
+  }
+  return true;
 }
 
 void check_pin() {
@@ -117,7 +195,7 @@ void check_avoid_move() {
   }
   for (int i=0;i<Black::King.movelist.size();i++) {
     if (Black::King.movelist[i] == avoid_move)
-      Black::King.movelist[i].clear();
+      Black::King.movelist.erase(Black::King.movelist.begin() + i);
   }
 }
 
@@ -317,5 +395,8 @@ void kill(std::string piece) {
   }
   Sound.kill();
 }
-
+std::vector<std::vector<int>> blocks(8);
+bool turn = true;
+int num_queens = 1;
+std::string checker = "";
 } // namespace White

@@ -5,6 +5,10 @@ namespace White {
 
 class Queen_Piece : public Piece {
 private:
+  void pin(int i, std::string);
+  std::string get_pinned_piece(int i);
+  int num_pieces(int i);
+  bool king_in_path(int i);
 public:
   Queen_Piece() {
     row = {7};
@@ -15,11 +19,7 @@ public:
     movelist.resize(1);
     protecting_movelist.resize(1);
   };
-  void pin(int i, std::string);
-  std::string get_pinned_piece(int i);
-  int num_pieces(int i);
   void check_pin();
-  bool king_in_path(int i);
   std::vector<int> get_avoid_move(int i);
   std::vector<std::vector<int>> get_check_movelist(int i);
   void update_movelist();

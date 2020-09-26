@@ -1,10 +1,18 @@
 #include "../include/common.h"
 
+void Game_Board::check_end() {
+  if (checkmate)
+    Text.checkmate();
+  else if (stalemate)
+    Text.stalemate();
+}
+
 void Game_Board::pop() {
-  if (undo.color[Board.total_moves] == "W") {
+  if (undo.color[total_moves-1] == "W") {
     for (int i=0;i<8;i++) {
-      if (undo.piece == "P" + std::to_string(i)) {
-        White::Pawn.move(i, undo.moved_from[0], undo.moved_from[1]);
+      if (undo.piece[total_moves-1] == "P" + std::to_string(i)) {
+        std::cout << "asd\n";
+        White::Pawn.move(i, undo.moved_from[total_moves-1][0], undo.moved_from[total_moves-1][1]);
       }
     }
   }
@@ -30,6 +38,8 @@ void Game_Board::arrow(std::vector<int> start, std::vector<int> end) {
 }
 
 void Game_Board::play() {
+  if (checkmate || stalemate)
+    return;
   if (Black::turn)
     Black::play();
   if (White::turn)
