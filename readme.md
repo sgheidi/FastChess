@@ -1,5 +1,5 @@
 # ♛ FastChess
-(*IN PROGRESS*) A fully featured C++ Chess GUI and AI.
+(**IN PROGRESS**) A fully featured C++ Chess GUI and AI.
 
 ## Screenshots
 ![Alt text](assets/1r.jpg?raw=true "Screenshot 1")
