@@ -1,4 +1,4 @@
-#include "../include/common.h"
+#include "common.h"
 
 void Click_Queue::enqueue(int row_, int col_) {
   if (row.size() >= 2) {

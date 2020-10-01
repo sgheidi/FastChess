@@ -1,4 +1,4 @@
-#include "../include/common.h"
+#include "common.h"
 
 bool testing = true;
 struct undo_stack undo = {

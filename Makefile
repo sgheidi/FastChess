@@ -1,5 +1,5 @@
 # generic Makefile for building program from source
-# PCH: sudo g++ -Wall -fexceptions -g include/common.h
+# PCH: sudo g++ -Wall -fexceptions -g src/common.h
 
 SOURCE= src/main.cc src/board.cc src/common.cc src/pieces/black_.cc src/pieces/black/bishop.cc
 SOURCE+= src/pieces/black/knight.cc src/pieces/black/pawn.cc src/pieces/black/king.cc

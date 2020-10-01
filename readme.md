@@ -9,7 +9,6 @@
 ## Setup
 Use ```setup.sh``` to install necessary dependencies and ```run.sh``` to run the program.
 
-
-
-Threaded search (specify num. threads for AI search).
-<!-- ## The AI -->
+## Some features
+- Threaded AI search using OpenMP (NUM_THREADS can be specified through a command line switch)
+- Choose difficulty if playing against AI (see Command line switches)

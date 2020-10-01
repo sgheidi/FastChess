@@ -1,4 +1,4 @@
-#include "../../include/common.h"
+#include "../common.h"
 
 namespace White {
 
@@ -8,60 +8,56 @@ void play() {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
   }
-  // else if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
-  // blocks[Queue.row[1]][Queue.col[1]] == 1) {
-  //   std::string piece1 = get_piece(Queue.row[0], Queue.col[0]);
-  //   std::string piece2 = get_piece(Queue.row[1], Queue.col[1]);
-  //   if (piece1 == "K" && piece2 == "R1" && castle_condition_K()) {
-  //     castle_K();
-  //   }
-  //   // else if (piece1 == "K" && piece2 == "R0" && castle_condition_Q()) {
-  //   //   castle_Q();
-  //   // }
-  // }
+  if (Queue.row.size() >= 2) {
+    std::vector<int> kingpos = {King.row, King.col};
+    std::vector<int> k_rook = {Rook.row[1], Rook.col[1]};
+    std::vector<int> q_rook = {Rook.row[0], Rook.col[0]};
+    std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
+    std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
+    if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
+      castle_K();
+    }
+}
+
+void castle_K() {
+  std::cout << "Test?" << std::endl;
+}
+
+bool castle_criteria_K() {
+  return true;
+  // if (King.moved || Rook.moved[1])
+  //   return false;
+  // if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])
+  //   return false;
+  // if (Black::checker != "")
+  //   return false;
+  // if (in_movelist(7, 6) || in_movelist(7, 5))
+  //   return false;
+  // return true;
 }
 
 bool in_movelist(int row, int col) {
-  // std::vector<int> pos = {row, col};
-  // if in(Black::King.movelist, pos)
-  //   return true;
-  // for (int i=0;i<Black::num_queens;i++) {
-  //   if in(Black::Queen.movelist[i], pos)
-  //     return true;
-  // }
-  // for (int i=0;i<8;i++) {
-  //   if in(Black::Pawn.movelist[i], pos)
-  //     return true;
-  // }
-  // for (int i=0;i<2;i++) {
-  //   if in(Black::Bishop.movelist[i], pos)
-  //     return true;
-  //   if in(Black::Knight.movelist[i], pos)
-  //     return true;
-  //   if in(Black::Rook.movelist[i], pos)
-  //     return true;
-  // }
+  std::vector<int> pos = {row, col};
+  if (in(Black::King.movelist, pos))
+    return true;
+  for (int i=0;i<Black::num_queens;i++) {
+    if (in(Black::Queen.movelist[i], pos))
+      return true;
+  }
+  for (int i=0;i<8;i++) {
+    if (in(Black::Pawn.movelist[i], pos))
+      return true;
+  }
+  for (int i=0;i<2;i++) {
+    if (in(Black::Bishop.movelist[i], pos))
+      return true;
+    if (in(Black::Knight.movelist[i], pos))
+      return true;
+    if (in(Black::Rook.movelist[i], pos))
+      return true;
+  }
   return false;
 }
-
-// void castle_k():
-//   WhiteKing.Move(7, 6)
-//   WhiteRook.Move(1, 7, 5)
-//   self.valid_move(False, sound)
-//   White.castled = 1
-//   Board.moves["piece"].append("CK")
-//   Board.moves["killed"].append(False)
-
-// bool castle_condition_K():
-//   if (King.moved || Rook.moved[1])
-//     return false;
-//   if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])
-//     return false;
-//   if (Black::checker != "")
-//     return false;
-//   if (in_movelist(7, 6) || in_movelist(7, 5))
-//     return false;
-//   return true;
 
 void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);

@@ -1,4 +1,4 @@
-#include "../include/common.h"
+#include "common.h"
 
 void Game_Sound::check() {
   buffer.loadFromFile("assets/check.wav");
