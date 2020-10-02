@@ -31,26 +31,26 @@ void print_v2(std::vector<std::vector<int>> v);
 
 #include "board.h"
 #include "queue.h"
-#include "sound.h"
-#include "pieces/piece.h"
-#include "text.h"
+#include "media/sound.h"
+#include "core/piece.h"
+#include "media/text.h"
 
-#include "pieces/black/bishop.h"
-#include "pieces/black/knight.h"
-#include "pieces/black/pawn.h"
-#include "pieces/black/rook.h"
-#include "pieces/black/queen.h"
-#include "pieces/black/king.h"
+#include "core/black/bishop.h"
+#include "core/black/knight.h"
+#include "core/black/pawn.h"
+#include "core/black/rook.h"
+#include "core/black/queen.h"
+#include "core/black/king.h"
 
-#include "pieces/white/bishop.h"
-#include "pieces/white/knight.h"
-#include "pieces/white/pawn.h"
-#include "pieces/white/rook.h"
-#include "pieces/white/queen.h"
-#include "pieces/white/king.h"
+#include "core/white/bishop.h"
+#include "core/white/knight.h"
+#include "core/white/pawn.h"
+#include "core/white/rook.h"
+#include "core/white/queen.h"
+#include "core/white/king.h"
 
-#include "pieces/white_.h"
-#include "pieces/black_.h"
+#include "core/white_.h"
+#include "core/black_.h"
 
 extern sf::RenderWindow window;
 
