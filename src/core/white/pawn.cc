@@ -23,6 +23,14 @@ void Pawn_Piece::update_movelist() {
         movelist[i].push_back({row[i]-1, col[i]+1});
       hit_movelist[i].push_back({row[i]-1, col[i]+1});
     }
+    if (row[i] == 3) {
+      for (int k=0;k<8;k++) {
+        if (Black::en_passant[k]) {
+          if (abs(col[i] - Black::Pawn.col[k]) == 1)
+            movelist[i].push_back({2, Black::Pawn.col[k]});
+        }
+      }
+    }
   }
 }
 

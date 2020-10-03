@@ -16,6 +16,8 @@ struct undo_stack {
 };
 extern struct undo_stack undo;
 extern bool testing;
+std::string str(int n);
+void print(std::string s);
 std::vector<std::vector<int>>
 filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2);
 std::vector<std::vector<int>>

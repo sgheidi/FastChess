@@ -8,6 +8,76 @@ void play() {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
   }
+  if (Queue.row.size() >= 2) {
+    std::vector<int> kingpos = {King.row, King.col};
+    std::vector<int> k_rook = {Rook.row[1], Rook.col[1]};
+    std::vector<int> q_rook = {Rook.row[0], Rook.col[0]};
+    std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
+    std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
+    if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
+      castle_K();
+    else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q())
+      castle_Q();
+    }
+}
+
+void castle_K() {
+  King.move(0, 6);
+  Rook.move(1, 0, 5);
+  valid_move(false, "R1", 0, 5);
+}
+
+void castle_Q() {
+  King.move(0, 3);
+  Rook.move(0, 0, 4);
+  valid_move(false, "R0", 0, 4);
+}
+
+bool castle_criteria_Q() {
+  if (King.moved || Rook.moved[0])
+    return false;
+  if (White::blocks[0][3] || White::blocks[0][4] || blocks[0][3] || blocks[0][4])
+    return false;
+  if (White::checker.size() >= 1)
+    return false;
+  if (in_opp_movelist(0, 3) || in_opp_movelist(0, 4))
+    return false;
+  return true;
+}
+
+bool castle_criteria_K() {
+  if (King.moved || Rook.moved[1])
+    return false;
+  if (White::blocks[0][5] || White::blocks[0][6] || blocks[0][5] || blocks[0][6])
+    return false;
+  if (White::checker.size() >= 1)
+    return false;
+  if (in_opp_movelist(0, 5) || in_opp_movelist(0, 6))
+    return false;
+  return true;
+}
+
+bool in_opp_movelist(int row, int col) {
+  std::vector<int> pos = {row, col};
+  if (in(White::King.movelist, pos))
+    return true;
+  for (int i=0;i<White::num_queens;i++) {
+    if (in(White::Queen.movelist[i], pos))
+      return true;
+  }
+  for (int i=0;i<8;i++) {
+    if (in(White::Pawn.movelist[i], pos))
+      return true;
+  }
+  for (int i=0;i<2;i++) {
+    if (in(White::Bishop.movelist[i], pos))
+      return true;
+    if (in(White::Knight.movelist[i], pos))
+      return true;
+    if (in(White::Rook.movelist[i], pos))
+      return true;
+  }
+  return false;
 }
 
 void move_piece(std::string piece, int row, int col) {
@@ -15,12 +85,14 @@ void move_piece(std::string piece, int row, int col) {
   std::vector<int> pos = {row, col};
   bool moved = false;
   checker = "";
+  bool killed = false;
   if (piece == "K" && in(King.movelist, pos)) {
     King.move(row, col);
     moved = true;
   }
   else if (piece == "K" && !in(King.movelist, pos)) {
     Sound.error();
+    return;
   }
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + std::to_string(i) && in(Queen.movelist[i], pos)) {
@@ -29,18 +101,29 @@ void move_piece(std::string piece, int row, int col) {
     }
     else if (piece == "Q" + std::to_string(i) && !in(Queen.movelist[i], pos)) {
       Sound.error();
+      return;
     }
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
-      Pawn.move(i, row, col);
-      if (row == 7) {
-        promote(i);
+      if (Pawn.row[i] == 4) {
+        for (int k=0;k<8;k++) {
+          if (White::en_passant[k]) {
+            if (abs(Pawn.col[i] - White::Pawn.col[k]) == 1) {
+              check_kill(4, White::Pawn.col[k]);
+              killed = true;
+            }
+          }
+        }
       }
+      Pawn.move(i, row, col);
+      if (row == 7)
+        promote(i);
       moved = true;
     }
     else if (piece == "P" + std::to_string(i) && !in(Pawn.movelist[i], pos)) {
       Sound.error();
+      return;
     }
   }
   for (int i=0;i<2;i++) {
@@ -50,6 +133,7 @@ void move_piece(std::string piece, int row, int col) {
     }
     else if (piece == "B" + std::to_string(i) && !in(Bishop.movelist[i], pos)) {
       Sound.error();
+      return;
     }
     if (piece == "N" + std::to_string(i) && in(Knight.movelist[i], pos)) {
       Knight.move(i, row, col);
@@ -57,6 +141,7 @@ void move_piece(std::string piece, int row, int col) {
     }
     else if (piece == "N" + std::to_string(i) && !in(Knight.movelist[i], pos)) {
       Sound.error();
+      return;
     }
     if (piece == "R" + std::to_string(i) && in(Rook.movelist[i], pos)) {
       Rook.move(i, row, col);
@@ -64,22 +149,59 @@ void move_piece(std::string piece, int row, int col) {
     }
     else if (piece == "R" + std::to_string(i) && !in(Rook.movelist[i], pos)) {
       Sound.error();
+      return;
     }
   }
-  if (moved) {
+  if (moved)
+    valid_move(killed, piece, row, col);
+}
+
+void valid_move(bool killed, std::string piece, int row, int col) {
+  if (!killed)
     Sound.move();
-    check_kill(row, col);
-    Board.update_moves();
-    if (check_opp_checked()) {
-      Sound.check();
-      update_opp_movelists();
-    }
-    check_pin();
-    if (!testing) {
-      turn = false;
-      White::turn = true;
-    }
+  check_kill(row, col);
+  Board.update_moves();
+  check_pin();
+  reset_opp_enpassant();
+  if (check_opp_checked()) {
+    Sound.check();
+    update_opp_movelists();
+    if (opp_no_moves())
+      Board.checkmate = true;
   }
+  if (opp_no_moves())
+    Board.stalemate = true;
+  if (!testing) {
+    turn = false;
+    White::turn = true;
+  }
+}
+
+bool opp_no_moves() {
+  if (!White::King.movelist.empty())
+    return false;
+  for (int i=0;i<White::num_queens;i++) {
+    if (!White::Queen.movelist[i].empty())
+      return false;
+  }
+  for (int i=0;i<8;i++) {
+    if (!White::Pawn.movelist[i].empty())
+      return false;
+  }
+  for (int i=0;i<2;i++) {
+    if (!White::Bishop.movelist[i].empty())
+      return false;
+    if (!White::Knight.movelist[i].empty())
+      return false;
+    if (!White::Rook.movelist[i].empty())
+      return false;
+  }
+  return true;
+}
+
+void reset_opp_enpassant() {
+  for (int i=0;i<8;i++)
+    White::en_passant[i] = 0;
 }
 
 void check_pin() {
@@ -233,6 +355,7 @@ void show() {
 
 void init() {
   for (int i=0;i<8;i++) {
+    en_passant.push_back(0);
     blocks.push_back(std::vector<int>());
     for (int k=0;k<8;k++) {
       if (i == 0 || i == 1)
@@ -305,7 +428,9 @@ void kill(std::string piece) {
   }
   Sound.kill();
 }
+
 std::vector<std::vector<int>> blocks(8);
+std::vector<bool> en_passant(8);
 bool turn = true;
 int num_queens = 1;
 std::string checker = "";

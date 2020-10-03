@@ -12,11 +12,11 @@ public:
   bool alive;
   King_Piece() {
     moved = 0;
+    alive = true;
     row = 7;
-    col = 3;
+    col = 4;
     y = row*UNIT;
     x = col*UNIT;
-    alive = true;
   };
   void filter_king_pos();
   void filter_check_pos();

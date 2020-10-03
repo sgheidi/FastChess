@@ -12,7 +12,16 @@ extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 extern int num_queens;
 extern std::string checker;
+extern std::vector<bool> en_passant;
 
+bool opp_no_moves();
+void valid_move(bool killed, std::string piece, int row, int col);
+bool castle_criteria_K();
+void castle_K();
+bool castle_criteria_Q();
+void castle_Q();
+bool in_opp_movelist(int row, int col);
+void reset_opp_enpassant();
 void check_pin();
 void check_avoid_move();
 void update_opp_movelists();

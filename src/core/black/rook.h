@@ -10,7 +10,9 @@ private:
   int num_pieces(int i);
   bool king_in_path(int i);
 public:
+  std::vector<bool> moved;
   Rook_Piece() {
+    moved = {0, 0};
     alive = {1, 1};
     movelist.resize(2);
     row = {0, 0};

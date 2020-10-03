@@ -24,12 +24,19 @@ void Pawn_Piece::update_movelist() {
         hit_movelist[i].push_back({row[i]+1, col[i]-1});
     }
     if (row[i] == 4) {
-
+      for (int k=0;k<8;k++) {
+        if (White::en_passant[k]) {
+          if (abs(col[i] - White::Pawn.col[k]) == 1)
+            movelist[i].push_back({5, White::Pawn.col[k]});
+        }
+      }
     }
   }
 }
 
 void Pawn_Piece::move(int i, int row_, int col_) {
+  if (abs(row_-row[i]) == 2)
+    en_passant[i] = 1;
   blocks[row[i]][col[i]] = 0;
   blocks[row_][col_] = 1;
   row[i] = row_;

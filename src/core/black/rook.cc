@@ -266,6 +266,7 @@ void Rook_Piece::update_movelist() {
 }
 
 void Rook_Piece::move(int i, int row_, int col_) {
+  moved[i] = 1;
   blocks[row[i]][col[i]] = 0;
   blocks[row_][col_] = 1;
   row[i] = row_;

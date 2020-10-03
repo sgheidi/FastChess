@@ -51,6 +51,7 @@ void King_Piece::filter_king_pos() {
 }
 
 void King_Piece::move(int row_, int col_) {
+  moved = 1;
   blocks[row][col] = 0;
   blocks[row_][col_] = 1;
   row = row_;

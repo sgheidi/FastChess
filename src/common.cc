@@ -7,6 +7,14 @@ struct undo_stack undo = {
   {""}
 };
 
+std::string str(int n) {
+  return std::to_string(n);
+}
+
+void print(std::string s) {
+  std::cout << s << std::endl;
+}
+
 // This function removes any elements in v1 that are in v2
 std::vector<std::vector<int>>
 filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {

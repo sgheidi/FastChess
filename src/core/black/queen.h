@@ -12,7 +12,7 @@ private:
 public:
   Queen_Piece() {
     row = {0};
-    col = {4};
+    col = {3};
     y = {row[0]*UNIT};
     x = {col[0]*UNIT};
     alive = {true};

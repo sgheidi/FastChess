@@ -6,13 +6,15 @@ namespace Black {
 class King_Piece : public Piece {
 private:
 public:
+  bool moved;
   std::vector<std::vector<int>> movelist, protecting_movelist;
   int x, y, row, col;
   bool alive;
   King_Piece() {
+    moved = 0;
     alive = true;
     row = 0;
-    col = 3;
+    col = 4;
     y = row*UNIT;
     x = col*UNIT;
   };

@@ -11,11 +11,15 @@ extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 extern int num_queens;
-extern std::string checker;
+extern std::vector<std::string> checker;
+extern std::vector<bool> en_passant;
 
-void valid_move(std::string piece, int row, int col);
+void reset_opp_enpassant();
+void valid_move(bool killed, std::string piece, int row, int col);
 bool castle_criteria_K();
 void castle_K();
+bool castle_criteria_Q();
+void castle_Q();
 bool in_opp_movelist(int row, int col);
 bool opp_no_moves();
 void check_avoid_move();
