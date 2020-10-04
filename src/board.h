@@ -11,11 +11,10 @@ public:
   float pieces_scale;
   bool checkmate, stalemate;
   Game_Board() {
+    selected_row = selected_col = -1;
     checkmate = false;
     stalemate = false;
     total_moves = 0;
-    selected_row = -1;
-    selected_col = -1;
     pieces_paddingx = 9;
     pieces_paddingy = 5;
     pieces_scale = 1.63;
@@ -23,7 +22,6 @@ public:
   void check_end();
   void pop();
   void update_moves();
-  void arrow(std::vector<int> start, std::vector<int> end);
   void play();
   void draw_board();
   std::vector<int> get_coords(int x, int y);

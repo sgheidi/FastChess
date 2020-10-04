@@ -38,7 +38,7 @@ bool castle_criteria_Q() {
     return false;
   if (Black::blocks[7][2] || Black::blocks[7][3] || blocks[7][2] || blocks[7][3])
     return false;
-  if (Black::checker != "")
+  if (Black::checker.size() >= 1)
     return false;
   if (in_opp_movelist(7, 2) || in_opp_movelist(7, 3))
     return false;
@@ -50,7 +50,7 @@ bool castle_criteria_K() {
     return false;
   if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])
     return false;
-  if (Black::checker != "")
+  if (Black::checker.size() >= 1)
     return false;
   if (in_opp_movelist(7, 6) || in_opp_movelist(7, 5))
     return false;
@@ -168,7 +168,6 @@ void valid_move(bool killed, std::string piece, int row, int col) {
     Sound.move();
   undo.piece.push_back(piece);
   undo.color.push_back("W");
-  // Board.arrow({undo.moved_from[Board.total_moves-1][0], undo.moved_from[Board.total_moves-1][1]}, {row, col});
   check_kill(row, col);
   Board.update_moves();
   check_pin();
@@ -272,7 +271,7 @@ void update_opp_movelists() {
     Black::Pawn.movelist[i] = filter(Black::Pawn.movelist[i], check_movelist);
   }
   // the rare case of double check: only the oppposite king can move! (this is because
-  // no 1 piece can block both checks)
+  // no 1 piece can block both checks!)
   if (checker.size() > 1) {
     for (int i=0;i<8;i++) {
       Black::Pawn.movelist[i].clear();

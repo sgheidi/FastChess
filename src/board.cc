@@ -33,10 +33,6 @@ void Game_Board::update_moves() {
   Black::King.update_movelist();
 }
 
-void Game_Board::arrow(std::vector<int> start, std::vector<int> end) {
-
-}
-
 void Game_Board::play() {
   if (checkmate || stalemate)
     return;

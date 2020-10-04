@@ -10,7 +10,7 @@ void Pawn_Piece::update_movelist() {
     hit_movelist[i].clear();
     if (row[i] > 0 && Black::blocks[row[i]-1][col[i]] == 0 && blocks[row[i]-1][col[i]] == 0) {
       movelist[i].push_back({row[i]-1, col[i]});
-      if (row[i] == 6)
+      if (row[i] == 6 && Black::blocks[row[i]-2][col[i]] == 0 && blocks[row[i]-2][col[i]] == 0)
         movelist[i].push_back({row[i]-2, col[i]});
     }
     if (row[i] > 0 && col[i] > 0) {
