@@ -7,23 +7,25 @@ void Game_Board::check_end() {
     Text.stalemate();
 }
 
-// handle enpassant too!
-// also castle
+// TODO corner case: handle enpassant.
 void Game_Board::pop() {
   int last = total_moves-1;
   assert(last >= 0);
-  bool ck = false;
-  bool cq = false;
+  bool castled = false;
   if (undo.color[last] == "W") {
     if (undo.piece[last] == "CK") {
-      ck = true;
+      castled = true;
       White::King.move(7, 4);
       White::Rook.move(1, 7, 7);
+      White::King.moved = 0;
+      White::Rook.moved[1] = 0;
     }
     else if (undo.piece[last] == "CQ") {
-      cq = true;
+      castled = true;
       White::King.move(7, 4);
       White::Rook.move(0, 7, 0);
+      White::King.moved = 0;
+      White::Rook.moved[0] = 0;
     }
     else if (undo.piece[last] == "K")
       White::King.move(undo.moved_from[last][0], undo.moved_from[last][1]);
@@ -51,6 +53,20 @@ void Game_Board::pop() {
     White::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
   else if (undo.color[last] == "B") {
+    if (undo.piece[last] == "CK") {
+      castled = true;
+      Black::King.move(0, 4);
+      Black::Rook.move(1, 0, 7);
+      Black::King.moved = 0;
+      Black::Rook.moved[1] = 0;
+    }
+    else if (undo.piece[last] == "CQ") {
+      castled = true;
+      Black::King.move(0, 4);
+      Black::Rook.move(0, 0, 0);
+      Black::King.moved = 0;
+      Black::Rook.moved[0] = 0;
+    }
     if (undo.piece[last] == "K")
       Black::King.move(undo.moved_from[last][0], undo.moved_from[last][1]);
     for (int i=0;i<Black::num_queens;i++) {
@@ -85,9 +101,7 @@ void Game_Board::pop() {
   undo.moved_from.resize(total_moves);
   undo.killed_piece.resize(total_moves);
   undo.killed_pos.resize(total_moves);
-  if (ck)
-    undo.color.resize(total_moves-1);
-  else if (cq)
+  if (castled)
     undo.color.resize(total_moves-1);
 }
 

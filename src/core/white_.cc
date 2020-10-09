@@ -211,7 +211,8 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   check_kill(is_undo, row, col);
   Board.update_moves();
   check_pin();
-  reset_opp_enpassant();
+  if (!is_undo)
+    reset_opp_enpassant();
   if (check_opp_checked() && !is_undo) {
     Sound.check();
     update_opp_movelists();

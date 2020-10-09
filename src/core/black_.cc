@@ -68,15 +68,19 @@ void play() {
 }
 
 void castle_K(bool is_undo) {
+  undo.moved_from.push_back({King.row, King.col});
+  undo.moved_from.push_back({Rook.row[1], Rook.col[1]});
   King.move(0, 6);
   Rook.move(1, 0, 5);
-  valid_move(is_undo, false, "R1", 0, 5);
+  valid_move(is_undo, false, "CK", 0, 5);
 }
 
 void castle_Q(bool is_undo) {
+  undo.moved_from.push_back({King.row, King.col});
+  undo.moved_from.push_back({Rook.row[0], Rook.col[0]});
   King.move(0, 3);
   Rook.move(0, 0, 4);
-  valid_move(is_undo, false, "R0", 0, 4);
+  valid_move(is_undo, false, "CQ", 0, 4);
 }
 
 bool castle_criteria_Q() {
@@ -219,7 +223,8 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   check_kill(is_undo, row, col);
   Board.update_moves();
   check_pin();
-  reset_opp_enpassant();
+  if (!is_undo)
+    reset_opp_enpassant();
   if (check_opp_checked() && !is_undo) {
     Sound.check();
     update_opp_movelists();

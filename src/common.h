@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include <algorithm>
 #include <assert.h>
 #include <SFML/Graphics.hpp>
