@@ -3,8 +3,11 @@
 bool testing = true;
 struct undo_stack undo = {
   {},
-  {""},
-  {""}
+  {},
+  {},
+  {},
+  {},
+  {}
 };
 
 std::string str(int n) {

@@ -23,6 +23,7 @@ public:
   std::vector<int> get_avoid_move(int i);
   std::vector<std::vector<int>> get_check_movelist(int i);
   void move(int i, int row_, int col_);
+  void pure_move(int i, int row_, int col_);
   void update_movelist();
   void show();
 };

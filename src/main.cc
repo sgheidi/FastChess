@@ -4,19 +4,20 @@ int main() {
   Black::init();
   White::init();
   Board.update_moves();
-  window.setPosition(sf::Vector2i(250, 120));
+  window.setPosition(sf::Vector2i(700, 80));
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
       if ((event.type == sf::Event::Closed) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
       || (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)))
         window.close();
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::B))
-        Black::print_blocks();
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-        White::print_blocks();
-      else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-        Board.pop();
+      else if (event.type == sf::Event::KeyPressed) {
+        switch (event.key.code) {
+          case sf::Keyboard::B: Black::print_blocks(); break;
+          case sf::Keyboard::W: White::print_blocks(); break;
+          case sf::Keyboard::Z: Board.pop(); break;
+        }
+      }
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {

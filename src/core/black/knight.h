@@ -16,6 +16,7 @@ public:
     x = {col[0]*UNIT, col[1]*UNIT};
   };
   void move(int i, int row_, int col_);
+  void pure_move(int i, int row_, int col_);
   void update_movelist();
   void show();
 };

@@ -17,6 +17,7 @@ public:
     movelist.resize(8);
     hit_movelist.resize(8);
   };
+  void pure_move(int i, int row_, int col_);
   void move(int i, int row_, int col_);
   void print_movelist();
   void update_movelist();

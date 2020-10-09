@@ -7,15 +7,88 @@ void Game_Board::check_end() {
     Text.stalemate();
 }
 
+// handle enpassant too!
+// also castle
 void Game_Board::pop() {
-  if (undo.color[total_moves-1] == "W") {
+  int last = total_moves-1;
+  assert(last >= 0);
+  bool ck = false;
+  bool cq = false;
+  if (undo.color[last] == "W") {
+    if (undo.piece[last] == "CK") {
+      ck = true;
+      White::King.move(7, 4);
+      White::Rook.move(1, 7, 7);
+    }
+    else if (undo.piece[last] == "CQ") {
+      cq = true;
+      White::King.move(7, 4);
+      White::Rook.move(0, 7, 0);
+    }
+    else if (undo.piece[last] == "K")
+      White::King.move(undo.moved_from[last][0], undo.moved_from[last][1]);
+    for (int i=0;i<White::num_queens;i++) {
+      if (undo.piece[last] == "Q" + std::to_string(i))
+        White::Queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+    }
     for (int i=0;i<8;i++) {
-      if (undo.piece[total_moves-1] == "P" + std::to_string(i)) {
-        std::cout << "asd\n";
-        White::Pawn.move(i, undo.moved_from[total_moves-1][0], undo.moved_from[total_moves-1][1]);
+      if (undo.piece[last] == "P" + std::to_string(i)) {
+        if (undo.moved_from[last][0] == 1)
+          White::handle_undo_promotion(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        White::Pawn.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       }
     }
+    for (int i=0;i<2;i++) {
+      if (undo.piece[last] == "B" + std::to_string(i))
+        White::Bishop.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+      else if (undo.piece[last] == "N" + std::to_string(i))
+        White::Knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+      else if (undo.piece[last] == "R" + std::to_string(i))
+        White::Rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+    }
+    if (undo.killed[last])
+      Black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
+    White::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
+  else if (undo.color[last] == "B") {
+    if (undo.piece[last] == "K")
+      Black::King.move(undo.moved_from[last][0], undo.moved_from[last][1]);
+    for (int i=0;i<Black::num_queens;i++) {
+      if (undo.piece[last] == "Q" + std::to_string(i))
+        Black::Queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+    }
+    for (int i=0;i<8;i++) {
+      if (undo.piece[last] == "P" + std::to_string(i)) {
+        if (undo.moved_from[last][0] == 6)
+          Black::handle_undo_promotion(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        Black::Pawn.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+      }
+    }
+    for (int i=0;i<2;i++) {
+      if (undo.piece[last] == "B" + std::to_string(i))
+        Black::Bishop.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+      else if (undo.piece[last] == "N" + std::to_string(i))
+        Black::Knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+      else if (undo.piece[last] == "R" + std::to_string(i))
+        Black::Rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+    }
+    if (undo.killed[last])
+      White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
+    Black::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
+  }
+  checkmate = false;
+  stalemate = false;
+  total_moves --;
+  undo.color.resize(total_moves);
+  undo.killed.resize(total_moves);
+  undo.piece.resize(total_moves);
+  undo.moved_from.resize(total_moves);
+  undo.killed_piece.resize(total_moves);
+  undo.killed_pos.resize(total_moves);
+  if (ck)
+    undo.color.resize(total_moves-1);
+  else if (cq)
+    undo.color.resize(total_moves-1);
 }
 
 void Game_Board::update_moves() {

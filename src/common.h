@@ -13,6 +13,9 @@ struct undo_stack {
   std::vector<std::vector<int>> moved_from;
   std::vector<std::string> piece;
   std::vector<std::string> color;
+  std::vector<bool> killed;
+  std::vector<std::string> killed_piece;
+  std::vector<std::vector<int>> killed_pos;
 };
 extern struct undo_stack undo;
 extern bool testing;

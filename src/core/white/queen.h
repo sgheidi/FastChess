@@ -19,6 +19,7 @@ public:
     movelist.resize(1);
     protecting_movelist.resize(1);
   };
+  void pure_move(int i, int row_, int col_);
   void check_pin();
   std::vector<int> get_avoid_move(int i);
   std::vector<std::vector<int>> get_check_movelist(int i);

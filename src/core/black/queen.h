@@ -24,6 +24,7 @@ public:
   std::vector<std::vector<int>> get_check_movelist(int i);
   void update_movelist();
   void move(int i, int row_, int col_);
+  void pure_move(int i, int row_, int col_);
   void show();
 };
 

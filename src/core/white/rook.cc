@@ -2,6 +2,14 @@
 
 namespace White {
 
+void Rook_Piece::pure_move(int i, int row_, int col_) {
+  blocks[row_][col_] = 1;
+  row[i] = row_;
+  col[i] = col_;
+  x[i] = col[i]*UNIT;
+  y[i] = row[i]*UNIT;
+}
+
 void Rook_Piece::pin(int k, std::string piece) {
   std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
   for (int i=0;i<Black::num_queens;i++) {

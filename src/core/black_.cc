@@ -2,6 +2,52 @@
 
 namespace Black {
 
+void handle_undo_promotion(int i, int row, int col) {
+  pop_last_queen();
+  revive("P" + str(i), row, col);
+}
+
+void pop_last_queen() {
+  num_queens --;
+  blocks[Queen.row[num_queens]][Queen.col[num_queens]] = 0;
+  Queen.row.resize(num_queens);
+  Queen.col.resize(num_queens);
+  Queen.x.resize(num_queens);
+  Queen.y.resize(num_queens);
+  Queen.alive.resize(num_queens);
+  Queen.movelist.resize(num_queens);
+  Queen.protecting_movelist.resize(num_queens);
+}
+
+void revive(std::string piece, int row, int col) {
+  for (int i=0;i<num_queens;i++) {
+    if (piece == "Q" + str(i)) {
+      Queen.pure_move(i, row, col);
+      Queen.alive[i] = 1;
+    }
+  }
+  for (int i=0;i<8;i++) {
+    if (piece == "P" + str(i)) {
+      Pawn.pure_move(i, row, col);
+      Pawn.alive[i] = 1;
+    }
+  }
+  for (int i=0;i<2;i++) {
+    if (piece == "B" + str(i)) {
+      Bishop.pure_move(i, row, col);
+      Bishop.alive[i] = 1;
+    }
+    if (piece == "N" + str(i)) {
+      Knight.pure_move(i, row, col);
+      Knight.alive[i] = 1;
+    }
+    if (piece == "R" + str(i)) {
+      Rook.pure_move(i, row, col);
+      Rook.alive[i] = 1;
+    }
+  }
+}
+
 void play() {
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
   blocks[Queue.row[1]][Queue.col[1]] == 0) {
@@ -15,22 +61,22 @@ void play() {
     std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
     std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
     if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
-      castle_K();
+      castle_K(false);
     else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q())
-      castle_Q();
+      castle_Q(false);
     }
 }
 
-void castle_K() {
+void castle_K(bool is_undo) {
   King.move(0, 6);
   Rook.move(1, 0, 5);
-  valid_move(false, "R1", 0, 5);
+  valid_move(is_undo, false, "R1", 0, 5);
 }
 
-void castle_Q() {
+void castle_Q(bool is_undo) {
   King.move(0, 3);
   Rook.move(0, 0, 4);
-  valid_move(false, "R0", 0, 4);
+  valid_move(is_undo, false, "R0", 0, 4);
 }
 
 bool castle_criteria_Q() {
@@ -97,11 +143,11 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + std::to_string(i) && in(Queen.movelist[i], pos)) {
+      undo.moved_from.push_back({Queen.row[i], Queen.col[i]});
       Queen.move(i, row, col);
       moved = true;
     }
     else if (piece == "Q" + std::to_string(i) && !in(Queen.movelist[i], pos)) {
-      undo.moved_from.push_back({Queen.row[i], Queen.col[i]});
       Sound.error();
       return;
     }
@@ -113,7 +159,7 @@ void move_piece(std::string piece, int row, int col) {
         for (int k=0;k<8;k++) {
           if (White::en_passant[k]) {
             if (abs(Pawn.col[i] - White::Pawn.col[k]) == 1) {
-              check_kill(4, White::Pawn.col[k]);
+              check_kill(false, 4, White::Pawn.col[k]);
               killed = true;
             }
           }
@@ -121,7 +167,7 @@ void move_piece(std::string piece, int row, int col) {
       }
       Pawn.move(i, row, col);
       if (row == 7)
-        promote(i);
+        promote(i, row, col);
       moved = true;
     }
     else if (piece == "P" + std::to_string(i) && !in(Pawn.movelist[i], pos)) {
@@ -159,26 +205,28 @@ void move_piece(std::string piece, int row, int col) {
     }
   }
   if (moved)
-    valid_move(killed, piece, row, col);
+    valid_move(false, killed, piece, row, col);
 }
 
-void valid_move(bool killed, std::string piece, int row, int col) {
-  Board.total_moves ++;
-  if (!killed)
+void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) {
+  if (!killed && !is_undo)
     Sound.move();
-  undo.piece.push_back(piece);
-  undo.color.push_back("W");
-  check_kill(row, col);
+  if (!is_undo) {
+    Board.total_moves ++;
+    undo.piece.push_back(piece);
+    undo.color.push_back("B");
+  }
+  check_kill(is_undo, row, col);
   Board.update_moves();
   check_pin();
   reset_opp_enpassant();
-  if (check_opp_checked()) {
+  if (check_opp_checked() && !is_undo) {
     Sound.check();
     update_opp_movelists();
     if (opp_no_moves())
       Board.checkmate = true;
   }
-  if (opp_no_moves())
+  if (opp_no_moves() && !is_undo)
     Board.stalemate = true;
   if (!testing) {
     turn = false;
@@ -318,10 +366,10 @@ bool check_opp_checked() {
   return checked;
 }
 
-void promote(int i) {
+void promote(int i, int row_, int col_) {
   int row = Pawn.row[i];
   int col = Pawn.col[i];
-  kill("P" + std::to_string(i));
+  kill(false, "P" + std::to_string(i), row, col);
   num_queens ++;
   Queen.row.push_back(row);
   Queen.col.push_back(col);
@@ -330,17 +378,26 @@ void promote(int i) {
   Queen.alive.push_back(1);
   Queen.movelist.resize(num_queens);
   Queen.protecting_movelist.resize(num_queens);
+  blocks[row_][col_] = 1;
 }
 
-void check_kill(int row, int col) {
-  if (White::blocks[row][col] == 1) {
-    White::blocks[row][col] = 0;
+void check_kill(bool is_undo, int row, int col) {
+  if (White::blocks[row][col] == 1 && !is_undo) {
     std::string piece = White::get_piece(row, col);
-    White::kill(piece);
+    White::kill(is_undo, piece, row, col);
+    undo.killed.push_back(1);
+    undo.killed_piece.push_back(piece);
+    undo.killed_pos.push_back({row, col});
+  }
+  else if (White::blocks[row][col] == 0 && !is_undo) {
+    undo.killed.push_back(0);
+    undo.killed_piece.push_back("");
+    undo.killed_pos.push_back({-1, -1});
   }
 }
 
 std::string get_piece(int row, int col) {
+  assert(row >= 0 && row < 8 && col >= 0 && col < 8);
   if (King.row == row && King.col == col)
     return "K";
   for (int i=0;i<num_queens;i++) {
@@ -391,7 +448,8 @@ void init() {
   }
 }
 
-void kill(std::string piece) {
+void kill(bool is_undo, std::string piece, int row, int col) {
+  blocks[row][col] = 0;
   if (piece == "K") {
     King.row = -1;
     King.col = -1;
@@ -451,7 +509,8 @@ void kill(std::string piece) {
       Rook.protecting_movelist[i].clear();
     }
   }
-  Sound.kill();
+  if (!is_undo)
+    Sound.kill();
 }
 
 std::vector<std::vector<int>> blocks(8);

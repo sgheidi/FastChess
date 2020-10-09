@@ -2,6 +2,14 @@
 
 namespace Black {
 
+void Knight_Piece::pure_move(int i, int row_, int col_) {
+  blocks[row_][col_] = 1;
+  row[i] = row_;
+  col[i] = col_;
+  x[i] = col[i]*UNIT;
+  y[i] = row[i]*UNIT;
+}
+
 void Knight_Piece::update_movelist() {
   for (int i=0;i<2;i++) {
     if (!alive[i])
