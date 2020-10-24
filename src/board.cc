@@ -10,6 +10,8 @@ void Game_Board::check_end() {
 // TODO corner case: handle enpassant.
 void Game_Board::pop() {
   int last = total_moves-1;
+  if (last < 0)
+    return
   assert(last >= 0);
   bool castled = false;
   if (undo.color[last] == "W") {

@@ -1,6 +1,13 @@
 #include "../common.h"
 
 namespace Black {
+std::vector<std::vector<int>> blocks(8);
+std::vector<bool> en_passant(8);
+bool turn = false;
+int num_queens = 1;
+std::vector<std::string> checker = {};
+bool is_AI = true;
+int depth = 2;
 
 void handle_undo_promotion(int i, int row, int col) {
   pop_last_queen();
@@ -49,6 +56,8 @@ void revive(std::string piece, int row, int col) {
 }
 
 void play() {
+  if (is_AI)
+    return;
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
   blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
@@ -213,7 +222,7 @@ void move_piece(std::string piece, int row, int col) {
 }
 
 void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) {
-  if (!killed && !is_undo)
+  if (!killed && !is_undo && !Board.freeze)
     Sound.move();
   if (!is_undo) {
     Board.total_moves ++;
@@ -226,7 +235,8 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   if (!is_undo)
     reset_opp_enpassant();
   if (check_opp_checked() && !is_undo) {
-    Sound.check();
+    if (!Board.freeze)
+      Sound.check();
     update_opp_movelists();
     if (opp_no_moves())
       Board.checkmate = true;
@@ -514,13 +524,8 @@ void kill(bool is_undo, std::string piece, int row, int col) {
       Rook.protecting_movelist[i].clear();
     }
   }
-  if (!is_undo)
+  if (!is_undo && !Board.freeze)
     Sound.kill();
 }
 
-std::vector<std::vector<int>> blocks(8);
-std::vector<bool> en_passant(8);
-bool turn = true;
-int num_queens = 1;
-std::vector<std::string> checker = {};
 } // namespace Black

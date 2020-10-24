@@ -10,6 +10,7 @@ public:
   int pieces_paddingx, pieces_paddingy;
   float pieces_scale;
   bool checkmate, stalemate;
+  bool freeze;
   Game_Board() {
     selected_row = selected_col = -1;
     checkmate = false;
@@ -18,7 +19,10 @@ public:
     pieces_paddingx = 9;
     pieces_paddingy = 5;
     pieces_scale = 1.63;
+    freeze = false;
   };
+  void unfreeze() {freeze = false;};
+  void set_freeze() {freeze = true;};
   void check_end();
   void pop();
   void update_moves();

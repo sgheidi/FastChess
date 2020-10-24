@@ -201,7 +201,7 @@ void move_piece(std::string piece, int row, int col) {
 }
 
 void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) {
-  if (!killed && !is_undo)
+  if (!killed && !is_undo && !Board.freeze)
     Sound.move();
   if (!is_undo) {
     Board.total_moves ++;
@@ -214,7 +214,8 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   if (!is_undo)
     reset_opp_enpassant();
   if (check_opp_checked() && !is_undo) {
-    Sound.check();
+    if (!Board.freeze)
+      Sound.check();
     update_opp_movelists();
     if (opp_no_moves())
       Board.checkmate = true;
@@ -514,7 +515,7 @@ void kill(bool is_undo, std::string piece, int row, int col) {
       Rook.protecting_movelist[i].clear();
     }
   }
-  if (!is_undo)
+  if (!is_undo && !Board.freeze)
     Sound.kill();
 }
 

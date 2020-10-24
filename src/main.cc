@@ -36,6 +36,9 @@ int main() {
     Black::show();
     Board.check_end();
     window.display();
+    if (Black::is_AI && Black::turn)
+      AI::gen_move();
+    window.display();
   }
   return 0;
 }

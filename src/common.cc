@@ -1,6 +1,6 @@
 #include "common.h"
 
-bool testing = true;
+bool testing = false;
 struct undo_stack undo = {
   {},
   {},
@@ -9,6 +9,14 @@ struct undo_stack undo = {
   {},
   {}
 };
+
+void print_map(std::map<std::string, std::vector<std::vector<int>>> map) {
+  std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
+  for (itr=map.begin();itr!=map.end();itr++) {
+    std::cout << itr->first << std::endl;
+    print_v2(itr->second);
+  }
+}
 
 std::string str(int n) {
   return std::to_string(n);

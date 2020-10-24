@@ -21,6 +21,7 @@ struct undo_stack {
 extern struct undo_stack undo;
 extern bool testing;
 std::string str(int n);
+void print_map(std::map<std::string, std::vector<std::vector<int>>> map);
 void print(std::string s);
 std::vector<std::vector<int>>
 filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2);
@@ -57,6 +58,9 @@ void print_v2(std::vector<std::vector<int>> v);
 
 #include "core/white_.h"
 #include "core/black_.h"
+
+#include "ai/helper.h"
+#include "ai/black.h"
 
 extern sf::RenderWindow window;
 

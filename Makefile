@@ -6,7 +6,7 @@ SOURCE+= src/core/black/knight.cc src/core/black/pawn.cc src/core/black/king.cc
 SOURCE+= src/core/black/queen.cc src/core/black/rook.cc src/core/white_.cc
 SOURCE+= src/core/white/bishop.cc src/core/white/knight.cc src/core/white/pawn.cc
 SOURCE+= src/core/white/king.cc src/core/white/queen.cc src/core/white/rook.cc src/queue.cc
-SOURCE+= src/media/sound.cc src/media/text.cc
+SOURCE+= src/media/sound.cc src/media/text.cc src/ai/helper.cc src/ai/black.cc
 
 CC= g++
 
