@@ -1,6 +1,6 @@
 #include "../common.h"
 
-namespace AI {
+namespace Black { namespace AI {
 
 void gen_move() {
   print("Generating move...");
@@ -14,7 +14,10 @@ void gen_move() {
     std::vector<std::vector<int>> value = itr->second;
     for (int i=0;i<value.size();i++) {
       Black::move_piece(piece, value[i][0], value[i][1]);
-      score = minimax(2, -10000, 10000, "W");
+      if (verbose) print("******************OUTER******************");
+      if (verbose) std::cout << "****************** "<< piece << " " << value[i][0] << " " << value[i][1]
+      << "******************" << std::endl;
+      score = minimax(Black::depth, -10000, 10000, "W");
       Board.pop();
       if (score >= std::stoi(best_move["score"])) {
         best_move["score"] = str(score);
@@ -24,6 +27,7 @@ void gen_move() {
     }
   }
   Board.unfreeze();
+  Black::reset_opp_enpassant();
   Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
   if (!testing) {
     Black::turn = false;
@@ -46,6 +50,8 @@ int minimax(int n, int alpha, int beta, std::string player) {
       std::vector<std::vector<int>> value = itr->second;
       for (int i=0;i<value.size();i++) {
         Black::move_piece(piece, value[i][0], value[i][1]);
+        if (verbose) print("INNER BLACK");
+        if (verbose) std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         best_move = std::max(best_move, minimax(n-1, alpha, beta, "W"));
         Board.pop();
         alpha = std::max(alpha, best_move);
@@ -62,6 +68,8 @@ int minimax(int n, int alpha, int beta, std::string player) {
       std::vector<std::vector<int>> value = itr->second;
       for (int i=0;i<value.size();i++) {
         White::move_piece(piece, value[i][0], value[i][1]);
+        if (verbose) print("INNER WHITE");
+        if (verbose) std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         best_move = std::min(best_move, minimax(n-1, alpha, beta, "B"));
         Board.pop();
         beta = std::min(beta, best_move);
@@ -74,3 +82,4 @@ int minimax(int n, int alpha, int beta, std::string player) {
 }
 
 } // namespace AI
+} // namespace Black

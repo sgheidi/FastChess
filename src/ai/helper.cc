@@ -1,6 +1,10 @@
 #include "../common.h"
 
-namespace AI {
+namespace Black { namespace AI {
+std::map<std::string, std::vector<std::vector<int>>>
+shuffle(std::map<std::string, std::vector<std::vector<int>>>) {
+
+}
 
 int evaluate_pos() {
   int score = 0;
@@ -90,3 +94,4 @@ std::map<std::string, std::vector<std::vector<int>>> get_black_moves() {
 }
 
 } // namespace AI
+} // namespace Black

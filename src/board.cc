@@ -7,9 +7,10 @@ void Game_Board::check_end() {
     Text.stalemate();
 }
 
-// TODO corner case: handle enpassant.
 void Game_Board::pop() {
   int last = total_moves-1;
+  if (verbose) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
+  << undo.moved_from[last][1] << std::endl;
   if (last < 0)
     return
   assert(last >= 0);
@@ -50,7 +51,7 @@ void Game_Board::pop() {
       else if (undo.piece[last] == "R" + std::to_string(i))
         White::Rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
-    if (undo.killed[last])
+    if (undo.killed[last] && undo.killed_color[last] == "B")
       Black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
     White::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
@@ -90,7 +91,7 @@ void Game_Board::pop() {
       else if (undo.piece[last] == "R" + std::to_string(i))
         Black::Rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
-    if (undo.killed[last])
+    if (undo.killed[last] && undo.killed_color[last] == "W")
       White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
     Black::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
@@ -103,6 +104,7 @@ void Game_Board::pop() {
   undo.moved_from.resize(total_moves);
   undo.killed_piece.resize(total_moves);
   undo.killed_pos.resize(total_moves);
+  undo.killed_color.resize(total_moves);
   if (castled)
     undo.color.resize(total_moves-1);
 }

@@ -3,6 +3,7 @@
 int main() {
   Black::init();
   White::init();
+  init(env);
   Board.update_moves();
   window.setPosition(sf::Vector2i(700, 80));
   while (window.isOpen()) {
@@ -37,7 +38,7 @@ int main() {
     Board.check_end();
     window.display();
     if (Black::is_AI && Black::turn)
-      AI::gen_move();
+      Black::AI::gen_move();
     window.display();
   }
   return 0;

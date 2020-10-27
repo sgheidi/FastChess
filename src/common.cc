@@ -1,7 +1,10 @@
 #include "common.h"
 
 bool testing = false;
+bool verbose = false;
+std::string env = "";
 struct undo_stack undo = {
+  {},
   {},
   {},
   {},
@@ -60,14 +63,6 @@ void print_v3(std::vector<std::vector<std::vector<int>>> v) {
       printf(" ");
     }
     printf("\n");
-  }
-  printf("\n");
-}
-
-void print_v1(std::vector<int> v) {
-  printf("vec1d...\n");
-  for (int i=0;i<v.size();i++) {
-    printf("%d", v[i]);
   }
   printf("\n");
 }

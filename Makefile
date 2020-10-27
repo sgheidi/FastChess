@@ -6,13 +6,13 @@ SOURCE+= src/core/black/knight.cc src/core/black/pawn.cc src/core/black/king.cc
 SOURCE+= src/core/black/queen.cc src/core/black/rook.cc src/core/white_.cc
 SOURCE+= src/core/white/bishop.cc src/core/white/knight.cc src/core/white/pawn.cc
 SOURCE+= src/core/white/king.cc src/core/white/queen.cc src/core/white/rook.cc src/queue.cc
-SOURCE+= src/media/sound.cc src/media/text.cc src/ai/helper.cc src/ai/black.cc
+SOURCE+= src/media/sound.cc src/media/text.cc src/ai/helper.cc src/ai/black.cc src/ai/env.cc
 
 CC= g++
 
 EXECUTABLE= main
 
-LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm -w
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm -w -g
 
 OBJECT= $(SOURCE:.cpp=.o)
 

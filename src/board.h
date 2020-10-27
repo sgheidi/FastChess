@@ -21,6 +21,8 @@ public:
     pieces_scale = 1.63;
     freeze = false;
   };
+  void save_enpassant();
+  void load_enpassant();
   void unfreeze() {freeze = false;};
   void set_freeze() {freeze = true;};
   void check_end();

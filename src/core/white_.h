@@ -9,10 +9,11 @@ extern Rook_Piece Rook;
 extern King_Piece King;
 extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
-extern bool turn;
 extern int num_queens;
 extern std::vector<std::string> checker;
 extern std::vector<bool> en_passant;
+extern bool turn;
+extern bool enpassant_check_killed;
 
 void pop_last_queen();
 void handle_undo_promotion(int i, int row, int col);

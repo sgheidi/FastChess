@@ -1,6 +1,32 @@
 #include "../common.h"
 
 namespace White {
+std::vector<std::vector<int>> blocks(8);
+std::vector<bool> en_passant(8);
+bool turn = true;
+bool enpassant_check_killed = false;
+int num_queens = 1;
+std::vector<std::string> checker = {};
+
+void play() {
+  if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
+  blocks[Queue.row[1]][Queue.col[1]] == 0) {
+    std::string piece = get_piece(Queue.row[0], Queue.col[0]);
+    move_piece(piece, Queue.row[1], Queue.col[1]);
+    if (verbose) print("-----------------------NON-AI MOVE-----------------------");
+  }
+  if (Queue.row.size() >= 2) {
+    std::vector<int> kingpos = {King.row, King.col};
+    std::vector<int> k_rook = {Rook.row[1], Rook.col[1]};
+    std::vector<int> q_rook = {Rook.row[0], Rook.col[0]};
+    std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
+    std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
+    if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
+      castle_K(false);
+    else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q())
+      castle_Q(false);
+    }
+}
 
 void handle_undo_promotion(int i, int row, int col) {
   pop_last_queen();
@@ -34,25 +60,6 @@ void revive(std::string piece, int row, int col) {
       Rook.alive[i] = 1;
     }
   }
-}
-
-void play() {
-  if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
-  blocks[Queue.row[1]][Queue.col[1]] == 0) {
-    std::string piece = get_piece(Queue.row[0], Queue.col[0]);
-    move_piece(piece, Queue.row[1], Queue.col[1]);
-  }
-  if (Queue.row.size() >= 2) {
-    std::vector<int> kingpos = {King.row, King.col};
-    std::vector<int> k_rook = {Rook.row[1], Rook.col[1]};
-    std::vector<int> q_rook = {Rook.row[0], Rook.col[0]};
-    std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
-    std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
-    if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
-      castle_K(false);
-    else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q())
-      castle_Q(false);
-    }
 }
 
 void castle_K(bool is_undo) {
@@ -150,8 +157,9 @@ void move_piece(std::string piece, int row, int col) {
       if (Pawn.row[i] == 3) {
         for (int k=0;k<8;k++) {
           if (Black::en_passant[k]) {
-            if (abs(Pawn.col[i] - Black::Pawn.col[k]) == 1) {
+            if (abs(Pawn.col[i] - Black::Pawn.col[k]) == 1 && col == Black::Pawn.col[k]) {
               check_kill(false, 3, Black::Pawn.col[k]);
+              enpassant_check_killed = true;
               killed = true;
             }
           }
@@ -208,10 +216,11 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
     undo.piece.push_back(piece);
     undo.color.push_back("W");
   }
-  check_kill(is_undo, row, col);
+  if (!enpassant_check_killed)
+    check_kill(is_undo, row, col);
   Board.update_moves();
   check_pin();
-  if (!is_undo)
+  if (!is_undo && !Board.freeze)
     reset_opp_enpassant();
   if (check_opp_checked() && !is_undo) {
     if (!Board.freeze)
@@ -226,6 +235,7 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
     turn = false;
     Black::turn = true;
   }
+  enpassant_check_killed = false;
 }
 
 void reset_opp_enpassant() {
@@ -382,10 +392,12 @@ void check_kill(bool is_undo, int row, int col) {
     undo.killed.push_back(1);
     undo.killed_piece.push_back(piece);
     undo.killed_pos.push_back({row, col});
+    undo.killed_color.push_back("B");
   }
   else if (Black::blocks[row][col] == 0 && !is_undo) {
     undo.killed.push_back(0);
-    undo.killed_piece.push_back("");
+    undo.killed_piece.push_back("X");
+    undo.killed_color.push_back("X");
     undo.killed_pos.push_back({-1, -1});
   }
 }
@@ -519,9 +531,4 @@ void kill(bool is_undo, std::string piece, int row, int col) {
     Sound.kill();
 }
 
-std::vector<std::vector<int>> blocks(8);
-std::vector<bool> en_passant(8);
-bool turn = true;
-int num_queens = 1;
-std::vector<std::string> checker = {};
 } // namespace White
