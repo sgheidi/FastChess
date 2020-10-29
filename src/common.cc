@@ -1,8 +1,9 @@
 #include "common.h"
 
 bool testing = false;
-bool verbose = false;
-std::string env = "";
+bool verbose = true;
+std::string env = "onlypawns0";
+bool isBlackAI = true;
 struct undo_stack undo = {
   {},
   {},

@@ -23,8 +23,6 @@ public:
   };
   void save_enpassant();
   void load_enpassant();
-  void unfreeze() {freeze = false;};
-  void set_freeze() {freeze = true;};
   void check_end();
   void pop();
   void update_moves();

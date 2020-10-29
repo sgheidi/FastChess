@@ -18,7 +18,7 @@ extern bool enpassant_check_killed;
 void pop_last_queen();
 void handle_undo_promotion(int i, int row, int col);
 void revive(std::string piece, int row, int col);
-void reset_opp_enpassant();
+void reset_enpassant();
 void valid_move(bool is_undo, bool killed, std::string piece, int row, int col);
 bool castle_criteria_K();
 void castle_K(bool is_undo);

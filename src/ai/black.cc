@@ -8,7 +8,7 @@ void gen_move() {
   std::map<std::string, std::vector<std::vector<int>>> moves = get_black_moves();
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
   int score;
-  Board.set_freeze();
+  Board.freeze = true;
   for (itr=moves.begin();itr!=moves.end();itr++) {
     std::string piece = itr->first;
     std::vector<std::vector<int>> value = itr->second;
@@ -26,8 +26,11 @@ void gen_move() {
       }
     }
   }
-  Board.unfreeze();
-  Black::reset_opp_enpassant();
+  Board.freeze = false;
+  if (best_move["piece"] == "") {
+    print("No moves left!");
+    exit(1);
+  }
   Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
   if (!testing) {
     Black::turn = false;

@@ -26,7 +26,7 @@ void castle_K(bool is_undo);
 bool castle_criteria_Q();
 void castle_Q(bool is_undo);
 bool in_opp_movelist(int row, int col);
-void reset_opp_enpassant();
+void reset_enpassant();
 void check_pin();
 void check_avoid_move();
 void update_opp_movelists();

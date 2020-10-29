@@ -53,6 +53,7 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "B")
       Black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
+    if (!Board.freeze) White::reset_enpassant();
     White::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
   else if (undo.color[last] == "B") {
@@ -93,6 +94,7 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "W")
       White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
+    if (!Board.freeze) Black::reset_enpassant();
     Black::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
   checkmate = false;
@@ -107,6 +109,20 @@ void Game_Board::pop() {
   undo.killed_color.resize(total_moves);
   if (castled)
     undo.color.resize(total_moves-1);
+  if (!testing) {
+    if (Black::turn) {
+      White::turn = true;
+      Black::turn = false;
+    }
+    else {
+      White::turn = false;
+      Black::turn = true;
+    }
+    if (isBlackAI) {
+      White::turn = true;
+      Black::turn = false;
+    }
+  }
 }
 
 void Game_Board::update_moves() {

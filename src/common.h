@@ -14,6 +14,7 @@
 extern bool testing;
 extern bool verbose;
 extern std::string env;
+extern bool isBlackAI;
 struct undo_stack {
   std::vector<std::vector<int>> moved_from;
   std::vector<std::string> piece;

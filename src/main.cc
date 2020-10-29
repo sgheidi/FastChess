@@ -37,7 +37,7 @@ int main() {
     Black::show();
     Board.check_end();
     window.display();
-    if (Black::is_AI && Black::turn)
+    if (Black::is_AI && Black::turn && !Board.checkmate && !Board.stalemate)
       Black::AI::gen_move();
     window.display();
   }
