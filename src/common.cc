@@ -2,8 +2,8 @@
 
 const bool testing = false;
 const bool verbose = false;
-const std::string env = "onlypawns0";
-const bool isBlackAI = true;
+const std::string env = "";
+const bool isBlackAI = false;
 
 #ifdef DEBUGAI
 std::ofstream Log("debug.log");

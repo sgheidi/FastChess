@@ -12,7 +12,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 
-#define DEBUGAI
+// #define DEBUGAI
 
 extern const bool testing;
 extern const bool verbose;
