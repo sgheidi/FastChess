@@ -7,14 +7,18 @@
 #include <algorithm>
 #include <assert.h>
 #include <random>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 
-extern bool testing;
-extern bool verbose;
-extern std::string env;
-extern bool isBlackAI;
+#define DEBUGAI
+
+extern const bool testing;
+extern const bool verbose;
+extern const std::string env;
+extern const bool isBlackAI;
+extern std::ofstream Log;
 struct undo_stack {
   std::vector<std::vector<int>> moved_from;
   std::vector<std::string> piece;
@@ -44,6 +48,13 @@ inline void print_v1(T v) {
     std::cout << v[i];
   }
   printf("\n");
+}
+template <typename T>
+inline void print_v1_Log(T v) {
+  for (int i=0;i<v.size();i++) {
+    Log << v[i];
+  }
+  Log << std::endl;
 }
 
 #define X_RES 800

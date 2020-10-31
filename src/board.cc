@@ -11,6 +11,10 @@ void Game_Board::pop() {
   int last = total_moves-1;
   if (verbose) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
   << undo.moved_from[last][1] << std::endl;
+  #ifdef DEBUGAI
+  Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
+  << undo.moved_from[last][1] << std::endl;
+  #endif
   if (last < 0)
     return
   assert(last >= 0);
@@ -94,7 +98,8 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "W")
       White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
-    if (!Board.freeze) Black::reset_enpassant();
+    if (!Board.freeze)
+      Black::reset_enpassant();
     Black::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
   checkmate = false;

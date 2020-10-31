@@ -1,5 +1,5 @@
 main
-.run.sh.swp
+*.swp
 todo
 other
 src/test.cc
@@ -7,4 +7,5 @@ test.sh
 src/test.h
 py.sh
 test_namespace
-src/*.gch
+*.gch
+*.log

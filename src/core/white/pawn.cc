@@ -22,18 +22,18 @@ void Pawn_Piece::update_movelist() {
         movelist[i].push_back({row[i]-2, col[i]});
     }
     if (row[i] > 0 && col[i] > 0) {
-      if (Black::blocks[row[i]-1][col[i]-1] == 1)
+      if (Black::blocks[row[i]-1][col[i]-1] == 1 && blocks[row[i]-1][col[i]-1] == 0)
         movelist[i].push_back({row[i]-1, col[i]-1});
       hit_movelist[i].push_back({row[i]-1, col[i]-1});
     }
     if (row[i] > 0 && col[i] < 7) {
-      if (Black::blocks[row[i]-1][col[i]+1] == 1)
+      if (Black::blocks[row[i]-1][col[i]+1] == 1 && blocks[row[i]-1][col[i]+1] == 0)
         movelist[i].push_back({row[i]-1, col[i]+1});
       hit_movelist[i].push_back({row[i]-1, col[i]+1});
     }
     if (row[i] == 3) {
       for (int k=0;k<8;k++) {
-        if (Black::en_passant[k]) {
+        if (Black::en_passant[k] && !blocks[2][Black::Pawn.col[k]]) {
           if (abs(col[i] - Black::Pawn.col[k]) == 1)
             movelist[i].push_back({2, Black::Pawn.col[k]});
         }

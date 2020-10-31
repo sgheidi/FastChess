@@ -5,7 +5,7 @@ int main() {
   White::init();
   init(env);
   Board.update_moves();
-  window.setPosition(sf::Vector2i(700, 80));
+  window.setPosition(sf::Vector2i(950, 80));
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {

@@ -40,6 +40,7 @@ void play();
 void print_blocks();
 void show();
 void init();
+void print_blocks_Log();
 
 } // namespace White
 
