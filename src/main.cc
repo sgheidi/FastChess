@@ -1,6 +1,7 @@
 #include "common.h"
 
 int main() {
+  srand(time(NULL));
   Black::init();
   White::init();
   init(env);
@@ -17,6 +18,7 @@ int main() {
           case sf::Keyboard::B: Black::print_blocks(); break;
           case sf::Keyboard::W: White::print_blocks(); break;
           case sf::Keyboard::Z: Board.pop(); break;
+          case sf::Keyboard::U: Board.print_undo(); break;
         }
       }
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {

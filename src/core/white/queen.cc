@@ -371,7 +371,7 @@ std::vector<int> Queen_Piece::get_avoid_move(int i) {
     ret = {pos[0]+1, pos[1]-1};
   else if (pos[0] < row[i] && pos[1] < col[i])
     ret = {pos[0]-1, pos[1]-1};
-  if (pos[0] > row[i])
+  else if (pos[0] > row[i])
     ret = {pos[0]+1, pos[1]};
   else if (pos[0] < row[i])
     ret = {pos[0]-1, pos[1]};

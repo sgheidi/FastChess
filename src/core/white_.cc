@@ -21,8 +21,20 @@ void play() {
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
     Log << "-----------------------NON-AI MOVE-----------------------" << std::endl;
     Log << "(" << piece << " " << Queue.row[1] << " " << Queue.col[1] << ")" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
+    Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
@@ -80,7 +92,6 @@ void revive(std::string piece, int row, int col) {
 
 void castle_K(bool is_undo) {
   undo.moved_from.push_back({King.row, King.col});
-  undo.moved_from.push_back({Rook.row[1], Rook.col[1]});
   King.move(7, 6);
   Rook.move(1, 7, 5);
   valid_move(is_undo, false, "CK", 7, 5);
@@ -88,7 +99,6 @@ void castle_K(bool is_undo) {
 
 void castle_Q(bool is_undo) {
   undo.moved_from.push_back({King.row, King.col});
-  undo.moved_from.push_back({Rook.row[0], Rook.col[0]});
   King.move(7, 2);
   Rook.move(0, 7, 3);
   valid_move(is_undo, false, "CQ", 7, 3);
@@ -292,24 +302,20 @@ void check_pin() {
 }
 
 void check_avoid_move() {
-  std::vector<int> avoid_move;
-  for (int i=0;i<num_queens;i++) {
-    if (checker[0] == "Q" + std::to_string(i)) {
-      avoid_move = Queen.get_avoid_move(i);
+  std::vector<std::vector<int>> avoid_moves;
+  for (int k=0;k<checker.size();k++) {
+    for (int i=0;i<num_queens;i++) {
+      if (checker[k] == "Q" + std::to_string(i))
+        avoid_moves.push_back(Queen.get_avoid_move(i));
+    }
+    for (int i=0;i<2;i++) {
+      if (checker[k] == "B" + std::to_string(i))
+        avoid_moves.push_back(Bishop.get_avoid_move(i));
+      if (checker[k] == "R" + std::to_string(i))
+        avoid_moves.push_back(Rook.get_avoid_move(i));
     }
   }
-  for (int i=0;i<2;i++) {
-    if (checker[0] == "B" + std::to_string(i)) {
-      avoid_move = Bishop.get_avoid_move(i);
-    }
-    if (checker[0] == "R" + std::to_string(i)) {
-      avoid_move = Rook.get_avoid_move(i);
-    }
-  }
-  for (int i=0;i<Black::King.movelist.size();i++) {
-    if (Black::King.movelist[i] == avoid_move)
-      Black::King.movelist.erase(Black::King.movelist.begin() + i);
-  }
+  Black::King.movelist = filter2(Black::King.movelist, avoid_moves);
 }
 
 void update_opp_movelists() {

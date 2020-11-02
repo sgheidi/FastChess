@@ -21,6 +21,7 @@ public:
     pieces_scale = 1.63;
     freeze = false;
   };
+  void print_undo();
   void save_enpassant();
   void load_enpassant();
   void check_end();

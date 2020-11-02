@@ -1,9 +1,12 @@
 #include "../common.h"
 
 namespace Black { namespace AI {
-std::map<std::string, std::vector<std::vector<int>>>
-shuffle(std::map<std::string, std::vector<std::vector<int>>>) {
 
+std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m) {
+  auto it = m.begin();
+  std::advance(it, rand() % m.size());
+  std::string key = it->first;
+  return key;
 }
 
 int evaluate_pos() {

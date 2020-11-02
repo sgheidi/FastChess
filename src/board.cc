@@ -1,12 +1,5 @@
 #include "common.h"
 
-void Game_Board::check_end() {
-  if (checkmate)
-    Text.checkmate();
-  else if (stalemate)
-    Text.stalemate();
-}
-
 void Game_Board::pop() {
   int last = total_moves-1;
   if (verbose) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
@@ -112,8 +105,6 @@ void Game_Board::pop() {
   undo.killed_piece.resize(total_moves);
   undo.killed_pos.resize(total_moves);
   undo.killed_color.resize(total_moves);
-  if (castled)
-    undo.color.resize(total_moves-1);
   if (!testing) {
     if (Black::turn) {
       White::turn = true;
@@ -128,6 +119,24 @@ void Game_Board::pop() {
       Black::turn = false;
     }
   }
+}
+
+void Game_Board::print_undo() {
+  print("UNDO STACK");
+  print_v2(undo.moved_from);
+  print_v1(undo.piece);
+  print_v1(undo.color);
+  print_v1(undo.killed);
+  print_v1(undo.killed_piece);
+  print_v2(undo.killed_pos);
+  print_v1(undo.killed_color);
+}
+
+void Game_Board::check_end() {
+  if (checkmate)
+    Text.checkmate();
+  else if (stalemate)
+    Text.stalemate();
 }
 
 void Game_Board::update_moves() {

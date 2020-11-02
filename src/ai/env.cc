@@ -49,4 +49,14 @@ void init(std::string env) {
       Black::kill(true, "P" + str(i), Black::Pawn.row[i], Black::Pawn.col[i]);
     White::Pawn.move(3, 4, 3);
   }
+  else if (env == "KQP") {
+    for (int i=0;i<2;i++) {
+      Black::kill(true, "B" + str(i), Black::Bishop.row[i], Black::Bishop.col[i]);
+      Black::kill(true, "R" + str(i), Black::Rook.row[i], Black::Rook.col[i]);
+      Black::kill(true, "N" + str(i), Black::Knight.row[i], Black::Knight.col[i]);
+      White::kill(true, "B" + str(i), White::Bishop.row[i], White::Bishop.col[i]);
+      White::kill(true, "R" + str(i), White::Rook.row[i], White::Rook.col[i]);
+      White::kill(true, "N" + str(i), White::Knight.row[i], White::Knight.col[i]);
+    }
+  }
 }

@@ -79,7 +79,6 @@ void revive(std::string piece, int row, int col) {
 
 void castle_K(bool is_undo) {
   undo.moved_from.push_back({King.row, King.col});
-  undo.moved_from.push_back({Rook.row[1], Rook.col[1]});
   King.move(0, 6);
   Rook.move(1, 0, 5);
   valid_move(is_undo, false, "CK", 0, 5);
@@ -87,7 +86,6 @@ void castle_K(bool is_undo) {
 
 void castle_Q(bool is_undo) {
   undo.moved_from.push_back({King.row, King.col});
-  undo.moved_from.push_back({Rook.row[0], Rook.col[0]});
   King.move(0, 3);
   Rook.move(0, 0, 4);
   valid_move(is_undo, false, "CQ", 0, 4);
@@ -291,24 +289,20 @@ void check_pin() {
 }
 
 void check_avoid_move() {
-  std::vector<int> avoid_move;
-  for (int i=0;i<num_queens;i++) {
-    if (checker[0] == "Q" + std::to_string(i)) {
-      avoid_move = Queen.get_avoid_move(i);
+  std::vector<std::vector<int>> avoid_moves;
+  for (int k=0;k<checker.size();k++) {
+    for (int i=0;i<num_queens;i++) {
+      if (checker[k] == "Q" + std::to_string(i))
+        avoid_moves.push_back(Queen.get_avoid_move(i));
+    }
+    for (int i=0;i<2;i++) {
+      if (checker[k] == "B" + std::to_string(i))
+        avoid_moves.push_back(Bishop.get_avoid_move(i));
+      if (checker[k] == "R" + std::to_string(i))
+        avoid_moves.push_back(Rook.get_avoid_move(i));
     }
   }
-  for (int i=0;i<2;i++) {
-    if (checker[0] == "B" + std::to_string(i)) {
-      avoid_move = Bishop.get_avoid_move(i);
-    }
-    if (checker[0] == "R" + std::to_string(i)) {
-      avoid_move = Rook.get_avoid_move(i);
-    }
-  }
-  for (int i=0;i<White::King.movelist.size();i++) {
-    if (White::King.movelist[i] == avoid_move)
-      White::King.movelist.erase(White::King.movelist.begin() + i);
-  }
+  White::King.movelist = filter2(White::King.movelist, avoid_moves);
 }
 
 void update_opp_movelists() {

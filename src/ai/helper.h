@@ -2,8 +2,7 @@
 #define HELPER_H
 
 namespace Black { namespace AI {
-std::map<std::string, std::vector<std::vector<int>>>
-shuffle(std::map<std::string, std::vector<std::vector<int>>>);
+std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m);
 int evaluate_pos();
 std::map<std::string, std::vector<std::vector<int>>> get_white_moves();
 std::map<std::string, std::vector<std::vector<int>>> get_black_moves();

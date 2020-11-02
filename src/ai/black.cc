@@ -9,6 +9,7 @@ void gen_move() {
   #endif
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
   std::map<std::string, std::vector<std::vector<int>>> moves = get_black_moves();
+  std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
   int score;
   Board.freeze = true;
@@ -16,9 +17,9 @@ void gen_move() {
   std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
   bool B_king_moved = Black::King.moved;
   std::vector<bool> B_rook_moved = {Black::Rook.moved[0], Black::Rook.moved[1]};
-  for (itr=moves.begin();itr!=moves.end();itr++) {
-    std::string piece = itr->first;
-    std::vector<std::vector<int>> value = itr->second;
+  for (itr=temp.begin();itr!=temp.end();itr++) {
+    std::string piece = random_key(moves);
+    std::vector<std::vector<int>> value = moves[piece];
     for (int i=0;i<value.size();i++) {
       Black::move_piece(piece, value[i][0], value[i][1]);
       if (verbose) print("******************OUTER******************");
@@ -37,6 +38,7 @@ void gen_move() {
         best_move["pos"] = str(value[i][0]) + str(value[i][1]);
       }
     }
+    moves.erase(piece);
   }
   Board.freeze = false;
   if (best_move["piece"] == "") {
@@ -62,6 +64,8 @@ void gen_move() {
 int minimax(int n, int alpha, int beta, std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> black_moves = get_black_moves();
   std::map<std::string, std::vector<std::vector<int>>> white_moves = get_white_moves();
+  std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
+  std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
   int best_move;
   if (n == 0)
@@ -69,9 +73,9 @@ int minimax(int n, int alpha, int beta, std::string player) {
   // minimizing player
   if (player == "B") {
     best_move = -9999;
-    for (itr=black_moves.begin();itr!=black_moves.end();itr++) {
-      std::string piece = itr->first;
-      std::vector<std::vector<int>> value = itr->second;
+    for (itr=btemp.begin();itr!=btemp.end();itr++) {
+      std::string piece = random_key(black_moves);
+      std::vector<std::vector<int>> value = black_moves[piece];
       for (int i=0;i<value.size();i++) {
         Black::move_piece(piece, value[i][0], value[i][1]);
         if (verbose) print("INNER BLACK");
@@ -86,14 +90,15 @@ int minimax(int n, int alpha, int beta, std::string player) {
         if (beta <= alpha)
           return best_move;
       }
+      black_moves.erase(piece);
     }
   }
   // maximizing player
   else {
     best_move = 9999;
-    for (itr=white_moves.begin();itr!=white_moves.end();itr++) {
-      std::string piece = itr->first;
-      std::vector<std::vector<int>> value = itr->second;
+    for (itr=wtemp.begin();itr!=wtemp.end();itr++) {
+      std::string piece = random_key(white_moves);
+      std::vector<std::vector<int>> value = white_moves[piece];
       for (int i=0;i<value.size();i++) {
         White::move_piece(piece, value[i][0], value[i][1]);
         if (verbose) print("INNER WHITE");
@@ -108,6 +113,7 @@ int minimax(int n, int alpha, int beta, std::string player) {
         if (beta <= alpha)
           return best_move;
       }
+      white_moves.erase(piece);
     }
   }
   return best_move;
