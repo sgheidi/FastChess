@@ -1,5 +1,5 @@
 # ♛ FastChess
-(**IN PROGRESS**) A fully-featured, elegant chess GUI and AI implementation in C++. 
+A fully-featured, elegant chess GUI and AI implementation in C++.
 
 ## Screenshots
 ![Alt text](assets/1r.jpg?raw=true "Screenshot 1")
@@ -7,8 +7,4 @@
 ## Video
 
 ## Setup
-Use ```setup.sh``` to install necessary dependencies and ```run.sh``` to run the program.
-
-## Some features
-- Threaded AI search using OpenMP (NUM_THREADS can be specified through a command line switch)
-- Choose difficulty if playing against AI (see Command line switches)
+Use ```setup.sh``` to install necessary dependencies (SFML for GUI) and ```run.sh``` to run the program. ```run.sh``` includes generating a precompiled header for faster compilation time (generate manually using ```pch.sh```).

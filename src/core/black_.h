@@ -14,7 +14,7 @@ extern int num_queens;
 extern std::vector<std::string> checker;
 extern std::vector<bool> en_passant;
 extern bool is_AI;
-extern int depth;
+extern const int depth;
 
 void pop_last_queen();
 void handle_undo_promotion(int i, int row, int col);

@@ -8,7 +8,7 @@ int num_queens = 1;
 std::vector<std::string> checker = {};
 bool enpassant_check_killed = false;
 bool is_AI = isBlackAI;
-int depth = 2;
+const int depth = 2;
 
 void play() {
   if (is_AI)

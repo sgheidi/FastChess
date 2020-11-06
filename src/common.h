@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <random>
 #include <fstream>
+#include <omp.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
@@ -51,6 +52,9 @@ inline void print_v1(T v) {
 }
 template <typename T>
 inline void print_v1_Log(T v) {
+  #ifndef DEBUGAI
+  return;
+  #endif
   for (int i=0;i<v.size();i++) {
     Log << v[i];
   }
