@@ -3,7 +3,7 @@
 
 namespace Black { namespace AI {
 std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m);
-int evaluate_pos();
+double evaluate_pos();
 std::map<std::string, std::vector<std::vector<int>>> get_white_moves();
 std::map<std::string, std::vector<std::vector<int>>> get_black_moves();
 } // namespace AI

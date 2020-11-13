@@ -9,8 +9,24 @@ std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m) {
   return key;
 }
 
-int evaluate_pos() {
-  int score = 0;
+// N points for every piece opposite piece that is attacked and not defended (N for piece value).
+// - e.g white bishop attacked 3 times, defended 2 times, we have N = 3.
+// - e.g Black (AI) bishop attacked 3 times and defended 2 times, we get N = -3.
+// Do not consider defending more than needed (i.e only want defending at most N times for attacked N times).
+double N_attacked_defended() {
+  for (int i=0;i<8;i++) {
+    if (Pawn.row[i] == 5)
+      return 0;
+  }
+}
+
+// RBQ reward for having 'open' movelists
+double RBQ_open_files() {
+
+}
+
+double evaluate_pos() {
+  double score = 0;
   if (Black::King.alive)
     score -= 3;
   for (int i=0;i<Black::num_queens;i++) {

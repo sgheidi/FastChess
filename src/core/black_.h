@@ -15,7 +15,9 @@ extern std::vector<std::string> checker;
 extern std::vector<bool> en_passant;
 extern bool is_AI;
 extern const int depth;
+extern bool screenshot;
 
+void check_capture_screen();
 void pop_last_queen();
 void handle_undo_promotion(int i, int row, int col);
 void revive(std::string piece, int row, int col);

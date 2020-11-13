@@ -9,6 +9,18 @@ std::vector<std::string> checker = {};
 bool enpassant_check_killed = false;
 bool is_AI = isBlackAI;
 const int depth = 2;
+bool screenshot = false;
+
+void check_capture_screen() {
+  if (screenshots_on && screenshot) {
+    std::string path = "assets/screenshots/";
+    path += str(Board.screenshot_num);
+    path += ".png";
+    take_screenshot(window, path);
+    screenshot = false;
+    Board.screenshot_num ++;
+  }
+}
 
 void play() {
   if (is_AI)
@@ -248,6 +260,9 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   }
   if (opp_no_moves() && !is_undo)
     Board.stalemate = true;
+  if (!Board.freeze && screenshots_on) {
+    screenshot = true;
+  }
   if (!testing) {
     turn = false;
     White::turn = true;

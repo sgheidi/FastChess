@@ -7,6 +7,18 @@ bool turn = true;
 bool enpassant_check_killed = false;
 int num_queens = 1;
 std::vector<std::string> checker = {};
+bool screenshot = true;
+
+void check_capture_screen() {
+  if (screenshots_on && screenshot) {
+    std::string path = "assets/screenshots/";
+    path += str(Board.screenshot_num);
+    path += ".png";
+    take_screenshot(window, path);
+    screenshot = false;
+    Board.screenshot_num ++;
+  }
+}
 
 void play() {
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
@@ -261,6 +273,9 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   }
   if (opp_no_moves() && !is_undo)
     Board.stalemate = true;
+  if (!Board.freeze && screenshots_on) {
+    screenshot = true;
+  }
   if (!testing) {
     turn = false;
     Black::turn = true;

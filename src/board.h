@@ -11,7 +11,9 @@ public:
   float pieces_scale;
   bool checkmate, stalemate;
   bool freeze;
+  int screenshot_num;
   Game_Board() {
+    screenshot_num = 1;
     selected_row = selected_col = -1;
     checkmate = false;
     stalemate = false;

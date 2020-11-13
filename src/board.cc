@@ -9,7 +9,7 @@ void Game_Board::pop() {
   << undo.moved_from[last][1] << std::endl;
   #endif
   if (last < 0)
-    return
+    return;
   assert(last >= 0);
   bool castled = false;
   if (undo.color[last] == "W") {

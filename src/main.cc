@@ -39,6 +39,8 @@ int main() {
     Black::show();
     Board.check_end();
     window.display();
+    White::check_capture_screen();
+    Black::check_capture_screen();
     if (Black::is_AI && Black::turn && !Board.checkmate && !Board.stalemate)
       Black::AI::gen_move();
     window.display();

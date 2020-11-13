@@ -15,6 +15,7 @@
 
 // #define DEBUGAI
 
+extern const bool screenshots_on;
 extern const bool testing;
 extern const bool verbose;
 extern const std::string env;
@@ -30,6 +31,8 @@ struct undo_stack {
   std::vector<std::string> killed_color;
 };
 extern struct undo_stack undo;
+
+void take_screenshot(const sf::RenderWindow& window, const std::string& filename);
 void init(std::string env);
 std::string str(int n);
 void print_map(std::map<std::string, std::vector<std::vector<int>>> map);
@@ -92,5 +95,6 @@ inline void print_v1_Log(T v) {
 #include "ai/black.h"
 
 extern sf::RenderWindow window;
+extern sf::Image image;
 
 #endif // COMMON_H

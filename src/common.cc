@@ -1,9 +1,10 @@
 #include "common.h"
 
+const std::string env = "";
 const bool testing = false;
 const bool verbose = false;
-const std::string env = "";
 const bool isBlackAI = true;
+const bool screenshots_on = true;
 
 #ifdef DEBUGAI
 std::ofstream Log("debug.log");
@@ -17,6 +18,16 @@ struct undo_stack undo = {
   {},
   {}
 };
+
+void take_screenshot(const sf::RenderWindow& window, const std::string& filename) {
+  sf::Texture texture;
+  texture.create(window.getSize().x, window.getSize().y);
+  texture.update(window);
+  if (texture.copyToImage().saveToFile(filename))
+    std::cout << "screenshot saved to " << filename << std::endl;
+  else
+    std::cout << "Failed to capture screen" << std::endl;
+}
 
 void print_map(std::map<std::string, std::vector<std::vector<int>>> map) {
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
@@ -114,3 +125,4 @@ Queen_Piece Queen;
 }
 
 sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
+sf::Image image;
