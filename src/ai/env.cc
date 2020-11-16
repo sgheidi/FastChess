@@ -1,5 +1,6 @@
 #include "../common.h"
 
+// Initialize the board with a custom environment for testing.
 void init(std::string env) {
   if (env == "") return;
   else if (env == "onlypawns0") {

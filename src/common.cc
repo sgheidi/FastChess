@@ -4,7 +4,7 @@ const std::string env = "";
 const bool testing = false;
 const bool verbose = false;
 const bool isBlackAI = true;
-const bool screenshots_on = true;
+const bool screenshots_on = false;
 
 #ifdef DEBUGAI
 std::ofstream Log("debug.log");

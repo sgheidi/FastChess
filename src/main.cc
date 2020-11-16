@@ -19,6 +19,8 @@ int main() {
           case sf::Keyboard::W: White::print_blocks(); break;
           case sf::Keyboard::Z: Board.pop(); break;
           case sf::Keyboard::U: Board.print_undo(); break;
+          case sf::Keyboard::A: std::cout << White::num_attacked("B1") << std::endl; break;
+          case sf::Keyboard::D: std::cout << White::num_defended("R1") << std::endl; break;
         }
       }
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {

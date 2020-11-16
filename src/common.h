@@ -15,6 +15,10 @@
 
 // #define DEBUGAI
 
+#define X_RES 800
+#define Y_RES 800
+#define UNIT (X_RES/8)
+
 extern const bool screenshots_on;
 extern const bool testing;
 extern const bool verbose;
@@ -63,10 +67,6 @@ inline void print_v1_Log(T v) {
   }
   Log << std::endl;
 }
-
-#define X_RES 800
-#define Y_RES 800
-#define UNIT (X_RES/8)
 
 #include "board.h"
 #include "queue.h"

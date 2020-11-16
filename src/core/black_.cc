@@ -136,7 +136,7 @@ bool in_opp_movelist(int row, int col) {
       return true;
   }
   for (int i=0;i<8;i++) {
-    if (in(White::Pawn.movelist[i], pos))
+    if (in(White::Pawn.hit_movelist[i], pos))
       return true;
   }
   for (int i=0;i<2;i++) {

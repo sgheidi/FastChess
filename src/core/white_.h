@@ -16,6 +16,8 @@ extern bool turn;
 extern bool enpassant_check_killed;
 extern bool screenshot;
 
+int num_defended(std::string piece);
+int num_attacked(std::string piece);
 void check_capture_screen();
 void pop_last_queen();
 void handle_undo_promotion(int i, int row, int col);
