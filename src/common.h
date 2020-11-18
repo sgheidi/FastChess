@@ -92,7 +92,9 @@ inline void print_v1_Log(T v) {
 #include "core/black_.h"
 
 #include "ai/helper.h"
-#include "ai/black.h"
+#include "ai/black/eval.h"
+#include "ai/white/eval.h"
+#include "ai/black/search.h"
 
 extern sf::RenderWindow window;
 extern sf::Image image;

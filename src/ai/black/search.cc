@@ -1,6 +1,6 @@
-#include "../common.h"
+#include "../../common.h"
 
-namespace Black { namespace AI {
+namespace Black::AI {
 
 void gen_move() {
   print("Generating move...");
@@ -119,5 +119,4 @@ int minimax(int n, int alpha, int beta, std::string player) {
   return best_move;
 }
 
-} // namespace AI
-} // namespace Black
+} // namespace Black::AI

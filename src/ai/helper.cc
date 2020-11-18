@@ -1,81 +1,12 @@
 #include "../common.h"
 
-namespace Black { namespace AI {
-
-#define RBQ_OPEN_FILES_REWARD 0.025
-#define BISHOP_PAIR_REWARD 1.4
-#define PROMOTION_REWARD 10
-#define PASSED_PAWN_REWARD 1.1
+namespace Black::AI {
 
 std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m) {
   auto it = m.begin();
   std::advance(it, rand() % m.size());
   std::string key = it->first;
   return key;
-}
-
-// N points for every piece opposite piece that is attacked and not defended (N for piece value).
-// - e.g white bishop attacked 3 times, defended 2 times -> N = 3.
-// - e.g Black (AI) bishop attacked 3 times and defended 2 times -> N = -3.
-// Do not consider defending more than needed (i.e only want defending at most N times for attacked N times).
-double N_attacked_defended() {
-
-}
-
-double passed_pawns() {
-  double reward = 0;
-  for (int i=0;i<8;i++) {
-    if (Pawn.row[i] >= 4)
-      reward += PASSED_PAWN_REWARD;
-  }
-  return reward;
-}
-
-double pawn_promote() {
-  double reward = 0;
-  for (int i=0;i<8;i++) {
-    if (Pawn.row[i] >= 7)
-      reward += 10.0;
-  }
-  return reward;
-}
-
-double bishop_pair() {
-  double reward = 0;
-  if (Bishop.alive[0] && Bishop.alive[1])
-    reward += BISHOP_PAIR_REWARD;
-  return reward;
-}
-
-// RBQ reward for having 'open' movelists. That is, positions where no piece is placed.
-double RBQ_open_files() {
-  double reward = 0;
-  for (int i=0;i<num_queens;i++) {
-    if (Queen.alive[i]) {
-      for (int k=0;k<Queen.movelist[i].size();k++) {
-        if (!blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]] &&
-        !White::blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]])
-          reward += RBQ_OPEN_FILES_REWARD;
-      }
-    }
-  }
-  for (int i=0;i<2;i++) {
-    if (Bishop.alive[i]) {
-      for (int k=0;k<Bishop.movelist[i].size();k++) {
-        if (!blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]] &&
-        !White::blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]])
-          reward += RBQ_OPEN_FILES_REWARD;
-      }
-    }
-    if (Rook.alive[i]) {
-      for (int k=0;k<Rook.movelist[i].size();k++) {
-        if (!blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]] &&
-        !White::blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]])
-          reward += RBQ_OPEN_FILES_REWARD;
-      }
-    }
-  }
-  return reward;
 }
 
 double evaluate_pos() {
@@ -116,10 +47,16 @@ double evaluate_pos() {
     if (White::Rook.alive[i])
       score += 5;
   }
-  score -= RBQ_open_files();
-  score -= pawn_promote();
-  score -= passed_pawns();
-  score -= bishop_pair();
+  score -= Eval::RBQ_open_files();
+  score -= Eval::pawn_promote();
+  score -= Eval::passed_pawns();
+  score -= Eval::bishop_pair();
+  score -= Eval::mobility();
+  score += White::Eval::RBQ_open_files();
+  score += White::Eval::pawn_promote();
+  score += White::Eval::passed_pawns();
+  score += White::Eval::bishop_pair();
+  score += White::Eval::mobility();
   return score;
 }
 
@@ -169,5 +106,4 @@ std::map<std::string, std::vector<std::vector<int>>> get_black_moves() {
   return moves;
 }
 
-} // namespace AI
-} // namespace Black
+} // namespace Black::AI
