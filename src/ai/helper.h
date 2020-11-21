@@ -4,8 +4,11 @@
 #define MOBILITY 0.15
 #define RBQ_OPEN_FILES_REWARD 0.025
 #define BISHOP_PAIR_REWARD 1.4
-#define PROMOTION_REWARD 10
-#define PASSED_PAWN_REWARD 1.1
+#define PROMOTION_REWARD 10.0
+
+extern const std::vector<double> PASSED_PAWNS;
+extern const std::vector<double> CONNECTED_PASSED_PAWNS;
+extern const std::vector<double> PROTECTED_PASSED_PAWNS;
 
 namespace Black::AI {
 std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m);

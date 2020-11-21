@@ -1,7 +1,13 @@
 #include "../common.h"
 
-namespace Black::AI {
+// ranks 4, 5, 6. These rewards accumulate as a pawn advanced in its file.
+const std::vector<double> PASSED_PAWNS = {1.1, 0.5, 0.5};
 
+// Very high reward for connected passed pawns as they will queen soon.
+const std::vector<double> CONNECTED_PASSED_PAWNS = {0.5, 1.0, 2.0};
+const std::vector<double> PROTECTED_PASSED_PAWNS = {0.2, 0.5, 0.6};
+
+namespace Black::AI {
 std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m) {
   auto it = m.begin();
   std::advance(it, rand() % m.size());

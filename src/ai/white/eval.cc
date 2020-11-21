@@ -36,11 +36,11 @@ double passed_pawns() {
   double reward = 0;
   for (int i=0;i<8;i++) {
     if (Pawn.row[i] >= 4)
-      reward += PASSED_PAWN_REWARD;
+      reward += PASSED_PAWNS[0];
     if (Pawn.row[i] >= 5)
-      reward += 0.5;
+      reward += PASSED_PAWNS[1];
     if (Pawn.row[i] >= 6)
-      reward += 1.0;
+      reward += PASSED_PAWNS[2];
   }
   return reward;
 }
