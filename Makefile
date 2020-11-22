@@ -13,7 +13,7 @@ CC= g++
 
 EXECUTABLE= main
 
-LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -fopenmp -lm -w -g
+LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm -w -g
 
 OBJECT= $(SOURCE:.cpp=.o)
 

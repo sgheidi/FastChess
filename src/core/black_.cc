@@ -98,19 +98,19 @@ void castle_K(bool is_undo) {
 
 void castle_Q(bool is_undo) {
   undo.moved_from.push_back({King.row, King.col});
-  King.move(0, 3);
-  Rook.move(0, 0, 4);
+  King.move(0, 2);
+  Rook.move(0, 0, 3);
   valid_move(is_undo, false, "CQ", 0, 4);
 }
 
 bool castle_criteria_Q() {
   if (King.moved || Rook.moved[0])
     return false;
-  if (White::blocks[0][3] || White::blocks[0][4] || blocks[0][3] || blocks[0][4])
+  if (White::blocks[0][2] || White::blocks[0][3] || blocks[0][2] || blocks[0][3])
     return false;
   if (White::checker.size() >= 1)
     return false;
-  if (in_opp_movelist(0, 3) || in_opp_movelist(0, 4))
+  if (in_opp_movelist(0, 2) || in_opp_movelist(0, 3))
     return false;
   return true;
 }

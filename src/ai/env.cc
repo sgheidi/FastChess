@@ -1,6 +1,6 @@
 #include "../common.h"
 
-// Initialize the board with a custom environment for testing.
+// Initialize the board with a custom environment for testing the AI.
 void init(std::string env) {
   if (env == "") return;
   else if (env == "onlypawns0") {
@@ -59,5 +59,57 @@ void init(std::string env) {
       White::kill(true, "R" + str(i), White::Rook.row[i], White::Rook.col[i]);
       White::kill(true, "N" + str(i), White::Knight.row[i], White::Knight.col[i]);
     }
+  }
+  else if (env == "KRP") {
+    for (int i=0;i<Black::num_queens;i++)
+      Black::kill(true, "Q" + str(i), Black::Queen.row[i], Black::Queen.col[i]);
+    for (int i=0;i<White::num_queens;i++)
+      White::kill(true, "Q" + str(i), White::Queen.row[i], White::Queen.col[i]);
+    for (int i=0;i<2;i++) {
+      Black::kill(true, "B" + str(i), Black::Bishop.row[i], Black::Bishop.col[i]);
+      Black::kill(true, "N" + str(i), Black::Knight.row[i], Black::Knight.col[i]);
+      White::kill(true, "B" + str(i), White::Bishop.row[i], White::Bishop.col[i]);
+      White::kill(true, "N" + str(i), White::Knight.row[i], White::Knight.col[i]);
+    }
+  }
+  else if (env == "KBPQ") {
+    for (int i=0;i<2;i++) {
+      Black::kill(true, "N" + str(i), Black::Knight.row[i], Black::Knight.col[i]);
+      White::kill(true, "N" + str(i), White::Knight.row[i], White::Knight.col[i]);
+    }
+    for (int i=0;i<8;i++) {
+      Black::kill(true, "P" + str(i), Black::Pawn.row[i], Black::Pawn.col[i]);
+      White::kill(true, "P" + str(i), White::Pawn.row[i], White::Pawn.col[i]);
+    }
+  }
+  else if (env == "KNPQ") {
+    for (int i=0;i<Black::num_queens;i++)
+      Black::kill(true, "Q" + str(i), Black::Queen.row[i], Black::Queen.col[i]);
+    for (int i=0;i<White::num_queens;i++)
+      White::kill(true, "Q" + str(i), White::Queen.row[i], White::Queen.col[i]);
+    for (int i=0;i<2;i++) {
+      Black::kill(true, "B" + str(i), Black::Bishop.row[i], Black::Bishop.col[i]);
+      White::kill(true, "B" + str(i), White::Bishop.row[i], White::Bishop.col[i]);
+    }
+  }
+  else if (env == "CK0") {
+    Black::kill(true, "B1", Black::Bishop.row[1], Black::Bishop.col[1]);
+    Black::kill(true, "N1", Black::Knight.row[1], Black::Knight.col[1]);
+  }
+  else if (env == "CK1") {
+    Black::kill(true, "B1", Black::Bishop.row[1], Black::Bishop.col[1]);
+    Black::kill(true, "N1", Black::Knight.row[1], Black::Knight.col[1]);
+    Black::kill(true, "B0", Black::Bishop.row[0], Black::Bishop.col[0]);
+    Black::kill(true, "N0", Black::Knight.row[0], Black::Knight.col[0]);
+    Black::kill(true, "R0", Black::Rook.row[0], Black::Rook.col[0]);
+    Black::kill(true, "Q0", Black::Queen.row[0], Black::Queen.col[0]);
+    for (int i=0;i<8;i++) {
+      Black::kill(true, "P" + str(i), Black::Pawn.row[i], Black::Pawn.col[i]);
+    }
+  }
+  else if (env == "CQ") {
+    Black::kill(true, "B0", Black::Bishop.row[0], Black::Bishop.col[0]);
+    Black::kill(true, "N0", Black::Knight.row[0], Black::Knight.col[0]);
+    Black::kill(true, "Q0", Black::Queen.row[0], Black::Queen.col[0]);
   }
 }

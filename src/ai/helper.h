@@ -1,7 +1,7 @@
 #ifndef HELPER_H
 #define HELPER_H
 
-#define MOBILITY 0.15
+#define MOBILITY 0.05
 #define RBQ_OPEN_FILES_REWARD 0.025
 #define BISHOP_PAIR_REWARD 1.4
 #define PROMOTION_REWARD 10.0

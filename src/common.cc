@@ -2,9 +2,11 @@
 
 const std::string env = "";
 const bool testing = false;
-const bool verbose = false;
-const bool isBlackAI = true;
+const bool isBlackAI = false;
 const bool screenshots_on = false;
+
+const bool verbose = false;
+const bool verbose2 = true;
 
 #ifdef DEBUGAI
 std::ofstream Log("debug.log");

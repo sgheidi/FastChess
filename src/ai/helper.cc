@@ -1,6 +1,6 @@
 #include "../common.h"
 
-// ranks 4, 5, 6. These rewards accumulate as a pawn advanced in its file.
+// ranks 4, 5, 6. These rewards accumulate as a pawn advances in its file.
 const std::vector<double> PASSED_PAWNS = {1.1, 0.5, 0.5};
 
 // Very high reward for connected passed pawns as they will queen soon.
@@ -53,16 +53,16 @@ double evaluate_pos() {
     if (White::Rook.alive[i])
       score += 5;
   }
-  score -= Eval::RBQ_open_files();
-  score -= Eval::pawn_promote();
-  score -= Eval::passed_pawns();
-  score -= Eval::bishop_pair();
-  score -= Eval::mobility();
-  score += White::Eval::RBQ_open_files();
-  score += White::Eval::pawn_promote();
-  score += White::Eval::passed_pawns();
-  score += White::Eval::bishop_pair();
-  score += White::Eval::mobility();
+  // score -= Eval::RBQ_open_files();
+  // score -= Eval::pawn_promote();
+  // score -= Eval::passed_pawns();
+  // score -= Eval::bishop_pair();
+  // score -= Eval::mobility();
+  // score += White::Eval::RBQ_open_files();
+  // score += White::Eval::pawn_promote();
+  // score += White::Eval::passed_pawns();
+  // score += White::Eval::bishop_pair();
+  // score += White::Eval::mobility();
   return score;
 }
 
@@ -91,6 +91,10 @@ std::map<std::string, std::vector<std::vector<int>>> get_white_moves() {
 
 std::map<std::string, std::vector<std::vector<int>>> get_black_moves() {
   std::map<std::string, std::vector<std::vector<int>>> moves = {};
+  if (Black::castle_criteria_K())
+    moves["CK"] = {{0, 0}};
+  if (Black::castle_criteria_Q())
+    moves["CQ"] = {{0, 0}};
   if (Black::King.alive && !Black::King.movelist.empty())
     moves["K"] = Black::King.movelist;
   for (int i=0;i<Black::num_queens;i++) {

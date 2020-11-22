@@ -9,210 +9,6 @@ int num_queens = 1;
 std::vector<std::string> checker = {};
 bool screenshot = true;
 
-// Return the number of times a White piece is defended.
-int num_defended(std::string piece) {
-  int defended = 0;
-  for (int i=0;i<num_queens;i++) {
-    if (piece == "Q" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Pawn.hit_movelist[k], {Queen.row[i], Queen.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<num_queens;k++) {
-        if (in(Queen.protecting_movelist[k], {Queen.row[i], Queen.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Bishop.protecting_movelist[k], {Queen.row[i], Queen.col[i]}))
-          defended ++;
-        if (in(Rook.protecting_movelist[k], {Queen.row[i], Queen.col[i]}))
-          defended ++;
-        if (in(Knight.protecting_movelist[k], {Queen.row[i], Queen.col[i]}))
-          defended ++;
-      }
-    }
-  }
-  for (int i=0;i<8;i++) {
-    if (piece == "P" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Pawn.hit_movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<num_queens;k++) {
-        if (in(Queen.protecting_movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Bishop.protecting_movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          defended ++;
-        if (in(Rook.protecting_movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          defended ++;
-        if (in(Knight.protecting_movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          defended ++;
-      }
-    }
-  }
-  for (int i=0;i<2;i++) {
-    if (piece == "B" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Pawn.hit_movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<num_queens;k++) {
-        if (in(Queen.protecting_movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Bishop.protecting_movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          defended ++;
-        if (in(Rook.protecting_movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          defended ++;
-        if (in(Knight.protecting_movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          defended ++;
-      }
-    }
-    else if (piece == "N" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Pawn.hit_movelist[k], {Knight.row[i], Knight.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<num_queens;k++) {
-        if (in(Queen.protecting_movelist[k], {Knight.row[i], Knight.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Bishop.protecting_movelist[k], {Knight.row[i], Knight.col[i]}))
-          defended ++;
-        if (in(Rook.protecting_movelist[k], {Knight.row[i], Knight.col[i]}))
-          defended ++;
-        if (in(Knight.protecting_movelist[k], {Knight.row[i], Knight.col[i]}))
-          defended ++;
-      }
-    }
-    else if (piece == "R" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Pawn.hit_movelist[k], {Rook.row[i], Rook.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<num_queens;k++) {
-        if (in(Queen.protecting_movelist[k], {Rook.row[i], Rook.col[i]}))
-          defended ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Bishop.protecting_movelist[k], {Rook.row[i], Rook.col[i]}))
-          defended ++;
-        if (in(Rook.protecting_movelist[k], {Rook.row[i], Rook.col[i]}))
-          defended ++;
-        if (in(Knight.protecting_movelist[k], {Rook.row[i], Rook.col[i]}))
-          defended ++;
-      }
-    }
-  }
-  return defended;
-}
-
-// Return the number of times a White piece is attacked.
-int num_attacked(std::string piece) {
-  int attacked = 0;
-  for (int i=0;i<num_queens;i++) {
-    if (piece == "Q" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Black::Pawn.hit_movelist[k], {Queen.row[i], Queen.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<Black::num_queens;k++) {
-        if (in(Black::Queen.movelist[k], {Queen.row[i], Queen.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Black::Bishop.movelist[k], {Queen.row[i], Queen.col[i]}))
-          attacked ++;
-        if (in(Black::Rook.movelist[k], {Queen.row[i], Queen.col[i]}))
-          attacked ++;
-        if (in(Black::Knight.movelist[k], {Queen.row[i], Queen.col[i]}))
-          attacked ++;
-      }
-    }
-  }
-  for (int i=0;i<8;i++) {
-    if (piece == "P" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Black::Pawn.hit_movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<Black::num_queens;k++) {
-        if (in(Black::Queen.movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Black::Bishop.movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          attacked ++;
-        if (in(Black::Rook.movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          attacked ++;
-        if (in(Black::Knight.movelist[k], {Pawn.row[i], Pawn.col[i]}))
-          attacked ++;
-      }
-    }
-  }
-  for (int i=0;i<2;i++) {
-    if (piece == "B" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Black::Pawn.hit_movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<Black::num_queens;k++) {
-        if (in(Black::Queen.movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Black::Bishop.movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          attacked ++;
-        if (in(Black::Rook.movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          attacked ++;
-        if (in(Black::Knight.movelist[k], {Bishop.row[i], Bishop.col[i]}))
-          attacked ++;
-      }
-    }
-    else if (piece == "N" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Black::Pawn.hit_movelist[k], {Knight.row[i], Knight.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<Black::num_queens;k++) {
-        if (in(Black::Queen.movelist[k], {Knight.row[i], Knight.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Black::Bishop.movelist[k], {Knight.row[i], Knight.col[i]}))
-          attacked ++;
-        if (in(Black::Rook.movelist[k], {Knight.row[i], Knight.col[i]}))
-          attacked ++;
-        if (in(Black::Knight.movelist[k], {Knight.row[i], Knight.col[i]}))
-          attacked ++;
-      }
-    }
-    else if (piece == "R" + str(i)) {
-      for (int k=0;k<8;k++) {
-        if (in(Black::Pawn.hit_movelist[k], {Rook.row[i], Rook.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<Black::num_queens;k++) {
-        if (in(Black::Queen.movelist[k], {Rook.row[i], Rook.col[i]}))
-          attacked ++;
-      }
-      for (int k=0;k<2;k++) {
-        if (in(Black::Bishop.movelist[k], {Rook.row[i], Rook.col[i]}))
-          attacked ++;
-        if (in(Black::Rook.movelist[k], {Rook.row[i], Rook.col[i]}))
-          attacked ++;
-        if (in(Black::Knight.movelist[k], {Rook.row[i], Rook.col[i]}))
-          attacked ++;
-      }
-    }
-  }
-  return attacked;
-}
-
 void check_capture_screen() {
   if (screenshots_on && screenshot) {
     std::string path = "assets/screenshots/";
@@ -677,16 +473,15 @@ void print_blocks() {
   }
 }
 
+#ifdef DEBUGAI
 void print_blocks_Log() {
-  #ifndef DEBUGAI
-  return;
-  #endif
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
       Log << blocks[i][k];
     Log << std::endl;
   }
 }
+#endif
 
 void show() {
   Bishop.show();

@@ -8,7 +8,6 @@
 #include <assert.h>
 #include <random>
 #include <fstream>
-#include <omp.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
@@ -21,6 +20,7 @@
 
 extern const bool screenshots_on;
 extern const bool testing;
+extern const bool verbose2;
 extern const bool verbose;
 extern const std::string env;
 extern const bool isBlackAI;
@@ -57,16 +57,16 @@ inline void print_v1(T v) {
   }
   printf("\n");
 }
+
+#ifdef DEBUGAI
 template <typename T>
 inline void print_v1_Log(T v) {
-  #ifndef DEBUGAI
-  return;
-  #endif
   for (int i=0;i<v.size();i++) {
     Log << v[i];
   }
   Log << std::endl;
 }
+#endif
 
 #include "board.h"
 #include "queue.h"

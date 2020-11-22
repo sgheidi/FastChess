@@ -11,7 +11,7 @@ void gen_move() {
   std::map<std::string, std::vector<std::vector<int>>> moves = get_black_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
-  int score;
+  double score;
   Board.freeze = true;
   bool W_king_moved = White::King.moved;
   std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
@@ -21,7 +21,12 @@ void gen_move() {
     std::string piece = random_key(moves);
     std::vector<std::vector<int>> value = moves[piece];
     for (int i=0;i<value.size();i++) {
-      Black::move_piece(piece, value[i][0], value[i][1]);
+      if (piece == "CK")
+        Black::castle_K(false);
+      if (piece == "CQ")
+        Black::castle_Q(false);
+      else
+        Black::move_piece(piece, value[i][0], value[i][1]);
       if (verbose) print("******************OUTER******************");
       if (verbose) std::cout << "****************** "<< piece << " " << value[i][0] << " " << value[i][1]
       << "******************" << std::endl;
@@ -31,6 +36,8 @@ void gen_move() {
       << "******************" << std::endl;
       #endif
       score = minimax(Black::depth, -10000, 10000, "W");
+      if (verbose2) std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") "
+      << score << std::endl;
       Board.pop();
       if (score >= std::stoi(best_move["score"])) {
         best_move["score"] = str(score);
@@ -48,7 +55,12 @@ void gen_move() {
     print("No moves left!");
     exit(1);
   }
-  Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
+  if (best_move["piece"] == "CK")
+    Black::castle_K(false);
+  else if (best_move["piece"] == "CQ")
+    Black::castle_Q(false);
+  else
+    Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
   if (!testing) {
     Black::turn = false;
     White::turn = true;
@@ -61,13 +73,13 @@ void gen_move() {
   Black::King.moved = B_king_moved;
 }
 
-int minimax(int n, int alpha, int beta, std::string player) {
+double minimax(int n, double alpha, double beta, std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> black_moves = get_black_moves();
   std::map<std::string, std::vector<std::vector<int>>> white_moves = get_white_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
   std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
-  int best_move;
+  double best_move;
   if (n == 0)
     return -evaluate_pos();
   // minimizing player
@@ -77,6 +89,7 @@ int minimax(int n, int alpha, int beta, std::string player) {
       std::string piece = random_key(black_moves);
       std::vector<std::vector<int>> value = black_moves[piece];
       for (int i=0;i<value.size();i++) {
+        if (piece == "CK" || piece == "CQ") continue;
         Black::move_piece(piece, value[i][0], value[i][1]);
         if (verbose) print("INNER BLACK");
         if (verbose) std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
