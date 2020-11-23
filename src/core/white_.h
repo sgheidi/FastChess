@@ -16,6 +16,7 @@ extern bool turn;
 extern bool enpassant_check_killed;
 extern bool screenshot;
 
+std::map<std::string, std::vector<std::vector<int>>> get_moves();
 void check_capture_screen();
 void pop_last_queen();
 void handle_undo_promotion(int i, int row, int col);

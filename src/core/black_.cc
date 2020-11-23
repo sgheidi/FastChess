@@ -11,6 +11,33 @@ bool is_AI = isBlackAI;
 const int depth = 2;
 bool screenshot = false;
 
+std::map<std::string, std::vector<std::vector<int>>> get_moves() {
+  std::map<std::string, std::vector<std::vector<int>>> moves = {};
+  if (Black::castle_criteria_K())
+    moves["CK"] = {{0, 0}};
+  if (Black::castle_criteria_Q())
+    moves["CQ"] = {{0, 0}};
+  if (Black::King.alive && !Black::King.movelist.empty())
+    moves["K"] = Black::King.movelist;
+  for (int i=0;i<Black::num_queens;i++) {
+    if (Black::Queen.alive[i] && !Black::Queen.movelist[i].empty())
+      moves["Q" + str(i)] = Black::Queen.movelist[i];
+  }
+  for (int i=0;i<8;i++) {
+    if (Black::Pawn.alive[i] && !Black::Pawn.movelist[i].empty())
+      moves["P" + str(i)] = Black::Pawn.movelist[i];
+  }
+  for (int i=0;i<2;i++) {
+    if (Black::Bishop.alive[i] && !Black::Bishop.movelist[i].empty())
+      moves["B" + str(i)] = Black::Bishop.movelist[i];
+    if (Black::Knight.alive[i] && !Black::Knight.movelist[i].empty())
+      moves["N" + str(i)] = Black::Knight.movelist[i];
+    if (Black::Rook.alive[i] && !Black::Rook.movelist[i].empty())
+      moves["R" + str(i)] = Black::Rook.movelist[i];
+  }
+  return moves;
+}
+
 void check_capture_screen() {
   if (screenshots_on && screenshot) {
     std::string path = "assets/screenshots/";

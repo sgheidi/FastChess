@@ -1,6 +1,7 @@
 #include "../common.h"
 
 // Initialize the board with a custom environment for testing the AI.
+// TODO: blocks needs to be set as well (i think?)
 void init(std::string env) {
   if (env == "") return;
   else if (env == "onlypawns0") {
@@ -143,5 +144,35 @@ void init(std::string env) {
     Black::kill(true, "B0", Black::Bishop.row[0], Black::Bishop.col[0]);
     Black::kill(true, "N0", Black::Knight.row[0], Black::Knight.col[0]);
     Black::kill(true, "Q0", Black::Queen.row[0], Black::Queen.col[0]);
+  }
+  else if (env == "KR") {
+    for (int i=0;i<Black::num_queens;i++)
+      Black::kill(true, "Q" + str(i), Black::Queen.row[i], Black::Queen.col[i]);
+    for (int i=0;i<White::num_queens;i++)
+      White::kill(true, "Q" + str(i), White::Queen.row[i], White::Queen.col[i]);
+    for (int i=0;i<2;i++) {
+      Black::kill(true, "B" + str(i), Black::Bishop.row[i], Black::Bishop.col[i]);
+      White::kill(true, "B" + str(i), White::Bishop.row[i], White::Bishop.col[i]);
+      Black::kill(true, "N" + str(i), Black::Knight.row[i], Black::Knight.col[i]);
+      White::kill(true, "N" + str(i), White::Knight.row[i], White::Knight.col[i]);
+    }
+    for (int i=0;i<8;i++) {
+      Black::kill(true, "P" + str(i), Black::Pawn.row[i], Black::Pawn.col[i]);
+      White::kill(true, "P" + str(i), White::Pawn.row[i], White::Pawn.col[i]);
+    }
+    for (int i=0;i<8;i++) {
+      White::blocks.push_back(std::vector<int>());
+      Black::blocks.push_back(std::vector<int>());
+      for (int k=0;k<8;k++) {
+        White::blocks[i].push_back(0);
+        Black::blocks[i].push_back(0);
+      }
+    }
+    White::blocks[7][0] = 1;
+    White::blocks[7][4] = 1;
+    White::blocks[7][7] = 1;
+    Black::blocks[0][0] = 1;
+    Black::blocks[0][4] = 1;
+    Black::blocks[0][7] = 1;
   }
 }

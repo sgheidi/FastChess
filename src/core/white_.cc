@@ -9,6 +9,29 @@ int num_queens = 1;
 std::vector<std::string> checker = {};
 bool screenshot = true;
 
+std::map<std::string, std::vector<std::vector<int>>> get_moves() {
+  std::map<std::string, std::vector<std::vector<int>>> moves = {};
+  if (White::King.alive && !White::King.movelist.empty())
+    moves["K"] = White::King.movelist;
+  for (int i=0;i<White::num_queens;i++) {
+    if (White::Queen.alive[i] && !White::Queen.movelist[i].empty())
+      moves["Q" + str(i)] = White::Queen.movelist[i];
+  }
+  for (int i=0;i<8;i++) {
+    if (White::Pawn.alive[i] && !White::Pawn.movelist[i].empty())
+      moves["P" + str(i)] = White::Pawn.movelist[i];
+  }
+  for (int i=0;i<2;i++) {
+    if (White::Bishop.alive[i] && !White::Bishop.movelist[i].empty())
+      moves["B" + str(i)] = White::Bishop.movelist[i];
+    if (White::Knight.alive[i] && !White::Knight.movelist[i].empty())
+      moves["N" + str(i)] = White::Knight.movelist[i];
+    if (White::Rook.alive[i] && !White::Rook.movelist[i].empty())
+      moves["R" + str(i)] = White::Rook.movelist[i];
+  }
+  return moves;
+}
+
 void check_capture_screen() {
   if (screenshots_on && screenshot) {
     std::string path = "assets/screenshots/";

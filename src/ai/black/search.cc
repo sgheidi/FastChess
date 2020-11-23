@@ -7,7 +7,7 @@ void gen_move() {
   Log << "Generating move..." << std::endl;
   #endif
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
-  std::map<std::string, std::vector<std::vector<int>>> moves = get_black_moves();
+  std::map<std::string, std::vector<std::vector<int>>> moves = Black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
   double score;
@@ -75,8 +75,8 @@ void gen_move() {
 }
 
 static double minimax(int n, double alpha, double beta, std::string player) {
-  std::map<std::string, std::vector<std::vector<int>>> black_moves = get_black_moves();
-  std::map<std::string, std::vector<std::vector<int>>> white_moves = get_white_moves();
+  std::map<std::string, std::vector<std::vector<int>>> black_moves = Black::get_moves();
+  std::map<std::string, std::vector<std::vector<int>>> white_moves = White::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
   std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
   std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
@@ -101,7 +101,7 @@ static double minimax(int n, double alpha, double beta, std::string player) {
         best_move = std::max(best_move, minimax(n-1, alpha, beta, "W"));
         Board.pop();
         alpha = std::max(alpha, best_move);
-        if (beta <= alpha)
+        if (alpha >= beta)
           return best_move;
       }
       black_moves.erase(piece);
@@ -124,7 +124,7 @@ static double minimax(int n, double alpha, double beta, std::string player) {
         best_move = std::min(best_move, minimax(n-1, alpha, beta, "B"));
         Board.pop();
         beta = std::min(beta, best_move);
-        if (beta <= alpha)
+        if (alpha >= beta)
           return best_move;
       }
       white_moves.erase(piece);
