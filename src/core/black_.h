@@ -40,6 +40,9 @@ void move_piece(std::string piece, int row, int col);
 std::string get_piece(int row_, int col_);
 void play();
 void print_blocks();
+#ifdef DEBUGAI
+void print_blocks_Log();
+#endif
 void show();
 void init();
 

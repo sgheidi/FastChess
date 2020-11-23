@@ -57,12 +57,12 @@ double evaluate_pos() {
   // score -= Eval::pawn_promote();
   // score -= Eval::passed_pawns();
   // score -= Eval::bishop_pair();
-  // score -= Eval::mobility();
+  score -= Eval::mobility();
   // score += White::Eval::RBQ_open_files();
   // score += White::Eval::pawn_promote();
   // score += White::Eval::passed_pawns();
   // score += White::Eval::bishop_pair();
-  // score += White::Eval::mobility();
+  score += White::Eval::mobility();
   return score;
 }
 

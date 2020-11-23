@@ -117,7 +117,7 @@ void castle_Q(bool is_undo) {
 }
 
 bool castle_criteria_Q() {
-  if (King.moved || Rook.moved[0])
+  if (King.moved || Rook.moved[0] || !Rook.alive[0])
     return false;
   if (Black::blocks[7][2] || Black::blocks[7][3] || blocks[7][2] || blocks[7][3])
     return false;
@@ -129,7 +129,7 @@ bool castle_criteria_Q() {
 }
 
 bool castle_criteria_K() {
-  if (King.moved || Rook.moved[1])
+  if (King.moved || Rook.moved[1] || !Rook.alive[1])
     return false;
   if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])
     return false;
@@ -466,6 +466,7 @@ std::string get_piece(int row, int col) {
 }
 
 void print_blocks() {
+  print("--White blocks--");
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
       printf("%d", blocks[i][k]);
@@ -475,6 +476,7 @@ void print_blocks() {
 
 #ifdef DEBUGAI
 void print_blocks_Log() {
+  Log << ("--White blocks--\n");
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
       Log << blocks[i][k];

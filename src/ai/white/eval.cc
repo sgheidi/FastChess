@@ -1,24 +1,29 @@
 #include "../../common.h"
 
 namespace White::Eval {
-
 // General mobility: the number of open positions available to each piece (non-BRQ).
 double mobility() {
   double reward = 0;
-  for (int i=0;i<8;i++) {
-    if (Pawn.alive[i]) {
-      for (int k=0;k<Pawn.movelist[i].size();k++) {
-        if (!blocks[Pawn.movelist[i][k][0]][Pawn.movelist[i][k][1]] &&
-        !Black::blocks[Pawn.movelist[i][k][0]][Pawn.movelist[i][k][1]])
-          reward += MOBILITY;
-      }
-    }
-  }
   for (int i=0;i<2;i++) {
     if (Knight.alive[i]) {
       for (int k=0;k<Knight.movelist[i].size();k++) {
         reward += MOBILITY;
       }
+    }
+    if (Bishop.alive[i]) {
+      for (int k=0;k<Bishop.movelist[i].size();k++) {
+        reward += MOBILITY;
+      }
+    }
+    if (Rook.alive[i]) {
+      for (int k=0;k<Rook.movelist[i].size();k++) {
+        reward += MOBILITY;
+      }
+    }
+  }
+  for (int i=0;i<num_queens;i++) {
+    for (int k=0;k<Queen.movelist[i].size();k++) {
+      reward += MOBILITY;
     }
   }
   return reward;
@@ -91,5 +96,4 @@ double RBQ_open_files() {
   }
   return reward;
 }
-
 } // namespace White::Eval

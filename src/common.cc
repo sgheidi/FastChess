@@ -2,7 +2,7 @@
 
 const std::string env = "";
 const bool testing = false;
-const bool isBlackAI = false;
+const bool isBlackAI = true;
 const bool screenshots_on = false;
 
 const bool verbose = false;

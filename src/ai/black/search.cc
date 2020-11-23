@@ -1,7 +1,6 @@
 #include "../../common.h"
 
 namespace Black::AI {
-
 void gen_move() {
   print("Generating move...");
   #ifdef DEBUGAI
@@ -34,6 +33,8 @@ void gen_move() {
       Log << "******************OUTER******************" << std::endl;
       Log << "****************** "<< piece << " " << value[i][0] << " " << value[i][1]
       << "******************" << std::endl;
+      Black::print_blocks_Log();
+      White::print_blocks_Log();
       #endif
       score = minimax(Black::depth, -10000, 10000, "W");
       if (verbose2) std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") "
@@ -73,7 +74,7 @@ void gen_move() {
   Black::King.moved = B_king_moved;
 }
 
-double minimax(int n, double alpha, double beta, std::string player) {
+static double minimax(int n, double alpha, double beta, std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> black_moves = get_black_moves();
   std::map<std::string, std::vector<std::vector<int>>> white_moves = get_white_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
@@ -131,5 +132,4 @@ double minimax(int n, double alpha, double beta, std::string player) {
   }
   return best_move;
 }
-
 } // namespace Black::AI

@@ -3,7 +3,7 @@
 
 class Game_Board {
 private:
-  inline void drawRect(int*color, int x, int y, int width, int height);
+  static void drawRect(int*color, int x, int y, int width, int height);
 public:
   int total_moves;
   int selected_row, selected_col;
