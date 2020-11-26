@@ -75,7 +75,7 @@ void handle_undo_promotion(int i, int row, int col) {
   revive("P" + str(i), row, col);
 }
 
-void pop_last_queen() {
+static void pop_last_queen() {
   num_queens --;
   blocks[Queen.row[num_queens]][Queen.col[num_queens]] = 0;
   Queen.row.resize(num_queens);
@@ -154,7 +154,7 @@ bool castle_criteria_K() {
   return true;
 }
 
-bool in_opp_movelist(int row, int col) {
+static bool in_opp_movelist(int row, int col) {
   std::vector<int> pos = {row, col};
   if (in(White::King.movelist, pos))
     return true;
@@ -297,7 +297,7 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   enpassant_check_killed = false;
 }
 
-bool opp_no_moves() {
+static bool opp_no_moves() {
   if (!White::King.movelist.empty())
     return false;
   for (int i=0;i<White::num_queens;i++) {
@@ -324,13 +324,13 @@ void reset_enpassant() {
     en_passant[i] = 0;
 }
 
-void check_pin() {
+static void check_pin() {
   Bishop.check_pin();
   Rook.check_pin();
   Queen.check_pin();
 }
 
-void check_avoid_move() {
+static void check_avoid_move() {
   std::vector<std::vector<int>> avoid_moves;
   for (int k=0;k<checker.size();k++) {
     for (int i=0;i<num_queens;i++) {
@@ -347,7 +347,7 @@ void check_avoid_move() {
   White::King.movelist = filter2(White::King.movelist, avoid_moves);
 }
 
-void update_opp_movelists() {
+static void update_opp_movelists() {
   check_avoid_move();
   std::vector<std::vector<int>> check_movelist;
   for (int i=0;i<num_queens;i++) {
@@ -394,7 +394,7 @@ void update_opp_movelists() {
   }
 }
 
-bool check_opp_checked() {
+static bool check_opp_checked() {
   bool checked = false;
   for (int i=0;i<num_queens;i++) {
     if (in(Queen.movelist[i], {White::King.row, White::King.col})) {
@@ -425,7 +425,7 @@ bool check_opp_checked() {
   return checked;
 }
 
-void promote(int i, int row_, int col_) {
+static void promote(int i, int row_, int col_) {
   int row = Pawn.row[i];
   int col = Pawn.col[i];
   kill(false, "P" + std::to_string(i), row, col);
@@ -440,7 +440,7 @@ void promote(int i, int row_, int col_) {
   blocks[row_][col_] = 1;
 }
 
-void check_kill(bool is_undo, int row, int col) {
+static void check_kill(bool is_undo, int row, int col) {
   if (White::blocks[row][col] == 1 && !is_undo) {
     std::string piece = White::get_piece(row, col);
     White::kill(is_undo, piece, row, col);
