@@ -2,7 +2,7 @@
 A fully-featured, elegant chess GUI and AI implementation in C++.
 
 ## Demo
-AI performance at depth = 2: (AI match vs. myself) <br /><br />
+AI performance at depth = 3: (AI match vs. myself) <br /><br />
 <img src="assets/out2.gif" alt="AI vs. myself" width="320"/>
 
 ## Setup
