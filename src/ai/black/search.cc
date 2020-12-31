@@ -16,6 +16,7 @@ void gen_move() {
   std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
   bool B_king_moved = Black::King.moved;
   std::vector<bool> B_rook_moved = {Black::Rook.moved[0], Black::Rook.moved[1]};
+  std::vector<double> scores = {};
   for (itr=temp.begin();itr!=temp.end();itr++) {
     std::string piece = random_key(moves);
     std::vector<std::vector<int>> value = moves[piece];
@@ -37,6 +38,7 @@ void gen_move() {
       White::print_blocks_Log();
       #endif
       score = minimax(Black::depth, -10000, 10000, "W");
+      scores.push_back(score);
       if (verbose2) std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") "
       << score << std::endl;
       Board.pop();
@@ -73,6 +75,14 @@ void gen_move() {
   Black::Rook.moved[1] = B_rook_moved[1];
   White::King.moved = W_king_moved;
   Black::King.moved = B_king_moved;
+  // get a sorted list of all our scores to make sure we have the right move
+  sort(scores.begin(), scores.end());
+  if (verbose2) {
+    std::cout << "**Scores**" << std::endl;
+    for (int i=0;i<scores.size();i++) {
+      std::cout << scores[i] << std::endl;
+    }
+  }
 }
 
 static double minimax(int n, double alpha, double beta, std::string player) {
