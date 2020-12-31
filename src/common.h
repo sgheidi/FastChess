@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+// #define USE_OPENMP
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -11,11 +13,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
+#ifdef USE_OPENMP
+#include <omp.h>
+#endif
 
 // #define DEBUGAI
 
-#define X_RES 800
-#define Y_RES 800
+#define X_RES 600
+#define Y_RES 600
 #define UNIT (X_RES/8)
 
 extern const bool screenshots_on;

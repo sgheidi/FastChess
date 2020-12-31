@@ -9,25 +9,52 @@ int num_queens = 1;
 std::vector<std::string> checker = {};
 bool screenshot = true;
 
-std::map<std::string, std::vector<std::vector<int>>> get_moves() {
-  std::map<std::string, std::vector<std::vector<int>>> moves = {};
-  if (White::King.alive && !White::King.movelist.empty())
-    moves["K"] = White::King.movelist;
-  for (int i=0;i<White::num_queens;i++) {
-    if (White::Queen.alive[i] && !White::Queen.movelist[i].empty())
-      moves["Q" + str(i)] = White::Queen.movelist[i];
+std::vector<std::string> get_movesVec() {
+  std::vector<std::string> moves = {};
+  if (castle_criteria_K())
+    moves.push_back("CK");
+  if (castle_criteria_Q())
+    moves.push_back("CQ");
+  if (King.alive && !King.movelist.empty())
+    moves.push_back("K");
+  for (int i=0;i<num_queens;i++) {
+    if (Queen.alive[i] && !Queen.movelist[i].empty())
+      moves.push_back("Q" + str(i));
   }
   for (int i=0;i<8;i++) {
-    if (White::Pawn.alive[i] && !White::Pawn.movelist[i].empty())
-      moves["P" + str(i)] = White::Pawn.movelist[i];
+    if (Pawn.alive[i] && !Pawn.movelist[i].empty())
+      moves.push_back("P" + str(i));
   }
   for (int i=0;i<2;i++) {
-    if (White::Bishop.alive[i] && !White::Bishop.movelist[i].empty())
-      moves["B" + str(i)] = White::Bishop.movelist[i];
-    if (White::Knight.alive[i] && !White::Knight.movelist[i].empty())
-      moves["N" + str(i)] = White::Knight.movelist[i];
-    if (White::Rook.alive[i] && !White::Rook.movelist[i].empty())
-      moves["R" + str(i)] = White::Rook.movelist[i];
+    if (Bishop.alive[i] && !Bishop.movelist[i].empty())
+      moves.push_back("B" + str(i));
+    if (Knight.alive[i] && !Knight.movelist[i].empty())
+      moves.push_back("N" + str(i));
+    if (Rook.alive[i] && !Rook.movelist[i].empty())
+      moves.push_back("R" + str(i));
+  }
+  return moves;
+}
+
+std::map<std::string, std::vector<std::vector<int>>> get_moves() {
+  std::map<std::string, std::vector<std::vector<int>>> moves = {};
+  if (King.alive && !King.movelist.empty())
+    moves["K"] = King.movelist;
+  for (int i=0;i<num_queens;i++) {
+    if (Queen.alive[i] && !Queen.movelist[i].empty())
+      moves["Q" + str(i)] = Queen.movelist[i];
+  }
+  for (int i=0;i<8;i++) {
+    if (Pawn.alive[i] && !Pawn.movelist[i].empty())
+      moves["P" + str(i)] = Pawn.movelist[i];
+  }
+  for (int i=0;i<2;i++) {
+    if (Bishop.alive[i] && !Bishop.movelist[i].empty())
+      moves["B" + str(i)] = Bishop.movelist[i];
+    if (Knight.alive[i] && !Knight.movelist[i].empty())
+      moves["N" + str(i)] = Knight.movelist[i];
+    if (Rook.alive[i] && !Rook.movelist[i].empty())
+      moves["R" + str(i)] = Rook.movelist[i];
   }
   return moves;
 }
@@ -140,6 +167,7 @@ void castle_Q(bool is_undo) {
 }
 
 bool castle_criteria_Q() {
+  if (King.row != 7 || King.col != 4 || Rook.row[0] != 7 || Rook.col[1] != 0) return false;
   if (King.moved || Rook.moved[0] || !Rook.alive[0])
     return false;
   if (Black::blocks[7][2] || Black::blocks[7][3] || blocks[7][2] || blocks[7][3])
@@ -152,6 +180,7 @@ bool castle_criteria_Q() {
 }
 
 bool castle_criteria_K() {
+  if (King.row != 7 || King.col != 4 || Rook.row[0] != 7 || Rook.col[1] != 7) return false;
   if (King.moved || Rook.moved[1] || !Rook.alive[1])
     return false;
   if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])

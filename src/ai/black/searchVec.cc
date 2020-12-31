@@ -7,18 +7,22 @@ void gen_move() {
   Log << "Generating move..." << std::endl;
   #endif
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
-  std::map<std::string, std::vector<std::vector<int>>> moves = Black::get_moves();
-  std::map<std::string, std::vector<std::vector<int>>> temp = moves;
-  std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
+  std::vector<std::string> moves = Black::get_moves();
+  std::vector<std::string> temp = moves;
   double score;
   Board.freeze = true;
   bool W_king_moved = White::King.moved;
   std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
   bool B_king_moved = Black::King.moved;
   std::vector<bool> B_rook_moved = {Black::Rook.moved[0], Black::Rook.moved[1]};
-  for (itr=temp.begin();itr!=temp.end();itr++) {
-    std::string piece = random_key(moves);
-    std::vector<std::vector<int>> value = moves[piece];
+  std::vector<std::vector<int>> currMvs = {};
+  for (int i=0;i<moves.size();i++) {
+    std::string piece = moves[i];
+    for (int k=0;k<8;k++) {
+      if (piece == "P" + str(k)) {
+
+      }
+    }
     for (int i=0;i<value.size();i++) {
       if (piece == "CK")
         Black::castle_K(false);
@@ -40,7 +44,7 @@ void gen_move() {
       if (verbose2) std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") "
       << score << std::endl;
       Board.pop();
-      if (score >= std::stof(best_move["score"])) {
+      if (score >= std::stoi(best_move["score"])) {
         best_move["score"] = str(score);
         best_move["piece"] = piece;
         best_move["pos"] = str(value[i][0]) + str(value[i][1]);
@@ -62,7 +66,6 @@ void gen_move() {
     Black::castle_Q(false);
   else
     Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
-  std::cout << "Best move is " << best_move["piece"] << " to " << "(" << best_move["pos"][0] << ", " << best_move["pos"][1] << ")" << std::endl;
   if (!testing) {
     Black::turn = false;
     White::turn = true;
@@ -76,11 +79,10 @@ void gen_move() {
 }
 
 static double minimax(int n, double alpha, double beta, std::string player) {
-  std::map<std::string, std::vector<std::vector<int>>> black_moves = Black::get_moves();
-  std::map<std::string, std::vector<std::vector<int>>> white_moves = White::get_moves();
-  std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
-  std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
-  std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
+  std::vector<std::string> black_moves = Black::get_moves();
+  std::vector<std::string> white_moves = White::get_moves();
+  std::vector<std::string> btemp = black_moves;
+  std::vector<std::string> wtemp = white_moves;
   double best_move;
   if (n == 0)
     return -evaluate_pos();

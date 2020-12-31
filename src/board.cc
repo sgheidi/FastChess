@@ -163,14 +163,6 @@ void Game_Board::play() {
     White::play();
 }
 
-// Draw a rectangle at (x, y) with 'width' and 'height'
-void Game_Board::drawRect(int*color, int x, int y, int width, int height) {
-  sf::RectangleShape rectangle(sf::Vector2f(width, height));
-  rectangle.setPosition(x, y);
-  rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
-  window.draw(rectangle);
-}
-
 void Game_Board::draw_board() {
   int brown[3] = {92, 48, 17};
   int white[3] = {180, 180, 180};
@@ -182,21 +174,100 @@ void Game_Board::draw_board() {
     for (int i=0; i<8; i++) {
       if (outer) {
         if (i%2 == 0)
-          drawRect(white, x, y, UNIT, UNIT);
-        else
           drawRect(brown, x, y, UNIT, UNIT);
+        else
+          drawRect(white, x, y, UNIT, UNIT);
         x += UNIT;
       }
       else {
         if (i%2 == 0)
-          drawRect(brown, x, y, UNIT, UNIT);
-        else
           drawRect(white, x, y, UNIT, UNIT);
+        else
+          drawRect(brown, x, y, UNIT, UNIT);
         x += UNIT;
       }
     }
     y += UNIT;
     x = 0;
+  }
+}
+
+// Draw a rectangle at (x, y) with 'width' and 'height'
+void Game_Board::drawRect(int*color, int x, int y, int width, int height) {
+  sf::RectangleShape rectangle(sf::Vector2f(width, height));
+  rectangle.setPosition(x, y);
+  rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
+  window.draw(rectangle);
+}
+
+void Game_Board::Circle(int row, int col) {
+  sf::CircleShape circle(10);
+  circle.setPosition(col*UNIT + 2*pieces_paddingx, row*UNIT + 3*pieces_paddingy);
+  circle.setFillColor(sf::Color(110, 71, 55));
+  window.draw(circle);
+}
+
+// show legal moves of selected piece
+void Game_Board::show_legal_moves() {
+  std::string selected_piece = get_selected_piece();
+  if (selected_piece == "") return;
+  else if (selected_piece == "K") {
+    for (int i=0;i<White::King.movelist.size();i++)
+      Circle(White::King.movelist[i][0], White::King.movelist[i][1]);
+  }
+  for (int i=0;i<8;i++) {
+    if (selected_piece == "P" + str(i)) {
+      for (int k=0;k<White::Pawn.movelist[i].size();k++)
+        Circle(White::Pawn.movelist[i][k][0], White::Pawn.movelist[i][k][1]);
+    }
+  }
+  for (int i=0;i<White::num_queens;i++) {
+    if (selected_piece == "Q" + str(i)) {
+      for (int k=0;k<White::Queen.movelist[i].size();k++)
+        Circle(White::Queen.movelist[i][k][0], White::Queen.movelist[i][k][1]);
+    }
+  }
+  for (int i=0;i<2;i++) {
+    if (selected_piece == "B" + str(i)) {
+      for (int k=0;k<White::Bishop.movelist[i].size();k++)
+        Circle(White::Bishop.movelist[i][k][0], White::Bishop.movelist[i][k][1]);
+    }
+    else if (selected_piece == "N" + str(i)) {
+      for (int k=0;k<White::Knight.movelist[i].size();k++)
+        Circle(White::Knight.movelist[i][k][0], White::Knight.movelist[i][k][1]);
+    }
+    else if (selected_piece == "R" + str(i)) {
+      for (int k=0;k<White::Rook.movelist[i].size();k++)
+        Circle(White::Rook.movelist[i][k][0], White::Rook.movelist[i][k][1]);
+    }
+  }
+}
+
+std::string Game_Board::get_selected_piece() {
+  if (clicked_piece != "") return clicked_piece;
+  if (selected_row == -1 || selected_col == -1) return "";
+  else if (!White::blocks[selected_row][selected_col]) return "";
+  return White::get_piece(selected_row, selected_col);
+}
+
+// reset sprites to where they're supposed to be
+void Game_Board::reset_pos() {
+  White::King.move(White::King.row, White::King.col);
+  for (int i=0;i<8;i++) {
+    if (White::Pawn.alive[i])
+      White::Pawn.move(i, White::Pawn.row[i], White::Pawn.col[i]);
+  }
+  for (int i=0;i<White::num_queens;i++) {
+    if (White::Queen.alive[i])
+      White::Queen.move(i, White::Queen.row[i], White::Queen.col[i]);
+  }
+  for (int i=0;i<2;i++) {
+    if (White::Bishop.alive[i])
+      White::Bishop.move(i, White::Bishop.row[i], White::Bishop.col[i]);
+    if (White::Rook.alive[i])
+      White::Rook.move(i, White::Rook.row[i], White::Rook.col[i]);
+    if (White::Knight.alive[i])
+      White::Knight.move(i, White::Knight.row[i], White::Knight.col[i]);
   }
 }
 

@@ -11,32 +11,61 @@ bool is_AI = isBlackAI;
 const int depth = 2;
 bool screenshot = false;
 
-std::map<std::string, std::vector<std::vector<int>>> get_moves() {
-  std::map<std::string, std::vector<std::vector<int>>> moves = {};
-  if (Black::castle_criteria_K())
-    moves["CK"] = {{0, 0}};
-  if (Black::castle_criteria_Q())
-    moves["CQ"] = {{0, 0}};
-  if (Black::King.alive && !Black::King.movelist.empty())
-    moves["K"] = Black::King.movelist;
-  for (int i=0;i<Black::num_queens;i++) {
-    if (Black::Queen.alive[i] && !Black::Queen.movelist[i].empty())
-      moves["Q" + str(i)] = Black::Queen.movelist[i];
+std::vector<std::string> get_movesVec() {
+  std::vector<std::string> moves = {};
+  if (castle_criteria_K())
+    moves.push_back("CK");
+  if (castle_criteria_Q())
+    moves.push_back("CQ");
+  if (King.alive && !King.movelist.empty())
+    moves.push_back("K");
+  for (int i=0;i<num_queens;i++) {
+    if (Queen.alive[i] && !Queen.movelist[i].empty())
+      moves.push_back("Q" + str(i));
   }
   for (int i=0;i<8;i++) {
-    if (Black::Pawn.alive[i] && !Black::Pawn.movelist[i].empty())
-      moves["P" + str(i)] = Black::Pawn.movelist[i];
+    if (Pawn.alive[i] && !Pawn.movelist[i].empty())
+      moves.push_back("P" + str(i));
   }
   for (int i=0;i<2;i++) {
-    if (Black::Bishop.alive[i] && !Black::Bishop.movelist[i].empty())
-      moves["B" + str(i)] = Black::Bishop.movelist[i];
-    if (Black::Knight.alive[i] && !Black::Knight.movelist[i].empty())
-      moves["N" + str(i)] = Black::Knight.movelist[i];
-    if (Black::Rook.alive[i] && !Black::Rook.movelist[i].empty())
-      moves["R" + str(i)] = Black::Rook.movelist[i];
+    if (Bishop.alive[i] && !Bishop.movelist[i].empty())
+      moves.push_back("B" + str(i));
+    if (Knight.alive[i] && !Knight.movelist[i].empty())
+      moves.push_back("N" + str(i));
+    if (Rook.alive[i] && !Rook.movelist[i].empty())
+      moves.push_back("R" + str(i));
   }
   return moves;
 }
+
+std::map<std::string, std::vector<std::vector<int>>> get_moves() {
+  std::map<std::string, std::vector<std::vector<int>>> moves = {};
+  if (castle_criteria_K())
+    moves["CK"] = {{0, 0}};
+  if (castle_criteria_Q())
+    moves["CQ"] = {{0, 0}};
+  if (King.alive && !King.movelist.empty())
+    moves["K"] = King.movelist;
+  for (int i=0;i<num_queens;i++) {
+    if (Queen.alive[i] && !Queen.movelist[i].empty())
+      moves["Q" + str(i)] = Queen.movelist[i];
+  }
+  for (int i=0;i<8;i++) {
+    if (Pawn.alive[i] && !Pawn.movelist[i].empty())
+      moves["P" + str(i)] = Pawn.movelist[i];
+  }
+  for (int i=0;i<2;i++) {
+    if (Bishop.alive[i] && !Bishop.movelist[i].empty())
+      moves["B" + str(i)] = Bishop.movelist[i];
+    if (Knight.alive[i] && !Knight.movelist[i].empty())
+      moves["N" + str(i)] = Knight.movelist[i];
+    if (Rook.alive[i] && !Rook.movelist[i].empty())
+      moves["R" + str(i)] = Rook.movelist[i];
+  }
+  return moves;
+}
+
+
 
 void check_capture_screen() {
   if (screenshots_on && screenshot) {
@@ -131,6 +160,7 @@ void castle_Q(bool is_undo) {
 }
 
 bool castle_criteria_Q() {
+  if (King.row != 0 || King.col != 4 || Rook.row[0] != 0 || Rook.col[1] != 0) return false;
   if (King.moved || Rook.moved[0] || !Rook.alive[0])
     return false;
   if (White::blocks[0][2] || White::blocks[0][3] || blocks[0][2] || blocks[0][3])
@@ -143,6 +173,7 @@ bool castle_criteria_Q() {
 }
 
 bool castle_criteria_K() {
+  if (King.row != 0 || King.col != 4 || Rook.row[0] != 0 || Rook.col[1] != 7) return false;
   if (King.moved || Rook.moved[1] || !Rook.alive[1])
     return false;
   if (White::blocks[0][5] || White::blocks[0][6] || blocks[0][5] || blocks[0][6])
