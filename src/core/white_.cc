@@ -75,7 +75,7 @@ void play() {
   blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
-    if (verbose) print("-----------------------NON-AI MOVE-----------------------");
+    if (verbose2) print("-----------------------NON-AI MOVE-----------------------");
     #ifdef DEBUGAI
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;

@@ -5,8 +5,11 @@ const bool testing = false;
 const bool isBlackAI = true;
 const bool screenshots_on = false;
 
-const bool verbose = false;
-const bool verbose2 = true;
+// for useful outputs relating to AI eval
+const bool verbose = true;
+
+// more verbose outputs relating to AI search in CLI
+const bool verbose2 = false;
 
 #ifdef DEBUGAI
 std::ofstream Log("debug.log");
@@ -20,6 +23,7 @@ struct undo_stack undo = {
   {},
   {}
 };
+sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
 
 void take_screenshot(const sf::RenderWindow& window, const std::string& filename) {
   sf::Texture texture;
@@ -32,8 +36,7 @@ void take_screenshot(const sf::RenderWindow& window, const std::string& filename
 }
 
 void print_map(std::map<std::string, std::vector<std::vector<int>>> map) {
-  std::map<std::string, std::vector<std::vector<int>>>::iterator itr;
-  for (itr=map.begin();itr!=map.end();itr++) {
+  for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=map.begin();itr!=map.end();itr++) {
     std::cout << itr->first << std::endl;
     print_v2(itr->second);
   }
@@ -125,6 +128,3 @@ Rook_Piece Rook;
 King_Piece King;
 Queen_Piece Queen;
 }
-
-sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
-sf::Image image;

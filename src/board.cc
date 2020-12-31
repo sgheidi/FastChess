@@ -2,7 +2,7 @@
 
 void Game_Board::pop() {
   int last = total_moves-1;
-  if (verbose) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
+  if (verbose2) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
   << undo.moved_from[last][1] << std::endl;
   #ifdef DEBUGAI
   Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "

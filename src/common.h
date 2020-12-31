@@ -1,8 +1,6 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-// #define USE_OPENMP
-
 #include <iostream>
 #include <vector>
 #include <map>
@@ -13,10 +11,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
-#ifdef USE_OPENMP
-#include <omp.h>
-#endif
 
+// uncomment this to dump verbose AI search logs in file debug.log
 // #define DEBUGAI
 
 #define X_RES 600
@@ -40,6 +36,7 @@ struct undo_stack {
   std::vector<std::string> killed_color;
 };
 extern struct undo_stack undo;
+
 
 void take_screenshot(const sf::RenderWindow& window, const std::string& filename);
 void init(std::string env);
