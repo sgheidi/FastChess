@@ -36,7 +36,7 @@ struct undo_stack {
   std::vector<std::string> killed_color;
 };
 extern struct undo_stack undo;
-
+extern sf::RenderWindow window;
 
 void take_screenshot(const sf::RenderWindow& window, const std::string& filename);
 void init(std::string env);
@@ -97,8 +97,5 @@ inline void print_v1_Log(T v) {
 #include "ai/black/eval.h"
 #include "ai/white/eval.h"
 #include "ai/black/search.h"
-
-extern sf::RenderWindow window;
-extern sf::Image image;
 
 #endif // COMMON_H
