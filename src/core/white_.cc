@@ -1,4 +1,33 @@
-#include "../common.h"
+#include "../common/config.h"
+#include "../common/util.h"
+
+#include "../board.h"
+#include "../queue.h"
+#include "piece.h"
+#include "../media/text.h"
+#include "../media/sound.h"
+
+#include "black/bishop.h"
+#include "black/knight.h"
+#include "black/pawn.h"
+#include "black/rook.h"
+#include "black/queen.h"
+#include "black/king.h"
+
+#include "white/bishop.h"
+#include "white/knight.h"
+#include "white/pawn.h"
+#include "white/rook.h"
+#include "white/queen.h"
+#include "white/king.h"
+
+#include "white_.h"
+#include "black_.h"
+
+#include "../ai/helper.h"
+#include "../ai/black/eval.h"
+#include "../ai/white/eval.h"
+#include "../ai/black/search.h"
 
 namespace White {
 std::vector<std::vector<int>> blocks(8);

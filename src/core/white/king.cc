@@ -1,10 +1,25 @@
-#include "../../common.h"
+#include "../../common/config.h"
+#include "../../common/util.h"
+
+#include "../../board.h"
+#include "../piece.h"
+
+#include "../black/bishop.h"
+#include "../black/knight.h"
+#include "../black/pawn.h"
+#include "../black/rook.h"
+#include "../black/queen.h"
+#include "../black/king.h"
+
+#include "king.h"
+
+#include "../white_.h"
+#include "../black_.h"
 
 namespace White {
 
 void King_Piece::update_movelist() {
-  if (!alive)
-    return;
+  if (!alive) return;
   movelist.clear();
   std::vector<std::vector<int>> pos = {
   {row-1, col-1}, {row-1, col}, {row-1, col+1},

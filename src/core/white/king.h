@@ -25,6 +25,8 @@ public:
   void show();
 };
 
+extern King_Piece King;
+
 } // namespace White
 
 #endif // WHITE_KING_H

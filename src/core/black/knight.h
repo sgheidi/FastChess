@@ -21,6 +21,8 @@ public:
   void show();
 };
 
+extern Knight_Piece Knight;
+
 } // namespace Black
 
 #endif // BLACK_KNIGHT_H

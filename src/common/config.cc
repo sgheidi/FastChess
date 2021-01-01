@@ -1,4 +1,33 @@
 #include "config.h"
+#include "util.h"
+
+#include "../board.h"
+#include "../queue.h"
+#include "../core/piece.h"
+#include "../media/text.h"
+#include "../media/sound.h"
+
+#include "../core/black/bishop.h"
+#include "../core/black/knight.h"
+#include "../core/black/pawn.h"
+#include "../core/black/rook.h"
+#include "../core/black/queen.h"
+#include "../core/black/king.h"
+
+#include "../core/white/bishop.h"
+#include "../core/white/knight.h"
+#include "../core/white/pawn.h"
+#include "../core/white/rook.h"
+#include "../core/white/queen.h"
+#include "../core/white/king.h"
+
+#include "../core/white_.h"
+#include "../core/black_.h"
+
+#include "../ai/helper.h"
+#include "../ai/black/eval.h"
+#include "../ai/white/eval.h"
+#include "../ai/black/search.h"
 
 const std::string env = "";
 const bool testing = false;
@@ -24,3 +53,27 @@ struct undo_stack undo = {
   {}
 };
 sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
+
+// objects.cc
+Game_Board Board;
+Click_Queue Queue;
+Game_Sound Sound;
+Game_Text Text;
+
+namespace Black {
+Bishop_Piece Bishop;
+Knight_Piece Knight;
+Pawn_Piece Pawn;
+Rook_Piece Rook;
+King_Piece King;
+Queen_Piece Queen;
+}
+
+namespace White {
+Bishop_Piece Bishop;
+Knight_Piece Knight;
+Pawn_Piece Pawn;
+Rook_Piece Rook;
+King_Piece King;
+Queen_Piece Queen;
+}

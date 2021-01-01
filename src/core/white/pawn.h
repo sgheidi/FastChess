@@ -24,6 +24,8 @@ public:
   void show();
 };
 
+extern Pawn_Piece Pawn;
+
 } // namespace White
 
 #endif // WHITE_PAWN_H

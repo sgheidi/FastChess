@@ -23,6 +23,8 @@ public:
   void show();
 };
 
+extern Pawn_Piece Pawn;
+
 } // namespace Black
 
 #endif // BLACK_PAWN_H

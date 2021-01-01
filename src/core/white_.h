@@ -2,12 +2,6 @@
 #define WHITE__H
 
 namespace White {
-extern Bishop_Piece Bishop;
-extern Knight_Piece Knight;
-extern Pawn_Piece Pawn;
-extern Rook_Piece Rook;
-extern King_Piece King;
-extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern int num_queens;
 extern std::vector<std::string> checker;

@@ -2,18 +2,12 @@
 #define BLACK__H
 
 namespace Black {
-extern Bishop_Piece Bishop;
-extern Knight_Piece Knight;
-extern Pawn_Piece Pawn;
-extern Rook_Piece Rook;
-extern King_Piece King;
-extern Queen_Piece Queen;
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 extern int num_queens;
 extern std::vector<std::string> checker;
 extern std::vector<bool> en_passant;
-extern bool is_AI;
+extern const bool is_AI;
 extern const int depth;
 extern bool screenshot;
 

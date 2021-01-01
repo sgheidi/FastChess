@@ -1,4 +1,32 @@
-#include "common.h"
+#include "common/config.h"
+#include "common/util.h"
+
+#include "board.h"
+#include "queue.h"
+#include "core/piece.h"
+#include "media/text.h"
+
+#include "core/black/bishop.h"
+#include "core/black/knight.h"
+#include "core/black/pawn.h"
+#include "core/black/rook.h"
+#include "core/black/queen.h"
+#include "core/black/king.h"
+
+#include "core/white/bishop.h"
+#include "core/white/knight.h"
+#include "core/white/pawn.h"
+#include "core/white/rook.h"
+#include "core/white/queen.h"
+#include "core/white/king.h"
+
+#include "core/white_.h"
+#include "core/black_.h"
+
+#include "ai/helper.h"
+#include "ai/black/eval.h"
+#include "ai/white/eval.h"
+#include "ai/black/search.h"
 
 void Game_Board::pop() {
   int last = total_moves-1;

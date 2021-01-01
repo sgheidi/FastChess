@@ -1,4 +1,32 @@
-#include "../common.h"
+#include "../common/config.h"
+#include "../common/util.h"
+
+#include "../board.h"
+#include "../queue.h"
+#include "../core/piece.h"
+#include "../media/text.h"
+
+#include "../core/black/bishop.h"
+#include "../core/black/knight.h"
+#include "../core/black/pawn.h"
+#include "../core/black/rook.h"
+#include "../core/black/queen.h"
+#include "../core/black/king.h"
+
+#include "../core/white/bishop.h"
+#include "../core/white/knight.h"
+#include "../core/white/pawn.h"
+#include "../core/white/rook.h"
+#include "../core/white/queen.h"
+#include "../core/white/king.h"
+
+#include "../core/white_.h"
+#include "../core/black_.h"
+
+#include "helper.h"
+#include "black/eval.h"
+#include "white/eval.h"
+#include "black/search.h"
 
 // ranks 4, 5, 6. These rewards accumulate as a pawn advances in its file.
 const std::vector<double> PASSED_PAWNS = {1.1, 0.5, 0.5};

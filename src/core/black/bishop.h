@@ -28,6 +28,8 @@ public:
   void show();
 };
 
+extern Bishop_Piece Bishop;
+
 } // namespace Black
 
 #endif // BLACK_BISHOP_H

@@ -30,6 +30,8 @@ public:
   void show();
 };
 
+extern Rook_Piece Rook;
+
 } // namespace Black
 
 #endif // BLACK_ROOK_H

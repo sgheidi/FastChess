@@ -33,3 +33,4 @@ struct undo_stack {
   std::vector<std::string> killed_color;
 };
 extern struct undo_stack undo;
+extern sf::RenderWindow window;

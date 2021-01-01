@@ -1,9 +1,11 @@
-#include "../common.h"
+#include "../common/config.h"
+#include "../common/util.h"
+#include "text.h"
 
 void Game_Text::checkmate() {
   text.setFont(font);
   text.setString("Checkmate");
-  text.setCharacterSize(60);
+  text.setCharacterSize(40);
   text.setFillColor(sf::Color(color[0], color[1], color[2]));
   text.setStyle(sf::Text::Bold | sf::Text::Underlined);
   sf::FloatRect textRect = text.getLocalBounds();
@@ -15,7 +17,7 @@ void Game_Text::checkmate() {
 void Game_Text::stalemate() {
   text.setFont(font);
   text.setString("Stalemate");
-  text.setCharacterSize(60);
+  text.setCharacterSize(40);
   text.setFillColor(sf::Color(color[0], color[1], color[2]));
   text.setStyle(sf::Text::Bold | sf::Text::Underlined);
   sf::FloatRect textRect = text.getLocalBounds();

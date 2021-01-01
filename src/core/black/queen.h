@@ -28,6 +28,8 @@ public:
   void show();
 };
 
+extern Queen_Piece Queen;
+
 } // namespace Black
 
 #endif // BLACK_QUEEN_H

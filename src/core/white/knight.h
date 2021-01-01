@@ -21,6 +21,8 @@ public:
   void show();
 };
 
+extern Knight_Piece Knight;
+
 } // namespace White
 
 #endif // WHITE_KNIGHT_H

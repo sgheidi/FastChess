@@ -28,6 +28,8 @@ public:
   void show();
 };
 
+extern Bishop_Piece Bishop;
+
 } // namespace White
 
 #endif // WHITE_BISHOP_H

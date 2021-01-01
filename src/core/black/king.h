@@ -25,6 +25,8 @@ public:
   void show();
 };
 
+extern King_Piece King;
+
 } // namespace Black
 
 #endif // BLACK_KING_H
