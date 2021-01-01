@@ -49,7 +49,6 @@ struct undo_stack undo = {
 };
 sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
 
-// objects.cc
 Game_Board Board;
 Click_Queue Queue;
 Game_Sound Sound;

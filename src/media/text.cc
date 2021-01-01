@@ -1,5 +1,4 @@
 #include "../common/config.h"
-#include "../common/util.h"
 #include "text.h"
 
 void Game_Text::checkmate() {

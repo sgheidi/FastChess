@@ -1,5 +1,4 @@
 #include "../common/config.h"
-#include "../common/util.h"
 
 #include "../core/piece.h"
 

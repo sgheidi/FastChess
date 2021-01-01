@@ -1,6 +1,8 @@
 #include "../../common/config.h"
 #include "../../common/util.h"
 
+#include "../../core/piece.h"
+
 #include "../../core/black/bishop.h"
 #include "../../core/black/knight.h"
 #include "../../core/black/pawn.h"
@@ -18,6 +20,7 @@
 #include "../../core/white_.h"
 #include "../../core/black_.h"
 
+#include "../helper.h"
 #include "eval.h"
 
 namespace White::Eval {

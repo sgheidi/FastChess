@@ -4,7 +4,6 @@
 #include "../board.h"
 #include "../queue.h"
 #include "piece.h"
-#include "../media/text.h"
 #include "../media/sound.h"
 
 #include "black/bishop.h"

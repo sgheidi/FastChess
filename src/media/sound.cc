@@ -1,5 +1,4 @@
 #include "../common/config.h"
-#include "../common/util.h"
 #include "sound.h"
 
 void Game_Sound::check() {

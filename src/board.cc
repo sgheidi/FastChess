@@ -2,7 +2,6 @@
 #include "common/util.h"
 
 #include "board.h"
-#include "queue.h"
 #include "core/piece.h"
 #include "media/text.h"
 
@@ -22,11 +21,6 @@
 
 #include "core/white_.h"
 #include "core/black_.h"
-
-#include "ai/helper.h"
-#include "ai/black/eval.h"
-#include "ai/white/eval.h"
-#include "ai/black/search.h"
 
 void Game_Board::pop() {
   int last = total_moves-1;
