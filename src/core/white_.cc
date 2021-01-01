@@ -24,11 +24,6 @@
 #include "white_.h"
 #include "black_.h"
 
-#include "../ai/helper.h"
-#include "../ai/black/eval.h"
-#include "../ai/white/eval.h"
-#include "../ai/black/search.h"
-
 namespace White {
 std::vector<std::vector<int>> blocks(8);
 std::vector<bool> en_passant(8);

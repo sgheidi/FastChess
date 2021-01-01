@@ -24,11 +24,6 @@
 #include "../core/white_.h"
 #include "../core/black_.h"
 
-#include "../ai/helper.h"
-#include "../ai/black/eval.h"
-#include "../ai/white/eval.h"
-#include "../ai/black/search.h"
-
 const std::string env = "";
 const bool testing = false;
 const bool isBlackAI = true;

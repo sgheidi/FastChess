@@ -1,10 +1,7 @@
 #include "../common/config.h"
 #include "../common/util.h"
 
-#include "../board.h"
-#include "../queue.h"
 #include "../core/piece.h"
-#include "../media/text.h"
 
 #include "../core/black/bishop.h"
 #include "../core/black/knight.h"
@@ -26,7 +23,6 @@
 #include "helper.h"
 #include "black/eval.h"
 #include "white/eval.h"
-#include "black/search.h"
 
 // ranks 4, 5, 6. These rewards accumulate as a pawn advances in its file.
 const std::vector<double> PASSED_PAWNS = {1.1, 0.5, 0.5};
