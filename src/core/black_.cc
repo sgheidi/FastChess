@@ -65,8 +65,6 @@ std::map<std::string, std::vector<std::vector<int>>> get_moves() {
   return moves;
 }
 
-
-
 void check_capture_screen() {
   if (screenshots_on && screenshot) {
     std::string path = "assets/screenshots/";

@@ -51,8 +51,7 @@ void print(std::string s) {
 }
 
 // This function removes any elements in v1 that are in v2
-std::vector<std::vector<int>>
-filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
+std::vector<std::vector<int>> filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
   for (int i=0;i<v1.size();i++) {
     if (in(v2, v1[i])) {
       v1.erase(v1.begin() + i);
@@ -63,8 +62,7 @@ filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
 }
 
 // This function removes any elements in v1 that are not in v2
-std::vector<std::vector<int>>
-filter(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
+std::vector<std::vector<int>> filter(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
   for (int i=0;i<v1.size();i++) {
     if (!in(v2, v1[i])) {
       v1.erase(v1.begin() + i);
