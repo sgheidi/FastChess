@@ -1,5 +1,5 @@
-#ifndef WHITE_EVAL_H
-#define WHITE_EVAL_H
+#ifndef AI_WHITE_EVAL_H
+#define AI_WHITE_EVAL_H
 
 namespace White::Eval {
 double mobility();
@@ -10,4 +10,4 @@ double bishop_pair();
 double RBQ_open_files();
 } // namespace White::Eval
 
-#endif // WHITE_EVAL_H
+#endif // AI_WHITE_EVAL_H

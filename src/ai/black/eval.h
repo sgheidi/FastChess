@@ -1,5 +1,5 @@
-#ifndef BLACK_EVAL_H
-#define BLACK_EVAL_H
+#ifndef AI_BLACK_EVAL_H
+#define AI_BLACK_EVAL_H
 
 namespace Black::Eval {
 double mobility();
@@ -8,4 +8,4 @@ double bishop_pair();
 double RBQ_open_files();
 } // namespace Black::Eval
 
-#endif // BLACK_EVAL_H
+#endif // AI_BLACK_EVAL_H

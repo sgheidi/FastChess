@@ -26,11 +26,9 @@
 
 void Game_Board::pop() {
   int last = total_moves-1;
-  if (verbose2) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
-  << undo.moved_from[last][1] << std::endl;
+  if (verbose2) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
   #ifdef DEBUGAI
-  Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " "
-  << undo.moved_from[last][1] << std::endl;
+  Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
   #endif
   if (last < 0)
     return;
@@ -295,7 +293,7 @@ void Game_Board::reset_pos() {
   }
 }
 
-// Return (row, col) of pixel values
+// Return (row, col) of pixel coords (x, y)
 std::vector<int> Game_Board::get_coords(int x, int y) {
   if (x >= 0 && y >= 0 && x <= X_RES && y <= Y_RES)
     return {x/UNIT, y/UNIT};

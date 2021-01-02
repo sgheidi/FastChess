@@ -28,7 +28,7 @@ namespace White {
 std::vector<std::vector<int>> blocks(8);
 std::vector<bool> en_passant(8);
 bool turn = true;
-bool enpassant_check_killed = false;
+static bool enpassant_check_killed = false;
 int num_queens = 1;
 std::vector<std::string> checker = {};
 bool screenshot = true;

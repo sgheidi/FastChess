@@ -30,7 +30,7 @@ std::vector<bool> en_passant(8);
 bool turn = false;
 int num_queens = 1;
 std::vector<std::string> checker = {};
-bool enpassant_check_killed = false;
+static bool enpassant_check_killed = false;
 const bool is_AI = isBlackAI;
 const int depth = 2;
 bool screenshot = false;

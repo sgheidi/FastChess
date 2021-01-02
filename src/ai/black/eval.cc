@@ -74,8 +74,7 @@ double RBQ_open_files() {
   for (int i=0;i<num_queens;i++) {
     if (Queen.alive[i]) {
       for (int k=0;k<Queen.movelist[i].size();k++) {
-        if (!blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]] &&
-        !White::blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]])
+        if (!blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]] && !White::blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
@@ -83,8 +82,7 @@ double RBQ_open_files() {
   for (int i=0;i<2;i++) {
     if (Bishop.alive[i]) {
       for (int k=0;k<Bishop.movelist[i].size();k++) {
-        if (!blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]] &&
-        !White::blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]])
+        if (!blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]] && !White::blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }

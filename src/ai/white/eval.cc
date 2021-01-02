@@ -21,6 +21,7 @@
 #include "eval.h"
 
 namespace White::Eval {
+
 // General mobility: the number of open positions available to each piece (non-BRQ).
 double mobility() {
   double reward = 0;
@@ -47,14 +48,6 @@ double mobility() {
     }
   }
   return reward;
-}
-
-// N points for every piece opposite piece that is attacked and not defended (N for piece value).
-// - e.g white bishop attacked 3 times, defended 2 times -> N = 3.
-// - e.g Black (AI) bishop attacked 3 times and defended 2 times -> N = -3.
-// Do not consider defending more than needed (i.e only want defending at most N times for attacked N times).
-double N_attacked_defended() {
-
 }
 
 double passed_pawns() {
@@ -92,8 +85,7 @@ double RBQ_open_files() {
   for (int i=0;i<num_queens;i++) {
     if (Queen.alive[i]) {
       for (int k=0;k<Queen.movelist[i].size();k++) {
-        if (!blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]] &&
-        !Black::blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]])
+        if (!blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]] && !Black::blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
@@ -101,15 +93,13 @@ double RBQ_open_files() {
   for (int i=0;i<2;i++) {
     if (Bishop.alive[i]) {
       for (int k=0;k<Bishop.movelist[i].size();k++) {
-        if (!blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]] &&
-        !Black::blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]])
+        if (!blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]] && !Black::blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
     if (Rook.alive[i]) {
       for (int k=0;k<Rook.movelist[i].size();k++) {
-        if (!blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]] &&
-        !Black::blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]])
+        if (!blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]] && !Black::blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }

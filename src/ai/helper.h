@@ -1,5 +1,5 @@
-#ifndef HELPER_H
-#define HELPER_H
+#ifndef AI_HELPER_H
+#define AI_HELPER_H
 
 #define MOBILITY 0.085
 #define RBQ_OPEN_FILES_REWARD 0.025
@@ -19,4 +19,4 @@ double pawn_promote();
 double bishop_pair();
 } // namespace Black::AI
 
-#endif // HELPER_H
+#endif // AI_HELPER_H

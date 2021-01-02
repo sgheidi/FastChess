@@ -7,7 +7,6 @@ extern int num_queens;
 extern std::vector<std::string> checker;
 extern std::vector<bool> en_passant;
 extern bool turn;
-extern bool enpassant_check_killed;
 extern bool screenshot;
 
 std::map<std::string, std::vector<std::vector<int>>> get_moves();

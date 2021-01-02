@@ -5,7 +5,6 @@
 #include "queue.h"
 #include "media/text.h"
 
-#include "core/black/bishop.h"
 #include "core/black/knight.h"
 #include "core/black/pawn.h"
 #include "core/black/rook.h"

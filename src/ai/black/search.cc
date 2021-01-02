@@ -51,20 +51,19 @@ void gen_move() {
         Black::castle_Q(false);
       else
         Black::move_piece(piece, value[i][0], value[i][1]);
-      if (verbose2) print("******************OUTER******************");
-      if (verbose2) std::cout << "****************** "<< piece << " " << value[i][0] << " " << value[i][1]
-      << "******************" << std::endl;
+      if (verbose2) {
+        print("******************OUTER******************");
+        std::cout << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
+      }
       #ifdef DEBUGAI
       Log << "******************OUTER******************" << std::endl;
-      Log << "****************** "<< piece << " " << value[i][0] << " " << value[i][1]
-      << "******************" << std::endl;
+      Log << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
       Black::print_blocks_Log();
       White::print_blocks_Log();
       #endif
       score = minimax(Black::depth, -10000, 10000, "W");
       scores.push_back(score);
-      if (verbose) std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") "
-      << score << std::endl;
+      if (verbose) std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") " << score << std::endl;
       Board.pop();
       if (score >= std::stof(best_move["score"])) {
         best_move["score"] = str(score);
@@ -128,8 +127,10 @@ static double minimax(int n, double alpha, double beta, std::string player) {
       for (int i=0;i<value.size();i++) {
         if (piece == "CK" || piece == "CQ") continue;
         Black::move_piece(piece, value[i][0], value[i][1]);
-        if (verbose2) print("INNER BLACK");
-        if (verbose2) std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+        if (verbose2) {
+          print("INNER BLACK");
+          std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+        }
         #ifdef DEBUGAI
         Log << "INNER BLACK" << std::endl;
         Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
@@ -151,8 +152,10 @@ static double minimax(int n, double alpha, double beta, std::string player) {
       std::vector<std::vector<int>> value = white_moves[piece];
       for (int i=0;i<value.size();i++) {
         White::move_piece(piece, value[i][0], value[i][1]);
-        if (verbose2) print("INNER WHITE");
-        if (verbose2) std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+        if (verbose2) {
+          print("INNER WHITE");
+          std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+        }
         #ifdef DEBUGAI
         Log << "INNER WHITE" << std::endl;
         Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
