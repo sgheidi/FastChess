@@ -2,12 +2,10 @@
 #include "../../common/util.h"
 
 #include "../../board.h"
-#include "../piece.h"
 
 #include "knight.h"
 
 #include "../white_.h"
-#include "../black_.h"
 
 namespace White {
 

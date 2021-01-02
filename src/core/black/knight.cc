@@ -2,11 +2,9 @@
 #include "../../common/util.h"
 
 #include "../../board.h"
-#include "../piece.h"
 
 #include "knight.h"
 
-#include "../white_.h"
 #include "../black_.h"
 
 namespace Black {
@@ -21,8 +19,7 @@ void Knight_Piece::pure_move(int i, int row_, int col_) {
 
 void Knight_Piece::update_movelist() {
   for (int i=0;i<2;i++) {
-    if (!alive[i])
-      continue;
+    if (!alive[i]) continue;
     movelist[i].clear();
     protecting_movelist[i].clear();
     std::vector<std::vector<int>> pos = {{row[i]-2, col[i]+1}, {row[i]-2, col[i]-1},

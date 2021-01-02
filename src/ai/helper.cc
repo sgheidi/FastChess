@@ -1,7 +1,5 @@
 #include "../common/config.h"
 
-#include "../core/piece.h"
-
 #include "../core/black/bishop.h"
 #include "../core/black/knight.h"
 #include "../core/black/pawn.h"

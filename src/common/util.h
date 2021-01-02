@@ -1,14 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <algorithm>
-#include <assert.h>
-#include <random>
-#include <fstream>
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Window.hpp>
 
 void take_screenshot(const sf::RenderWindow& window, const std::string& filename);
 void init(std::string env);

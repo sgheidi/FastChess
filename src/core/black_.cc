@@ -1,9 +1,10 @@
+#include <assert.h>
+
 #include "../common/config.h"
 #include "../common/util.h"
 
 #include "../board.h"
 #include "../queue.h"
-#include "piece.h"
 #include "../media/sound.h"
 
 #include "black/bishop.h"

@@ -1,6 +1,8 @@
 #ifndef SOUND_H
 #define SOUND_H
 
+#include <SFML/Audio.hpp>
+
 class Game_Sound {
 private:
   sf::SoundBuffer buffer;

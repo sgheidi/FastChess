@@ -3,7 +3,6 @@
 
 #include "board.h"
 #include "queue.h"
-#include "core/piece.h"
 #include "media/text.h"
 
 #include "core/black/bishop.h"
@@ -23,11 +22,13 @@
 #include "core/white_.h"
 #include "core/black_.h"
 
+#include "ai/black/search.h"
+
 int main() {
   srand(time(NULL));
   Black::init();
   White::init();
-  // init(env);
+  init(env);
   Board.update_moves();
   window.setPosition(sf::Vector2i(950, 180));
   while (window.isOpen()) {
@@ -116,6 +117,8 @@ int main() {
     window.display();
     White::check_capture_screen();
     Black::check_capture_screen();
+    if (Black::is_AI && Black::turn && !Board.checkmate && !Board.stalemate)
+      Black::AI::gen_move();
     window.display();
   }
   return 0;

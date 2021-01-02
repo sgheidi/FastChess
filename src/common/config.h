@@ -1,13 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <map>
-#include <algorithm>
-#include <assert.h>
-#include <random>
-#include <fstream>
+
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Window.hpp>
 
 // uncomment this to dump verbose AI search logs in file debug.log
 // #define DEBUGAI

@@ -2,7 +2,6 @@
 #include "../../common/util.h"
 
 #include "../../board.h"
-#include "../piece.h"
 
 #include "../black/bishop.h"
 #include "../black/knight.h"

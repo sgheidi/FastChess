@@ -1,6 +1,8 @@
 #ifndef BLACK_KNIGHT_H
 #define BLACK_KNIGHT_H
 
+#include "../piece.h"
+
 namespace Black {
 
 class Knight_Piece : public Piece {

@@ -3,7 +3,6 @@
 
 #include "../board.h"
 #include "../queue.h"
-#include "../core/piece.h"
 #include "../media/text.h"
 #include "../media/sound.h"
 
@@ -49,6 +48,7 @@ struct undo_stack undo = {
 };
 sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
 
+// Global objects
 Game_Board Board;
 Click_Queue Queue;
 Game_Sound Sound;

@@ -1,6 +1,8 @@
 #ifndef WHITE_KNIGHT_H
 #define WHITE_KNIGHT_H
 
+#include "../piece.h"
+
 namespace White {
 
 class Knight_Piece : public Piece {
