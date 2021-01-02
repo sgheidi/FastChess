@@ -1,5 +1,5 @@
 # generic Makefile for building program from source
-# PCH: sudo g++ -Wall -fexceptions -g src/common.h (for any common file import)
+# PCH: sudo g++ -Wall -fexceptions -g src/common.h (for any 'common' file import)
 
 SOURCE= src/main.cc src/board.cc src/common/config.cc src/common/util.cc src/core/black_.cc src/core/black/bishop.cc
 SOURCE+= src/core/black/knight.cc src/core/black/pawn.cc src/core/black/king.cc
@@ -9,7 +9,7 @@ SOURCE+= src/core/white/king.cc src/core/white/queen.cc src/core/white/rook.cc s
 SOURCE+= src/media/sound.cc src/media/text.cc src/ai/helper.cc src/ai/black/search.cc src/ai/env.cc
 SOURCE+= src/ai/black/eval.cc src/ai/white/eval.cc
 
-CC= g++
+CC= g++ -std=c++17
 
 EXECUTABLE= main
 

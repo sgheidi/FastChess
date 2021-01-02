@@ -107,7 +107,7 @@ void gen_move() {
       std::cout << scores[i] << std::endl;
     }
   }
-  std::cout << "Obtained highest score of " << best_move["score"] << std::endl;
+  std::cout << "Obtained highest score of " << double(best_move["score"]) << std::endl;
 }
 
 static double minimax(int n, double alpha, double beta, std::string player) {

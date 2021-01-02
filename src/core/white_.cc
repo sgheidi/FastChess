@@ -95,8 +95,7 @@ void check_capture_screen() {
 }
 
 void play() {
-  if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 &&
-  blocks[Queue.row[1]][Queue.col[1]] == 0) {
+  if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 && blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
     if (verbose2) print("-----------------------NON-AI MOVE-----------------------");
@@ -439,8 +438,7 @@ static void update_opp_movelists() {
   for (int i=0;i<8;i++) {
     Black::Pawn.movelist[i] = filter(Black::Pawn.movelist[i], check_movelist);
   }
-  // the rare case of double check: only the oppposite king can move! (this is because
-  // no 1 piece can block both checks!)
+  // the rare case of double check: only the oppposite king can move! (this is because no 1 piece can block both checks)
   if (checker.size() > 1) {
     for (int i=0;i<8;i++) {
       Black::Pawn.movelist[i].clear();

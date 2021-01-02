@@ -181,7 +181,7 @@ void Game_Board::play() {
     return;
   if (Black::turn)
     Black::play();
-  if (White::turn)
+  else if (White::turn)
     White::play();
 }
 
