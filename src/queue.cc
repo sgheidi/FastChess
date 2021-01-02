@@ -1,10 +1,7 @@
 #include "common/config.h"
 #include "common/util.h"
 
-#include "board.h"
 #include "queue.h"
-#include "core/piece.h"
-#include "media/text.h"
 
 void Click_Queue::enqueue(int row_, int col_) {
   if (row.size() >= 2) {

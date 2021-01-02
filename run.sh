@@ -1,1 +1,1 @@
-make clean; make; ./main
+./pch.sh; make clean; make; ./main

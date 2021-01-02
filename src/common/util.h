@@ -1,3 +1,6 @@
+#ifndef UTIL_H
+#define UTIL_H
+
 #include <iostream>
 #include <vector>
 #include <map>
@@ -33,3 +36,5 @@ inline void print_v1_Log(T v) {
   Log << std::endl;
 }
 #endif
+
+#endif // UTIL_H

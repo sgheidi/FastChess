@@ -2,7 +2,6 @@
 
 #include "../../board.h"
 #include "../../queue.h"
-#include "../../core/piece.h"
 #include "../../media/text.h"
 
 #include "../../core/black/bishop.h"

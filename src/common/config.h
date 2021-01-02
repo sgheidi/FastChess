@@ -1,3 +1,6 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
 #include <iostream>
 #include <vector>
 
@@ -28,3 +31,5 @@ struct undo_stack {
 };
 extern struct undo_stack undo;
 extern sf::RenderWindow window;
+
+#endif // CONFIG_H

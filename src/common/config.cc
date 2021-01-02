@@ -1,3 +1,8 @@
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <SFML/Graphics.hpp>
+
 #include "config.h"
 #include "util.h"
 

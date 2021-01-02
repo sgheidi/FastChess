@@ -1,3 +1,8 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+
 #include "util.h"
 
 void take_screenshot(const sf::RenderWindow& window, const std::string& filename) {
