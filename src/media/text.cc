@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "../common/config.h"
 #include "text.h"
 

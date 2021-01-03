@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
-#include "util.h"
 
 #include "../board.h"
 #include "../queue.h"
@@ -24,9 +23,6 @@
 #include "../core/white/rook.h"
 #include "../core/white/queen.h"
 #include "../core/white/king.h"
-
-#include "../core/white_.h"
-#include "../core/black_.h"
 
 const std::string env = "";
 const bool testing = false;

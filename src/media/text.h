@@ -1,6 +1,8 @@
 #ifndef TEXT_H
 #define TEXT_H
 
+#include <vector>
+
 class Game_Text {
 private:
   std::vector<int> color;
