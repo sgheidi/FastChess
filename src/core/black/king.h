@@ -1,5 +1,7 @@
-#ifndef BLACK_KING_H
-#define BLACK_KING_H
+#ifndef CORE_BLACK_KING_H
+#define CORE_BLACK_KING_H
+
+#include "../piece.h"
 
 namespace Black {
 
@@ -29,4 +31,4 @@ extern King_Piece King;
 
 } // namespace Black
 
-#endif // BLACK_KING_H
+#endif // CORE_BLACK_KING_H

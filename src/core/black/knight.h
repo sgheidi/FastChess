@@ -1,5 +1,5 @@
-#ifndef BLACK_KNIGHT_H
-#define BLACK_KNIGHT_H
+#ifndef CORE_BLACK_KNIGHT_H
+#define CORE_BLACK_KNIGHT_H
 
 #include "../piece.h"
 
@@ -27,4 +27,4 @@ extern Knight_Piece Knight;
 
 } // namespace Black
 
-#endif // BLACK_KNIGHT_H
+#endif // CORE_BLACK_KNIGHT_H

@@ -1,5 +1,5 @@
-#ifndef SOUND_H
-#define SOUND_H
+#ifndef MEDIA_SOUND_H
+#define MEDIA_SOUND_H
 
 #include <SFML/Audio.hpp>
 
@@ -19,4 +19,4 @@ public:
 
 extern Game_Sound Sound;
 
-#endif // SOUND_H
+#endif // MEDIA_SOUND_H

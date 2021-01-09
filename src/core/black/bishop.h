@@ -1,5 +1,5 @@
-#ifndef BLACK_BISHOP_H
-#define BLACK_BISHOP_H
+#ifndef CORE_BLACK_BISHOP_H
+#define CORE_BLACK_BISHOP_H
 
 #include "../piece.h"
 
@@ -34,4 +34,4 @@ extern Bishop_Piece Bishop;
 
 } // namespace Black
 
-#endif // BLACK_BISHOP_H
+#endif // BLACK_BICORE_BLACK_BISHOP_HSHOP_H

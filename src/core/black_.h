@@ -1,5 +1,5 @@
-#ifndef BLACK__H
-#define BLACK__H
+#ifndef CORE_BLACK__H
+#define CORE_BLACK__H
 
 namespace Black {
 extern std::vector<std::vector<int>> blocks;
@@ -44,4 +44,4 @@ void init();
 
 } // namespace Black
 
-#endif // BLACK__H
+#endif // CORE_BLACK__H

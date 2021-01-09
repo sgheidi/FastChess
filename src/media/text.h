@@ -1,5 +1,5 @@
-#ifndef TEXT_H
-#define TEXT_H
+#ifndef MEDIA_TEXT_H
+#define MEDIA_TEXT_H
 
 #include <vector>
 
@@ -19,4 +19,4 @@ public:
 
 extern Game_Text Text;
 
-#endif // TEXT_H
+#endif // MEDIA_TEXT_H

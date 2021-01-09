@@ -1,5 +1,7 @@
-#ifndef BLACK_ROOK_H
-#define BLACK_ROOK_H
+#ifndef CORE_BLACK_ROOK_H
+#define CORE_BLACK_ROOK_H
+
+#include "../piece.h"
 
 namespace Black {
 
@@ -34,4 +36,4 @@ extern Rook_Piece Rook;
 
 } // namespace Black
 
-#endif // BLACK_ROOK_H
+#endif // CORE_BLACK_ROOK_H

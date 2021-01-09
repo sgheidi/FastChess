@@ -1,5 +1,5 @@
-#ifndef WHITE_BISHOP_H
-#define WHITE_BISHOP_H
+#ifndef CORE_WHITE_BISHOP_H
+#define CORE_WHITE_BISHOP_H
 
 #include "../piece.h"
 
@@ -34,4 +34,4 @@ extern Bishop_Piece Bishop;
 
 } // namespace White
 
-#endif // WHITE_BISHOP_H
+#endif // CORE_WHITE_BISHOP_H

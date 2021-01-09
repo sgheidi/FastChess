@@ -1,5 +1,5 @@
-#ifndef WHITE__H
-#define WHITE__H
+#ifndef CORE_WHITE__H
+#define CORE_WHITE__H
 
 namespace White {
 extern std::vector<std::vector<int>> blocks;
@@ -43,4 +43,4 @@ void init();
 
 } // namespace White
 
-#endif // WHITE__H
+#endif // CORE_WHITE__H

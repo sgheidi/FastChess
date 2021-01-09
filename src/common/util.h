@@ -1,5 +1,5 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef COMMON_UTIL_H
+#define COMMON_UTIL_H
 
 #include <iostream>
 #include <vector>
@@ -37,4 +37,4 @@ inline void print_v1_Log(T v) {
 }
 #endif
 
-#endif // UTIL_H
+#endif // COMMON_UTIL_H

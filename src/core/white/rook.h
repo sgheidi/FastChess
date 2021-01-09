@@ -1,5 +1,7 @@
-#ifndef WHITE_ROOK_H
-#define WHITE_ROOK_H
+#ifndef CORE_WHITE_ROOK_H
+#define CORE_WHITE_ROOK_H
+
+#include "../piece.h"
 
 namespace White {
 
@@ -34,4 +36,4 @@ extern Rook_Piece Rook;
 
 } // namespace White
 
-#endif // WHITE_ROOK_H
+#endif // CORE_WHITE_ROOK_H

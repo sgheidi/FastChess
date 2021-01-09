@@ -1,5 +1,7 @@
-#ifndef WHITE_QUEEN_H
-#define WHITE_QUEEN_H
+#ifndef CORE_WHITE_QUEEN_H
+#define CORE_WHITE_QUEEN_H
+
+#include "../piece.h"
 
 namespace White {
 
@@ -32,4 +34,4 @@ extern Queen_Piece Queen;
 
 } // namespace White
 
-#endif // WHITE_QUEEN_H
+#endif // CORE_WHITE_QUEEN_H

@@ -1,5 +1,5 @@
-#ifndef CONFIG_H
-#define CONFIG_H
+#ifndef COMMON_CONFIG_H
+#define COMMON_CONFIG_H
 
 #include <iostream>
 #include <vector>
@@ -32,4 +32,4 @@ struct undo_stack {
 extern struct undo_stack undo;
 extern sf::RenderWindow window;
 
-#endif // CONFIG_H
+#endif // COMMON_CONFIG_H

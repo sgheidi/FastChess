@@ -1,5 +1,7 @@
-#ifndef BLACK_QUEEN_H
-#define BLACK_QUEEN_H
+#ifndef CORE_BLACK_QUEEN_H
+#define CORE_BLACK_QUEEN_H
+
+#include "../piece.h"
 
 namespace Black {
 
@@ -32,4 +34,4 @@ extern Queen_Piece Queen;
 
 } // namespace Black
 
-#endif // BLACK_QUEEN_H
+#endif // CORE_BLACK_QUEEN_H

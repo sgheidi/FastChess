@@ -1,5 +1,7 @@
-#ifndef BLACK_PAWN_H
-#define BLACK_PAWN_H
+#ifndef CORE_BLACK_PAWN_H
+#define CORE_BLACK_PAWN_H
+
+#include "../piece.h"
 
 namespace Black {
 
@@ -27,4 +29,4 @@ extern Pawn_Piece Pawn;
 
 } // namespace Black
 
-#endif // BLACK_PAWN_H
+#endif // CORE_BLACK_PAWN_H
