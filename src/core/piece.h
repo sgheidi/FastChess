@@ -1,5 +1,5 @@
-#ifndef PIECE_H
-#define PIECE_H
+#ifndef CORE_PIECE_H
+#define CORE_PIECE_H
 
 class Piece {
 protected:

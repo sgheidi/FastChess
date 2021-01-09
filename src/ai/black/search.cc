@@ -5,7 +5,6 @@
 
 #include "../../core/black/rook.h"
 #include "../../core/black/king.h"
-
 #include "../../core/white/rook.h"
 #include "../../core/white/king.h"
 
