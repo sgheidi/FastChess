@@ -24,13 +24,206 @@
 #include "white_.h"
 #include "black_.h"
 
+namespace {
+  using namespace Black;
+  bool enpassant_check_killed = false;
+
+  void pop_last_queen() {
+    num_queens --;
+    blocks[Queen.row[num_queens]][Queen.col[num_queens]] = 0;
+    Queen.row.resize(num_queens);
+    Queen.col.resize(num_queens);
+    Queen.x.resize(num_queens);
+    Queen.y.resize(num_queens);
+    Queen.alive.resize(num_queens);
+    Queen.movelist.resize(num_queens);
+    Queen.protecting_movelist.resize(num_queens);
+  }
+
+  bool in_opp_movelist(int row, int col) {
+    std::vector<int> pos = {row, col};
+    if (in(White::King.movelist, pos))
+      return true;
+    for (int i=0;i<White::num_queens;i++) {
+      if (in(White::Queen.movelist[i], pos))
+        return true;
+    }
+    for (int i=0;i<8;i++) {
+      if (in(White::Pawn.hit_movelist[i], pos))
+        return true;
+    }
+    for (int i=0;i<2;i++) {
+      if (in(White::Bishop.movelist[i], pos))
+        return true;
+      if (in(White::Knight.movelist[i], pos))
+        return true;
+      if (in(White::Rook.movelist[i], pos))
+        return true;
+    }
+    return false;
+  }
+
+  bool opp_no_moves() {
+    if (!White::King.movelist.empty())
+      return false;
+    for (int i=0;i<White::num_queens;i++) {
+      if (!White::Queen.movelist[i].empty())
+        return false;
+    }
+    for (int i=0;i<8;i++) {
+      if (!White::Pawn.movelist[i].empty())
+        return false;
+    }
+    for (int i=0;i<2;i++) {
+      if (!White::Bishop.movelist[i].empty())
+        return false;
+      if (!White::Knight.movelist[i].empty())
+        return false;
+      if (!White::Rook.movelist[i].empty())
+        return false;
+    }
+    return true;
+  }
+
+  void check_pin() {
+    Bishop.check_pin();
+    Rook.check_pin();
+    Queen.check_pin();
+  }
+
+  void check_avoid_move() {
+    std::vector<std::vector<int>> avoid_moves;
+    for (int k=0;k<checker.size();k++) {
+      for (int i=0;i<num_queens;i++) {
+        if (checker[k] == "Q" + std::to_string(i))
+          avoid_moves.push_back(Queen.get_avoid_move(i));
+      }
+      for (int i=0;i<2;i++) {
+        if (checker[k] == "B" + std::to_string(i))
+          avoid_moves.push_back(Bishop.get_avoid_move(i));
+        if (checker[k] == "R" + std::to_string(i))
+          avoid_moves.push_back(Rook.get_avoid_move(i));
+      }
+    }
+    White::King.movelist = filter2(White::King.movelist, avoid_moves);
+  }
+
+  void update_opp_movelists() {
+    check_avoid_move();
+    std::vector<std::vector<int>> check_movelist;
+    for (int i=0;i<num_queens;i++) {
+      if (checker[0] == "Q" + std::to_string(i))
+        check_movelist = Queen.get_check_movelist(i);
+    }
+    for (int i=0;i<2;i++) {
+      if (checker[0] == "B" + std::to_string(i))
+        check_movelist = Bishop.get_check_movelist(i);
+      else if (checker[0] == "R" + std::to_string(i))
+        check_movelist = Rook.get_check_movelist(i);
+      else if (checker[0] == "N" + std::to_string(i))
+        check_movelist = {{Knight.row[i], Knight.col[i]}};
+    }
+    for (int i=0;i<8;i++) {
+      if (checker[0] == "P" + std::to_string(i))
+        check_movelist = {{Pawn.row[i], Pawn.col[i]}};
+    }
+    for (int i=0;i<White::num_queens;i++) {
+      White::Queen.movelist[i] = filter(White::Queen.movelist[i], check_movelist);
+    }
+    for (int i=0;i<2;i++) {
+      White::Bishop.movelist[i] = filter(White::Bishop.movelist[i], check_movelist);
+      White::Knight.movelist[i] = filter(White::Knight.movelist[i], check_movelist);
+      White::Rook.movelist[i] = filter(White::Rook.movelist[i], check_movelist);
+    }
+    for (int i=0;i<8;i++) {
+      White::Pawn.movelist[i] = filter(White::Pawn.movelist[i], check_movelist);
+    }
+    // the rare case of double check: only the oppposite king can move! (this is because no 1 piece can block both checks)
+    if (checker.size() > 1) {
+      for (int i=0;i<8;i++) {
+        White::Pawn.movelist[i].clear();
+      }
+      for (int i=0;i<2;i++) {
+        White::Bishop.movelist[i].clear();
+        White::Knight.movelist[i].clear();
+        White::Rook.movelist[i].clear();
+      }
+      for (int i=0;i<White::num_queens;i++) {
+        White::Queen.movelist[i].clear();
+      }
+    }
+  }
+
+  bool check_opp_checked() {
+    bool checked = false;
+    for (int i=0;i<num_queens;i++) {
+      if (in(Queen.movelist[i], {White::King.row, White::King.col})) {
+        checker.push_back("Q" + std::to_string(i));
+        checked = true;
+      }
+    }
+    for (int i=0;i<8;i++) {
+      if (in(Pawn.hit_movelist[i], {White::King.row, White::King.col})) {
+        checker.push_back("P" + std::to_string(i));
+        checked = true;
+      }
+    }
+    for (int i=0;i<2;i++) {
+      if (in(Bishop.movelist[i], {White::King.row, White::King.col})) {
+        checker.push_back("B" + std::to_string(i));
+        checked = true;
+      }
+      if (in(Knight.movelist[i], {White::King.row, White::King.col})) {
+        checker.push_back("N" + std::to_string(i));
+        checked = true;
+      }
+      if (in(Rook.movelist[i], {White::King.row, White::King.col})) {
+        checker.push_back("R" + std::to_string(i));
+        checked = true;
+      }
+    }
+    return checked;
+  }
+
+  void promote(int i, int row_, int col_) {
+    int row = Pawn.row[i];
+    int col = Pawn.col[i];
+    kill(false, "P" + std::to_string(i), row, col);
+    num_queens ++;
+    Queen.row.push_back(row);
+    Queen.col.push_back(col);
+    Queen.x.push_back(col*UNIT);
+    Queen.y.push_back(row*UNIT);
+    Queen.alive.push_back(1);
+    Queen.movelist.resize(num_queens);
+    Queen.protecting_movelist.resize(num_queens);
+    blocks[row_][col_] = 1;
+  }
+
+  void check_kill(bool is_undo, int row, int col) {
+    if (White::blocks[row][col] == 1 && !is_undo) {
+      std::string piece = White::get_piece(row, col);
+      White::kill(is_undo, piece, row, col);
+      undo.killed.push_back(1);
+      undo.killed_piece.push_back(piece);
+      undo.killed_pos.push_back({row, col});
+      undo.killed_color.push_back("W");
+    }
+    else if (White::blocks[row][col] == 0 && !is_undo) {
+      undo.killed.push_back(0);
+      undo.killed_piece.push_back("X");
+      undo.killed_color.push_back("X");
+      undo.killed_pos.push_back({-1, -1});
+    }
+  }
+} // namespace
+
 namespace Black {
 std::vector<std::vector<int>> blocks(8);
 std::vector<bool> en_passant(8);
 bool turn = false;
 int num_queens = 1;
 std::vector<std::string> checker = {};
-static bool enpassant_check_killed = false;
 const bool is_AI = isBlackAI;
 const int depth = 2;
 bool screenshot = false;
@@ -125,18 +318,6 @@ void handle_undo_promotion(int i, int row, int col) {
   revive("P" + str(i), row, col);
 }
 
-static void pop_last_queen() {
-  num_queens --;
-  blocks[Queen.row[num_queens]][Queen.col[num_queens]] = 0;
-  Queen.row.resize(num_queens);
-  Queen.col.resize(num_queens);
-  Queen.x.resize(num_queens);
-  Queen.y.resize(num_queens);
-  Queen.alive.resize(num_queens);
-  Queen.movelist.resize(num_queens);
-  Queen.protecting_movelist.resize(num_queens);
-}
-
 void revive(std::string piece, int row, int col) {
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + str(i)) {
@@ -204,29 +385,6 @@ bool castle_criteria_K() {
   if (in_opp_movelist(0, 5) || in_opp_movelist(0, 6))
     return false;
   return true;
-}
-
-static bool in_opp_movelist(int row, int col) {
-  std::vector<int> pos = {row, col};
-  if (in(White::King.movelist, pos))
-    return true;
-  for (int i=0;i<White::num_queens;i++) {
-    if (in(White::Queen.movelist[i], pos))
-      return true;
-  }
-  for (int i=0;i<8;i++) {
-    if (in(White::Pawn.hit_movelist[i], pos))
-      return true;
-  }
-  for (int i=0;i<2;i++) {
-    if (in(White::Bishop.movelist[i], pos))
-      return true;
-    if (in(White::Knight.movelist[i], pos))
-      return true;
-    if (in(White::Rook.movelist[i], pos))
-      return true;
-  }
-  return false;
 }
 
 void move_piece(std::string piece, int row, int col) {
@@ -349,163 +507,9 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   enpassant_check_killed = false;
 }
 
-static bool opp_no_moves() {
-  if (!White::King.movelist.empty())
-    return false;
-  for (int i=0;i<White::num_queens;i++) {
-    if (!White::Queen.movelist[i].empty())
-      return false;
-  }
-  for (int i=0;i<8;i++) {
-    if (!White::Pawn.movelist[i].empty())
-      return false;
-  }
-  for (int i=0;i<2;i++) {
-    if (!White::Bishop.movelist[i].empty())
-      return false;
-    if (!White::Knight.movelist[i].empty())
-      return false;
-    if (!White::Rook.movelist[i].empty())
-      return false;
-  }
-  return true;
-}
-
 void reset_enpassant() {
   for (int i=0;i<8;i++)
     en_passant[i] = 0;
-}
-
-static void check_pin() {
-  Bishop.check_pin();
-  Rook.check_pin();
-  Queen.check_pin();
-}
-
-static void check_avoid_move() {
-  std::vector<std::vector<int>> avoid_moves;
-  for (int k=0;k<checker.size();k++) {
-    for (int i=0;i<num_queens;i++) {
-      if (checker[k] == "Q" + std::to_string(i))
-        avoid_moves.push_back(Queen.get_avoid_move(i));
-    }
-    for (int i=0;i<2;i++) {
-      if (checker[k] == "B" + std::to_string(i))
-        avoid_moves.push_back(Bishop.get_avoid_move(i));
-      if (checker[k] == "R" + std::to_string(i))
-        avoid_moves.push_back(Rook.get_avoid_move(i));
-    }
-  }
-  White::King.movelist = filter2(White::King.movelist, avoid_moves);
-}
-
-static void update_opp_movelists() {
-  check_avoid_move();
-  std::vector<std::vector<int>> check_movelist;
-  for (int i=0;i<num_queens;i++) {
-    if (checker[0] == "Q" + std::to_string(i))
-      check_movelist = Queen.get_check_movelist(i);
-  }
-  for (int i=0;i<2;i++) {
-    if (checker[0] == "B" + std::to_string(i))
-      check_movelist = Bishop.get_check_movelist(i);
-    else if (checker[0] == "R" + std::to_string(i))
-      check_movelist = Rook.get_check_movelist(i);
-    else if (checker[0] == "N" + std::to_string(i))
-      check_movelist = {{Knight.row[i], Knight.col[i]}};
-  }
-  for (int i=0;i<8;i++) {
-    if (checker[0] == "P" + std::to_string(i))
-      check_movelist = {{Pawn.row[i], Pawn.col[i]}};
-  }
-  for (int i=0;i<White::num_queens;i++) {
-    White::Queen.movelist[i] = filter(White::Queen.movelist[i], check_movelist);
-  }
-  for (int i=0;i<2;i++) {
-    White::Bishop.movelist[i] = filter(White::Bishop.movelist[i], check_movelist);
-    White::Knight.movelist[i] = filter(White::Knight.movelist[i], check_movelist);
-    White::Rook.movelist[i] = filter(White::Rook.movelist[i], check_movelist);
-  }
-  for (int i=0;i<8;i++) {
-    White::Pawn.movelist[i] = filter(White::Pawn.movelist[i], check_movelist);
-  }
-  // the rare case of double check: only the oppposite king can move! (this is because no 1 piece can block both checks)
-  if (checker.size() > 1) {
-    for (int i=0;i<8;i++) {
-      White::Pawn.movelist[i].clear();
-    }
-    for (int i=0;i<2;i++) {
-      White::Bishop.movelist[i].clear();
-      White::Knight.movelist[i].clear();
-      White::Rook.movelist[i].clear();
-    }
-    for (int i=0;i<White::num_queens;i++) {
-      White::Queen.movelist[i].clear();
-    }
-  }
-}
-
-static bool check_opp_checked() {
-  bool checked = false;
-  for (int i=0;i<num_queens;i++) {
-    if (in(Queen.movelist[i], {White::King.row, White::King.col})) {
-      checker.push_back("Q" + std::to_string(i));
-      checked = true;
-    }
-  }
-  for (int i=0;i<8;i++) {
-    if (in(Pawn.hit_movelist[i], {White::King.row, White::King.col})) {
-      checker.push_back("P" + std::to_string(i));
-      checked = true;
-    }
-  }
-  for (int i=0;i<2;i++) {
-    if (in(Bishop.movelist[i], {White::King.row, White::King.col})) {
-      checker.push_back("B" + std::to_string(i));
-      checked = true;
-    }
-    if (in(Knight.movelist[i], {White::King.row, White::King.col})) {
-      checker.push_back("N" + std::to_string(i));
-      checked = true;
-    }
-    if (in(Rook.movelist[i], {White::King.row, White::King.col})) {
-      checker.push_back("R" + std::to_string(i));
-      checked = true;
-    }
-  }
-  return checked;
-}
-
-static void promote(int i, int row_, int col_) {
-  int row = Pawn.row[i];
-  int col = Pawn.col[i];
-  kill(false, "P" + std::to_string(i), row, col);
-  num_queens ++;
-  Queen.row.push_back(row);
-  Queen.col.push_back(col);
-  Queen.x.push_back(col*UNIT);
-  Queen.y.push_back(row*UNIT);
-  Queen.alive.push_back(1);
-  Queen.movelist.resize(num_queens);
-  Queen.protecting_movelist.resize(num_queens);
-  blocks[row_][col_] = 1;
-}
-
-static void check_kill(bool is_undo, int row, int col) {
-  if (White::blocks[row][col] == 1 && !is_undo) {
-    std::string piece = White::get_piece(row, col);
-    White::kill(is_undo, piece, row, col);
-    undo.killed.push_back(1);
-    undo.killed_piece.push_back(piece);
-    undo.killed_pos.push_back({row, col});
-    undo.killed_color.push_back("W");
-  }
-  else if (White::blocks[row][col] == 0 && !is_undo) {
-    undo.killed.push_back(0);
-    undo.killed_piece.push_back("X");
-    undo.killed_color.push_back("X");
-    undo.killed_pos.push_back({-1, -1});
-  }
 }
 
 std::string get_piece(int row, int col) {
