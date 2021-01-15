@@ -3,8 +3,6 @@
 
 class Game_Board {
 private:
-  void drawRect(int*color, int x, int y, int width, int height);
-  void Circle(int row, int col);
   std::string get_selected_piece();
 public:
   int total_moves;

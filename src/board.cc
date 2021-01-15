@@ -24,6 +24,23 @@
 #include "core/white_.h"
 #include "core/black_.h"
 
+namespace {
+  // Draw a rectangle at (x, y) with 'width' and 'height'
+  void drawRect(int*color, int x, int y, int width, int height) {
+    sf::RectangleShape rectangle(sf::Vector2f(width, height));
+    rectangle.setPosition(x, y);
+    rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
+    window.draw(rectangle);
+  }
+
+  void Circle(int row, int col) {
+    sf::CircleShape circle(10);
+    circle.setPosition(col*UNIT + 2*Board.pieces_paddingx, row*UNIT + 3*Board.pieces_paddingy);
+    circle.setFillColor(sf::Color(110, 71, 55));
+    window.draw(circle);
+  }
+} // namespace
+
 void Game_Board::pop() {
   int last = total_moves-1;
   if (verbose2) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
@@ -212,21 +229,6 @@ void Game_Board::draw_board() {
     y += UNIT;
     x = 0;
   }
-}
-
-// Draw a rectangle at (x, y) with 'width' and 'height'
-void Game_Board::drawRect(int*color, int x, int y, int width, int height) {
-  sf::RectangleShape rectangle(sf::Vector2f(width, height));
-  rectangle.setPosition(x, y);
-  rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
-  window.draw(rectangle);
-}
-
-void Game_Board::Circle(int row, int col) {
-  sf::CircleShape circle(10);
-  circle.setPosition(col*UNIT + 2*pieces_paddingx, row*UNIT + 3*pieces_paddingy);
-  circle.setFillColor(sf::Color(110, 71, 55));
-  window.draw(circle);
 }
 
 // show legal moves of selected piece
