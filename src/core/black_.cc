@@ -25,7 +25,7 @@
 #include "black_.h"
 
 namespace {
-namespace Black {
+  using namespace Black;
   bool enpassant_check_killed = false;
 
   void pop_last_queen() {
@@ -216,7 +216,6 @@ namespace Black {
       undo.killed_pos.push_back({-1, -1});
     }
   }
-} // namespace Black
 } // namespace
 
 namespace Black {
