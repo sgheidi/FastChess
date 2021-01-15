@@ -11,4 +11,4 @@ public:
   std::vector<bool> alive;
 };
 
-#endif // PIECE_H
+#endif // CORE_PIECE_H
