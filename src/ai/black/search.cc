@@ -24,12 +24,12 @@ namespace {
     std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
     double best_move;
     if (n == 0)
-      return -evaluate_pos();
+      return -Black::AI::evaluate_pos();
     // minimizing player
     if (player == "B") {
       best_move = -9999;
       for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=btemp.begin();itr!=btemp.end();itr++) {
-        std::string piece = random_key(black_moves);
+        std::string piece = Black::AI::random_key(black_moves);
         std::vector<std::vector<int>> value = black_moves[piece];
         for (int i=0;i<value.size();i++) {
           if (piece == "CK" || piece == "CQ") continue;
@@ -55,7 +55,7 @@ namespace {
     else {
       best_move = 9999;
       for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=wtemp.begin();itr!=wtemp.end();itr++) {
-        std::string piece = random_key(white_moves);
+        std::string piece = Black::AI::random_key(white_moves);
         std::vector<std::vector<int>> value = white_moves[piece];
         for (int i=0;i<value.size();i++) {
           White::move_piece(piece, value[i][0], value[i][1]);
