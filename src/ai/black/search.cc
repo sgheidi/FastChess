@@ -25,7 +25,7 @@ double minimax(int n, double alpha, double beta, std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
   double best_move;
   if (n == 0)
-    return evaluate_pos();
+    return -evaluate_pos();
   // minimizing player
   if (player == "B") {
     best_move = -9999;
