@@ -16,71 +16,71 @@
 #include "eval.h"
 #include "search.h"
 
+namespace Black::AI {
 namespace {
-  double minimax(int n, double alpha, double beta, std::string player) {
-    std::map<std::string, std::vector<std::vector<int>>> black_moves = Black::get_moves();
-    std::map<std::string, std::vector<std::vector<int>>> white_moves = White::get_moves();
-    std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
-    std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
-    double best_move;
-    if (n == 0)
-      return -Black::AI::evaluate_pos();
-    // minimizing player
-    if (player == "B") {
-      best_move = -9999;
-      for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=btemp.begin();itr!=btemp.end();itr++) {
-        std::string piece = Black::AI::random_key(black_moves);
-        std::vector<std::vector<int>> value = black_moves[piece];
-        for (int i=0;i<value.size();i++) {
-          if (piece == "CK" || piece == "CQ") continue;
-          Black::move_piece(piece, value[i][0], value[i][1]);
-          if (verbose2) {
-            print("INNER BLACK");
-            std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
-          }
-          #ifdef DEBUGAI
-          Log << "INNER BLACK" << std::endl;
-          Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
-          #endif
-          best_move = std::max(best_move, minimax(n-1, alpha, beta, "W"));
-          Board.pop();
-          alpha = std::max(alpha, best_move);
-          if (alpha >= beta)
-            return best_move;
+double minimax(int n, double alpha, double beta, std::string player) {
+  std::map<std::string, std::vector<std::vector<int>>> black_moves = Black::get_moves();
+  std::map<std::string, std::vector<std::vector<int>>> white_moves = White::get_moves();
+  std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
+  std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
+  double best_move;
+  if (n == 0)
+    return evaluate_pos();
+  // minimizing player
+  if (player == "B") {
+    best_move = -9999;
+    for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=btemp.begin();itr!=btemp.end();itr++) {
+      std::string piece = random_key(black_moves);
+      std::vector<std::vector<int>> value = black_moves[piece];
+      for (int i=0;i<value.size();i++) {
+        if (piece == "CK" || piece == "CQ") continue;
+        Black::move_piece(piece, value[i][0], value[i][1]);
+        if (verbose2) {
+          print("INNER BLACK");
+          std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         }
-        black_moves.erase(piece);
+        #ifdef DEBUGAI
+        Log << "INNER BLACK" << std::endl;
+        Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+        #endif
+        best_move = std::max(best_move, minimax(n-1, alpha, beta, "W"));
+        Board.pop();
+        alpha = std::max(alpha, best_move);
+        if (alpha >= beta)
+          return best_move;
       }
+      black_moves.erase(piece);
     }
-    // maximizing player
-    else {
-      best_move = 9999;
-      for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=wtemp.begin();itr!=wtemp.end();itr++) {
-        std::string piece = Black::AI::random_key(white_moves);
-        std::vector<std::vector<int>> value = white_moves[piece];
-        for (int i=0;i<value.size();i++) {
-          White::move_piece(piece, value[i][0], value[i][1]);
-          if (verbose2) {
-            print("INNER WHITE");
-            std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
-          }
-          #ifdef DEBUGAI
-          Log << "INNER WHITE" << std::endl;
-          Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
-          #endif
-          best_move = std::min(best_move, minimax(n-1, alpha, beta, "B"));
-          Board.pop();
-          beta = std::min(beta, best_move);
-          if (alpha >= beta)
-            return best_move;
+  }
+  // maximizing player
+  else {
+    best_move = 9999;
+    for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=wtemp.begin();itr!=wtemp.end();itr++) {
+      std::string piece = random_key(white_moves);
+      std::vector<std::vector<int>> value = white_moves[piece];
+      for (int i=0;i<value.size();i++) {
+        White::move_piece(piece, value[i][0], value[i][1]);
+        if (verbose2) {
+          print("INNER WHITE");
+          std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         }
-        white_moves.erase(piece);
+        #ifdef DEBUGAI
+        Log << "INNER WHITE" << std::endl;
+        Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+        #endif
+        best_move = std::min(best_move, minimax(n-1, alpha, beta, "B"));
+        Board.pop();
+        beta = std::min(beta, best_move);
+        if (alpha >= beta)
+          return best_move;
       }
+      white_moves.erase(piece);
     }
-    return best_move;
+  }
+  return best_move;
   }
 } // namespace
 
-namespace Black::AI {
 void gen_move() {
   print("Generating move...");
   #ifdef DEBUGAI
