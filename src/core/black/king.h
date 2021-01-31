@@ -7,6 +7,8 @@ namespace Black {
 
 class King_Piece : public Piece {
 private:
+  void filter_king_pos();
+  void filter_check_pos();
 public:
   bool moved;
   std::vector<std::vector<int>> movelist, protecting_movelist;
@@ -20,8 +22,6 @@ public:
     y = row*UNIT;
     x = col*UNIT;
   };
-  void filter_king_pos();
-  void filter_check_pos();
   void move(int row_, int col_);
   void update_movelist();
   void show();
