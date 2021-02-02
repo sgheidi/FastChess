@@ -1,6 +1,7 @@
 #ifndef CORE_PIECE_H
 #define CORE_PIECE_H
 
+// The abstract base class from which all other piece classes (King, Queen, Bishop,...etc) inherit attributes from
 class Piece {
 protected:
 public:
