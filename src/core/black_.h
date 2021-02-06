@@ -7,7 +7,6 @@ extern bool turn;
 extern int num_queens;
 extern std::vector<std::string> checker;
 extern std::vector<bool> en_passant;
-extern const bool is_AI;
 extern const int depth;
 extern bool screenshot;
 

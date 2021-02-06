@@ -21,13 +21,15 @@
 #include "core/white_.h"
 #include "core/black_.h"
 
+#ifdef IS_BLACK_AI
 #include "ai/black/search.h"
+#endif
 
 int main() {
   srand(time(NULL));
   Black::init();
   White::init();
-  init(env);
+  init(GAME_ENV);
   Board.update_moves();
   window.setPosition(sf::Vector2i(950, 180));
   while (window.isOpen()) {
@@ -113,10 +115,14 @@ int main() {
     White::show();
     Board.check_end();
     window.display();
+    #ifdef SCREENSHOTS_ON
     White::check_capture_screen();
     Black::check_capture_screen();
-    if (Black::is_AI && Black::turn && !Board.checkmate && !Board.stalemate)
+    #endif
+    #ifdef IS_BLACK_AI
+    if (Black::turn && !Board.checkmate && !Board.stalemate)
       Black::AI::gen_move();
+    #endif
     window.display();
   }
   return 0;

@@ -25,6 +25,14 @@
 #include "black_.h"
 
 namespace White {
+
+std::vector<std::vector<int>> blocks(8);
+std::vector<bool> en_passant(8);
+bool turn = true;
+int num_queens = 1;
+std::vector<std::string> checker = {};
+bool screenshot = true;
+
 namespace {
 bool enpassant_check_killed = false;
 
@@ -218,13 +226,6 @@ void pop_last_queen() {
 }
 } // namespace
 
-std::vector<std::vector<int>> blocks(8);
-std::vector<bool> en_passant(8);
-bool turn = true;
-int num_queens = 1;
-std::vector<std::string> checker = {};
-bool screenshot = true;
-
 std::vector<std::string> get_movesVec() {
   std::vector<std::string> moves = {};
   if (castle_criteria_K())
@@ -275,8 +276,9 @@ std::map<std::string, std::vector<std::vector<int>>> get_moves() {
   return moves;
 }
 
+#ifdef SCREENSHOTS_ON
 void check_capture_screen() {
-  if (screenshots_on && screenshot) {
+  if (screenshot) {
     std::string path = "assets/screenshots/";
     path += str(Board.screenshot_num);
     path += ".png";
@@ -285,12 +287,14 @@ void check_capture_screen() {
     Board.screenshot_num ++;
   }
 }
+#endif
 
 void play() {
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 && blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
-    if (verbose2) print("-----------------------NON-AI MOVE-----------------------");
+    #ifdef VERBOSE2
+    print("-----------------------NON-AI MOVE-----------------------");
     #ifdef DEBUGAI
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
@@ -318,6 +322,7 @@ void play() {
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
     Log << "---------------------------------------------------------" << std::endl;
+    #endif
     #endif
   }
   if (Queue.row.size() >= 2) {
@@ -518,13 +523,14 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   }
   if (opp_no_moves() && !is_undo)
     Board.stalemate = true;
-  if (!Board.freeze && screenshots_on) {
+  #ifdef SCREENSHOTS_ON
+  if (!Board.freeze && screenshots_on)
     screenshot = true;
-  }
-  if (!testing) {
-    turn = false;
-    Black::turn = true;
-  }
+  #endif
+  #ifndef IS_TESTING
+  turn = false;
+  Black::turn = true;
+  #endif
   enpassant_check_killed = false;
 }
 

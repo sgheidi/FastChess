@@ -25,6 +25,15 @@
 #include "black_.h"
 
 namespace Black {
+
+std::vector<std::vector<int>> blocks(8);
+std::vector<bool> en_passant(8);
+bool turn = false;
+int num_queens = 1;
+std::vector<std::string> checker = {};
+const int depth = 2;
+bool screenshot = false;
+
 namespace {
 bool enpassant_check_killed = false;
 
@@ -218,15 +227,6 @@ void check_kill(bool is_undo, int row, int col) {
 }
 } // namespace
 
-std::vector<std::vector<int>> blocks(8);
-std::vector<bool> en_passant(8);
-bool turn = false;
-int num_queens = 1;
-std::vector<std::string> checker = {};
-const bool is_AI = isBlackAI;
-const int depth = 2;
-bool screenshot = false;
-
 std::vector<std::string> get_movesVec() {
   std::vector<std::string> moves = {};
   if (castle_criteria_K())
@@ -281,8 +281,9 @@ std::map<std::string, std::vector<std::vector<int>>> get_moves() {
   return moves;
 }
 
+#ifdef SCREENSHOTS_ON
 void check_capture_screen() {
-  if (screenshots_on && screenshot) {
+  if (screenshot) {
     std::string path = "assets/screenshots/";
     path += str(Board.screenshot_num);
     path += ".png";
@@ -291,10 +292,12 @@ void check_capture_screen() {
     Board.screenshot_num ++;
   }
 }
+#endif
 
 void play() {
-  if (is_AI)
-    return;
+  #ifdef IS_BLACK_AI
+  return;
+  #endif
   if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 && blocks[Queue.row[1]][Queue.col[1]] == 0) {
     std::string piece = get_piece(Queue.row[0], Queue.col[0]);
     move_piece(piece, Queue.row[1], Queue.col[1]);
@@ -496,13 +499,14 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   }
   if (opp_no_moves() && !is_undo)
     Board.stalemate = true;
-  if (!Board.freeze && screenshots_on) {
+  #ifdef SCREENSHOTS_ON
+  if (!Board.freeze)
     screenshot = true;
-  }
-  if (!testing) {
-    turn = false;
-    White::turn = true;
-  }
+  #endif
+  #ifndef IS_TESTING
+  turn = false;
+  White::turn = true;
+  #endif
   enpassant_check_killed = false;
 }
 
@@ -573,8 +577,9 @@ void init() {
         blocks[i].push_back(0);
     }
   }
-  if (testing)
-    turn = true;
+  #ifdef IS_TESTING
+  turn = true;
+  #endif
 }
 
 void kill(bool is_undo, std::string piece, int row, int col) {

@@ -43,9 +43,11 @@ namespace {
 
 void Game_Board::pop() {
   int last = total_moves-1;
-  if (verbose2) std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
+  #ifdef VERBOSE2 
+    std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
+  #endif
   #ifdef DEBUGAI
-  Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
+    Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
   #endif
   if (last < 0)
     return;
@@ -144,20 +146,20 @@ void Game_Board::pop() {
   undo.killed_piece.resize(total_moves);
   undo.killed_pos.resize(total_moves);
   undo.killed_color.resize(total_moves);
-  if (!testing) {
-    if (Black::turn) {
-      White::turn = true;
-      Black::turn = false;
-    }
-    else {
-      White::turn = false;
-      Black::turn = true;
-    }
-    if (isBlackAI) {
-      White::turn = true;
-      Black::turn = false;
-    }
+  #ifdef IS_TESTING
+  if (Black::turn) {
+    White::turn = true;
+    Black::turn = false;
   }
+  else {
+    White::turn = false;
+    Black::turn = true;
+  }
+  #ifdef IS_BLACK_AI
+  White::turn = true;
+  Black::turn = false;
+  #endif
+  #endif
 }
 
 void Game_Board::print_undo() {
