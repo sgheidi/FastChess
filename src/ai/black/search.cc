@@ -18,12 +18,12 @@
 
 namespace Black::AI {
 namespace {
-double minimax(int n, double alpha, double beta, std::string player) {
+static double minimax(const int n, double alpha, double beta, std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> black_moves = Black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> white_moves = White::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
   std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
-  double best_move;
+  static double best_move;
   if (n == 0)
     return -evaluate_pos();
   // minimizing player
