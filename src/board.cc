@@ -214,17 +214,11 @@ void Game_Board::draw_board() {
     outer = !outer;
     for (int i=0; i<8; i++) {
       if (outer) {
-        if (i%2 == 0)
-          drawRect(brown, x, y, UNIT, UNIT);
-        else
-          drawRect(white, x, y, UNIT, UNIT);
+        (i%2 == 0) ? drawRect(brown, x, y, UNIT, UNIT) : drawRect(white, x, y, UNIT, UNIT);
         x += UNIT;
       }
       else {
-        if (i%2 == 0)
-          drawRect(white, x, y, UNIT, UNIT);
-        else
-          drawRect(brown, x, y, UNIT, UNIT);
+        (i%2 == 0) ? drawRect(white, x, y, UNIT, UNIT) : drawRect(brown, x, y, UNIT, UNIT);
         x += UNIT;
       }
     }
@@ -235,7 +229,7 @@ void Game_Board::draw_board() {
 
 // show legal moves of selected piece
 void Game_Board::show_legal_moves() {
-  std::string selected_piece = get_selected_piece();
+  const std::string selected_piece = get_selected_piece();
   if (selected_piece == "") return;
   else if (selected_piece == "K") {
     for (int i=0;i<White::King.movelist.size();i++)
@@ -298,13 +292,13 @@ void Game_Board::reset_pos() {
 }
 
 // Return (row, col) of pixel coords (x, y)
-std::vector<int> Game_Board::get_coords(int x, int y) {
+std::vector<int> Game_Board::get_coords(const int x, const int y) {
   if (x >= 0 && y >= 0 && x <= X_RES && y <= Y_RES)
     return {x/UNIT, y/UNIT};
 }
 
 // select (row, col) by clicking on the board
-void Game_Board::select(int row, int col) {
+void Game_Board::select(const int row, const int col) {
   if (row < 0 || row > 7 || col > 7 || col < 0)
     return;
   int color[3] = {173, 199, 137};
