@@ -33,7 +33,7 @@ int main() {
   Board.update_moves();
   window.setPosition(sf::Vector2i(950, 180));
   while (window.isOpen()) {
-    sf::Event event;
+    static sf::Event event;
     while (window.pollEvent(event)) {
       if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) || sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
         window.close();

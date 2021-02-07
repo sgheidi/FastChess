@@ -89,12 +89,12 @@ void gen_move() {
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
   std::map<std::string, std::vector<std::vector<int>>> moves = Black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
-  double score;
+  static double score;
   Board.freeze = true;
-  bool W_king_moved = White::King.moved;
-  std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
-  bool B_king_moved = Black::King.moved;
-  std::vector<bool> B_rook_moved = {Black::Rook.moved[0], Black::Rook.moved[1]};
+  const bool W_king_moved = White::King.moved;
+  const std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
+  const bool B_king_moved = Black::King.moved;
+  const std::vector<bool> B_rook_moved = {Black::Rook.moved[0], Black::Rook.moved[1]};
   std::vector<double> scores = {};
   for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=temp.begin();itr!=temp.end();itr++) {
     std::string piece = random_key(moves);
