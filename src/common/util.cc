@@ -9,10 +9,8 @@ void take_screenshot(const sf::RenderWindow& window, const std::string& filename
   sf::Texture texture;
   texture.create(window.getSize().x, window.getSize().y);
   texture.update(window);
-  if (texture.copyToImage().saveToFile(filename))
-    std::cout << "screenshot saved to " << filename << std::endl;
-  else
-    std::cout << "Failed to capture screen" << std::endl;
+  texture.copyToImage().saveToFile(filename) ? std::cout << "screenshot saved to " << filename << std::endl :
+      std::cout << "Failed to capture screen" << std::endl;
 }
 
 void print_map(std::map<std::string, std::vector<std::vector<int>>> map) {

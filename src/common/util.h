@@ -21,18 +21,16 @@ bool in(std::vector<std::vector<int>> v, std::vector<int> item);
 template <typename T>
 inline void print_v1(T v) {
   printf("vec1d...\n");
-  for (int i=0;i<v.size();i++) {
+  for (int i=0;i<v.size();i++)
     std::cout << v[i];
-  }
   printf("\n");
 }
 
 #ifdef DEBUGAI
 template <typename T>
 inline void print_v1_Log(T v) {
-  for (int i=0;i<v.size();i++) {
+  for (int i=0;i<v.size();i++)
     Log << v[i];
-  }
   Log << std::endl;
 }
 #endif
