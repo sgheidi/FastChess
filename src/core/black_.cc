@@ -25,7 +25,6 @@
 #include "black_.h"
 
 namespace Black {
-
 std::vector<std::vector<int>> blocks(8);
 std::vector<bool> en_passant(8);
 bool turn = false;
