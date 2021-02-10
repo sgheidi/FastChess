@@ -160,9 +160,8 @@ void gen_move() {
   sort(scores.begin(), scores.end());
   #ifdef VERBOSE
     std::cout << "**Scores**" << std::endl;
-    for (int i=0;i<scores.size();i++) {
-      std::cout << scores[i] << std::endl;
-    }
+    for (double s : scores)
+      std::cout << s << std::endl;
   #endif
   std::cout << "Obtained highest score of " << best_move["score"] << std::endl;
 }
