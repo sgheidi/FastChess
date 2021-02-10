@@ -29,7 +29,7 @@ const std::vector<double> CONNECTED_PASSED_PAWNS = {0.5, 1.0, 2.0};
 const std::vector<double> PROTECTED_PASSED_PAWNS = {0.2, 0.5, 0.6};
 
 namespace Black::AI {
-std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m) {
+std::string random_key(const std::map<std::string, std::vector<std::vector<int>>>& m) {
   auto it = m.begin();
   std::advance(it, rand() % m.size());
   std::string key = it->first;

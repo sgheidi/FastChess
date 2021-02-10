@@ -11,7 +11,7 @@ extern const std::vector<double> CONNECTED_PASSED_PAWNS;
 extern const std::vector<double> PROTECTED_PASSED_PAWNS;
 
 namespace Black::AI {
-std::string random_key(std::map<std::string, std::vector<std::vector<int>>> m);
+std::string random_key(const std::map<std::string, std::vector<std::vector<int>>>& m);
 double RBQ_open_files();
 double evaluate_pos();
 double passed_pawns();

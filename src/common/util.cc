@@ -30,7 +30,7 @@ void print(std::string s) {
 
 // This function removes any elements in v1 that are in v2
 std::vector<std::vector<int>>
-filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
+filter2(std::vector<std::vector<int>> v1, const std::vector<std::vector<int>>& v2) {
   for (int i=0;i<v1.size();i++) {
     if (in(v2, v1[i])) {
       v1.erase(v1.begin() + i);
@@ -42,7 +42,7 @@ filter2(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
 
 // This function removes any elements in v1 that are not in v2
 std::vector<std::vector<int>>
-filter(std::vector<std::vector<int>> v1, std::vector<std::vector<int>> v2) {
+filter(std::vector<std::vector<int>> v1, const std::vector<std::vector<int>>& v2) {
   for (int i=0;i<v1.size();i++) {
     if (!in(v2, v1[i])) {
       v1.erase(v1.begin() + i);
@@ -79,7 +79,5 @@ void print_v2(std::vector<std::vector<int>> v) {
 
 // return true if 1d vector in 2d vector
 bool in(std::vector<std::vector<int>> v, std::vector<int> item) {
-  if (std::find(v.begin(), v.end(), item) != v.end())
-    return true;
-  return false;
+  return std::find(v.begin(), v.end(), item) != v.end() ? true : false;
 }
