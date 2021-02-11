@@ -11,7 +11,7 @@ SOURCE+= src/ai/black/eval.cc src/ai/white/eval.cc
 
 CC= g++ -std=c++17
 
-EXECUTABLE= main
+EXECUTABLE= FastChess
 
 LDFLAGS = -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm -w -g
 

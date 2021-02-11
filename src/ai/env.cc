@@ -20,7 +20,7 @@
 
 // Initialize the board with a custom environment for testing the AI.
 // TODO: blocks needs to be set as well (i think?)
-void init(const std::string env) {
+void init(const std::string& env) {
   if (env == "") return;
   else if (env == "onlypawns0") {
     Black::kill(true, "Q0", 0, 3);
