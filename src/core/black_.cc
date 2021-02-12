@@ -61,11 +61,8 @@ bool in_opp_movelist(int row, int col) {
       return true;
   }
   for (int i=0;i<2;i++) {
-    if (in(White::Bishop.movelist[i], pos))
-      return true;
-    if (in(White::Knight.movelist[i], pos))
-      return true;
-    if (in(White::Rook.movelist[i], pos))
+    if (in(White::Bishop.movelist[i], pos) || in(White::Knight.movelist[i], pos) ||
+        in(White::Rook.movelist[i], pos))
       return true;
   }
   return false;

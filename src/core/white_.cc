@@ -48,11 +48,8 @@ bool in_opp_movelist(int row, int col) {
       return true;
   }
   for (int i=0;i<2;i++) {
-    if (in(Black::Bishop.movelist[i], pos))
-      return true;
-    if (in(Black::Knight.movelist[i], pos))
-      return true;
-    if (in(Black::Rook.movelist[i], pos))
+    if (in(Black::Bishop.movelist[i], pos) || in(Black::Knight.movelist[i], pos) ||
+        in(Black::Rook.movelist[i], pos))
       return true;
   }
   return false;
