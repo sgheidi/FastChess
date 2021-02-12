@@ -36,7 +36,7 @@ namespace {
 bool enpassant_check_killed = false;
 
 bool in_opp_movelist(int row, int col) {
-  std::vector<int> pos = {row, col};
+  const std::vector<int> pos = {row, col};
   if (in(Black::King.movelist, pos))
     return true;
   for (int i=0;i<Black::num_queens;i++) {

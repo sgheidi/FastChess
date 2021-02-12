@@ -49,7 +49,7 @@ void pop_last_queen() {
 }
 
 bool in_opp_movelist(int row, int col) {
-  std::vector<int> pos = {row, col};
+  const std::vector<int> pos = {row, col};
   if (in(White::King.movelist, pos))
     return true;
   for (int i=0;i<White::num_queens;i++) {
