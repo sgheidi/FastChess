@@ -26,7 +26,7 @@ void Bishop_Piece::pure_move(int i, int row_, int col_) {
 }
 
 void Bishop_Piece::pin(int k, std::string piece) {
-  std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
+  const std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
   for (int i=0;i<White::num_queens;i++) {
     if (piece == "Q" + std::to_string(i))
       White::Queen.movelist[i] = filter(White::Queen.movelist[i], pinned_movelist);
@@ -55,7 +55,7 @@ void Bishop_Piece::check_pin() {
 }
 
 std::string Bishop_Piece::get_pinned_piece(int i) {
-  std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::King.row, White::King.col};
   int row_;
   int col_;
   if (pos[0] > row[i] && pos[1] > col[i]) {
@@ -102,7 +102,7 @@ std::string Bishop_Piece::get_pinned_piece(int i) {
 }
 
 int Bishop_Piece::num_pieces(int i) {
-  std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::King.row, White::King.col};
   int row_;
   int col_;
   int total = 0;
@@ -158,7 +158,7 @@ int Bishop_Piece::num_pieces(int i) {
 }
 
 bool Bishop_Piece::king_in_path(int i) {
-  std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::King.row, White::King.col};
   int row_;
   int col_;
   row_ = row[i]+1;
@@ -197,7 +197,7 @@ bool Bishop_Piece::king_in_path(int i) {
 }
 
 std::vector<std::vector<int>> Bishop_Piece::get_check_movelist(int i) {
-  std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::King.row, White::King.col};
   int row_;
   int col_;
   std::vector<std::vector<int>> ret;
@@ -242,7 +242,7 @@ std::vector<std::vector<int>> Bishop_Piece::get_check_movelist(int i) {
 }
 
 std::vector<int> Bishop_Piece::get_avoid_move(int i) {
-  std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::King.row, White::King.col};
   std::vector<int> ret;
   if (pos[0] > row[i] && pos[1] > col[i])
     ret = {pos[0]+1, pos[1]+1};

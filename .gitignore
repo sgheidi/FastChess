@@ -1,15 +1,14 @@
 main
 *.swp
-todo
+todo*
 other
 src/test.cc
-test.sh
 src/test.h
+test.sh
 py.sh
 test_namespace
 *.gch
 *.log
 *.py
 *.mp4
-todo1
 FastChess
