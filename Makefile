@@ -9,7 +9,7 @@ SOURCE+= src/core/white/king.cc src/core/white/queen.cc src/core/white/rook.cc s
 SOURCE+= src/media/sound.cc src/media/text.cc src/ai/helper.cc src/ai/black/search.cc src/ai/env.cc
 SOURCE+= src/ai/black/eval.cc src/ai/white/eval.cc
 
-CC= g++ -std=c++17
+CC= g++ -std=c++2a
 
 EXECUTABLE= FastChess
 
