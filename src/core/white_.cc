@@ -67,11 +67,7 @@ bool opp_no_moves() {
       return false;
   }
   for (int i=0;i<2;i++) {
-    if (!Black::Bishop.movelist[i].empty())
-      return false;
-    if (!Black::Knight.movelist[i].empty())
-      return false;
-    if (!Black::Rook.movelist[i].empty())
+    if (!Black::Bishop.movelist[i].empty() || !Black::Knight.movelist[i].empty() || !Black::Rook.movelist[i].empty())
       return false;
   }
   return true;

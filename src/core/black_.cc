@@ -61,8 +61,7 @@ bool in_opp_movelist(int row, int col) {
       return true;
   }
   for (int i=0;i<2;i++) {
-    if (in(White::Bishop.movelist[i], pos) || in(White::Knight.movelist[i], pos) ||
-        in(White::Rook.movelist[i], pos))
+    if (in(White::Bishop.movelist[i], pos) || in(White::Knight.movelist[i], pos) || in(White::Rook.movelist[i], pos))
       return true;
   }
   return false;
@@ -80,11 +79,7 @@ bool opp_no_moves() {
       return false;
   }
   for (int i=0;i<2;i++) {
-    if (!White::Bishop.movelist[i].empty())
-      return false;
-    if (!White::Knight.movelist[i].empty())
-      return false;
-    if (!White::Rook.movelist[i].empty())
+    if (!White::Bishop.movelist[i].empty() || !White::Knight.movelist[i].empty() || !White::Rook.movelist[i].empty())
       return false;
   }
   return true;
