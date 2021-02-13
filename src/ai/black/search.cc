@@ -90,7 +90,7 @@ void gen_move() {
   std::map<std::string, std::vector<std::vector<int>>> moves = Black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   static double score;
-  Board.freeze = true;
+  Board.isFrozen = true;
   const bool W_king_moved = White::King.moved;
   const std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
   const bool B_king_moved = Black::King.moved;
@@ -126,12 +126,14 @@ void gen_move() {
         best_move["score"] = str(score);
         best_move["piece"] = piece;
         best_move["pos"] = str(value[i][0]) + str(value[i][1]);
+        #ifdef VERBOSE
         std::cout << best_move["score"] << std::endl;
+        #endif
       }
     }
     moves.erase(piece);
   }
-  Board.freeze = false;
+  Board.isFrozen = false;
   if (best_move["piece"] == "") {
     #ifdef DEBUGAI
       Log << "No moves left!" << std::endl;
@@ -145,7 +147,10 @@ void gen_move() {
     Black::castle_Q(false);
   else
     Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
-  std::cout << "Best move is " << best_move["piece"] << " to " << "(" << best_move["pos"][0] << ", " << best_move["pos"][1] << ")" << std::endl;
+  #ifdef VERBOSE
+  std::cout << "Best move is " << best_move["piece"] << " to " << "(" << best_move["pos"][0] << ", " 
+  << best_move["pos"][1] << ")" << std::endl;
+  #endif
   #ifndef IS_TESTING
     Black::turn = false;
     White::turn = true;
@@ -162,8 +167,8 @@ void gen_move() {
     std::cout << "**Scores**" << std::endl;
     for (double s : scores)
       std::cout << s << std::endl;
-  #endif
   std::cout << "Obtained highest score of " << best_move["score"] << std::endl;
+  #endif
 }
 
 } // namespace Black::AI

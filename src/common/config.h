@@ -20,7 +20,7 @@
 
 // for useful outputs relating to AI eval
 #ifdef IS_BLACK_AI
-#define VERBOSE
+// #define VERBOSE
 #endif
 
 // more verbose outputs relating to AI search in CLI

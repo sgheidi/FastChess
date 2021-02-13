@@ -1,3 +1,4 @@
+# Convert MP4 to GIF
 ffmpeg \
   -i ../assets/output.mp4 \
   -r 15 \

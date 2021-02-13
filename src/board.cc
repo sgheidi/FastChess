@@ -91,7 +91,7 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "B")
       Black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
-    if (!Board.freeze) White::reset_enpassant();
+    if (!Board.isFrozen) White::reset_enpassant();
     White::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
   else if (undo.color[last] == "B") {
@@ -132,7 +132,7 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "W")
       White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
-    if (!Board.freeze)
+    if (!Board.isFrozen)
       Black::reset_enpassant();
     Black::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
@@ -163,7 +163,7 @@ void Game_Board::pop() {
 }
 
 void Game_Board::print_undo() {
-  print("UNDO STACK");
+  print("----UNDO STACK----");
   print_v2(undo.moved_from);
   print_v1(undo.piece);
   print_v1(undo.color);

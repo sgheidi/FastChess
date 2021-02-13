@@ -10,7 +10,7 @@ public:
   int pieces_paddingx, pieces_paddingy;
   float pieces_scale;
   bool checkmate, stalemate;
-  bool freeze;
+  bool isFrozen;
   int screenshot_num;
   std::string clicked_piece;
   Game_Board() {
@@ -23,7 +23,7 @@ public:
     pieces_paddingx = 13;
     pieces_paddingy = 8;
     pieces_scale = 1;
-    freeze = false;
+    isFrozen = false;
   };
   void show_legal_moves();
   void reset_pos();

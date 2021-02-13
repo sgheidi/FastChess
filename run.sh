@@ -1,1 +1,1 @@
-make clean; make; ./FastChess
+./pch.sh; make clean; make; ./FastChess
