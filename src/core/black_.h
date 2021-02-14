@@ -11,7 +11,6 @@ extern const int depth;
 extern bool screenshot;
 
 std::map<std::string, std::vector<std::vector<int>>> get_moves();
-std::vector<std::string> get_movesVec();
 void check_capture_screen();
 void handle_undo_promotion(int i, int row, int col);
 void revive(std::string piece, int row, int col);

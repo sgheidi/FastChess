@@ -217,33 +217,6 @@ void pop_last_queen() {
 }
 } // namespace
 
-std::vector<std::string> get_movesVec() {
-  std::vector<std::string> moves = {};
-  if (castle_criteria_K())
-    moves.push_back("CK");
-  if (castle_criteria_Q())
-    moves.push_back("CQ");
-  if (King.alive && !King.movelist.empty())
-    moves.push_back("K");
-  for (int i=0;i<num_queens;i++) {
-    if (Queen.alive[i] && !Queen.movelist[i].empty())
-      moves.push_back("Q" + str(i));
-  }
-  for (int i=0;i<8;i++) {
-    if (Pawn.alive[i] && !Pawn.movelist[i].empty())
-      moves.push_back("P" + str(i));
-  }
-  for (int i=0;i<2;i++) {
-    if (Bishop.alive[i] && !Bishop.movelist[i].empty())
-      moves.push_back("B" + str(i));
-    if (Knight.alive[i] && !Knight.movelist[i].empty())
-      moves.push_back("N" + str(i));
-    if (Rook.alive[i] && !Rook.movelist[i].empty())
-      moves.push_back("R" + str(i));
-  }
-  return moves;
-}
-
 std::map<std::string, std::vector<std::vector<int>>> get_moves() {
   std::map<std::string, std::vector<std::vector<int>>> moves = {};
   if (King.alive && !King.movelist.empty())
