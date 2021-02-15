@@ -17,6 +17,6 @@ public:
   void move();
 };
 
-extern Game_Sound Sound;
+extern Game_Sound sound;
 
 #endif // MEDIA_SOUND_H

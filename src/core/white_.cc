@@ -390,7 +390,7 @@ void move_piece(std::string piece, int row, int col) {
     moved = true;
   }
   else if (piece == "K" && !in(king.movelist, pos)) {
-    Sound.error();
+    sound.error();
     return;
   }
   for (int i=0;i<num_queens;i++) {
@@ -401,7 +401,7 @@ void move_piece(std::string piece, int row, int col) {
       moved = true;
     }
     else if (piece == "Q" + std::to_string(i) && !in(queen.movelist[i], pos)) {
-      Sound.error();
+      sound.error();
       return;
     }
   }
@@ -426,7 +426,7 @@ void move_piece(std::string piece, int row, int col) {
       moved = true;
     }
     else if (piece == "P" + std::to_string(i) && !in(pawn.movelist[i], pos)) {
-      Sound.error();
+      sound.error();
       return;
     }
   }
@@ -438,7 +438,7 @@ void move_piece(std::string piece, int row, int col) {
       moved = true;
     }
     else if (piece == "B" + std::to_string(i) && !in(bishop.movelist[i], pos)) {
-      Sound.error();
+      sound.error();
       return;
     }
     if (piece == "N" + std::to_string(i) && in(knight.movelist[i], pos)) {
@@ -448,7 +448,7 @@ void move_piece(std::string piece, int row, int col) {
       moved = true;
     }
     else if (piece == "N" + std::to_string(i) && !in(knight.movelist[i], pos)) {
-      Sound.error();
+      sound.error();
       return;
     }
     if (piece == "R" + std::to_string(i) && in(rook.movelist[i], pos)) {
@@ -458,7 +458,7 @@ void move_piece(std::string piece, int row, int col) {
       moved = true;
     }
     else if (piece == "R" + std::to_string(i) && !in(rook.movelist[i], pos)) {
-      Sound.error();
+      sound.error();
       return;
     }
   }
@@ -468,7 +468,7 @@ void move_piece(std::string piece, int row, int col) {
 
 void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) {
   if (!killed && !is_undo && !board.isFrozen)
-    Sound.move();
+    sound.move();
   if (!is_undo) {
     board.total_moves ++;
     undo.piece.push_back(piece);
@@ -480,7 +480,7 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   check_pin();
   if (check_opp_checked() && !is_undo) {
     if (!board.isFrozen)
-      Sound.check();
+      sound.check();
     update_opp_movelists();
     if (opp_no_moves())
       board.checkmate = true;
@@ -629,7 +629,7 @@ void kill(bool is_undo, std::string piece, int row, int col) {
     }
   }
   if (!is_undo && !board.isFrozen)
-    Sound.kill();
+    sound.kill();
 }
 
 } // namespace white

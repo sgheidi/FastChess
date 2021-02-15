@@ -15,7 +15,7 @@
 // flag for toggling no turns
 // #define IS_TESTING
 
-// black AI
+// Black AI
 #define IS_BLACK_AI
 
 // for useful outputs relating to AI eval
@@ -33,7 +33,10 @@
 #define Y_RES 600
 #define UNIT (X_RES/8)
 
+// DEBUGAI log file
 extern std::ofstream Log;
+
+// stack used for undoing moves
 struct undo_stack {
   std::vector<std::vector<int>> moved_from;
   std::vector<std::string> piece;

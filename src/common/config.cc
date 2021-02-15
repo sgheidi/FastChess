@@ -41,7 +41,7 @@ sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
 // Global game objects
 Game_Board board;
 Click_Queue queue;
-Game_Sound Sound;
+Game_Sound sound;
 Game_Text text;
 
 namespace black {
