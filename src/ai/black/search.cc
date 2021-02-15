@@ -91,10 +91,10 @@ void gen_move() {
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   static double score;
   Board.isFrozen = true;
-  const bool W_king_moved = White::King.moved;
-  const std::vector<bool> W_rook_moved = {White::Rook.moved[0], White::Rook.moved[1]};
-  const bool B_king_moved = Black::King.moved;
-  const std::vector<bool> B_rook_moved = {Black::Rook.moved[0], Black::Rook.moved[1]};
+  const bool W_king_moved = White::king.moved;
+  const std::vector<bool> W_rook_moved = {White::rook.moved[0], White::rook.moved[1]};
+  const bool B_king_moved = Black::king.moved;
+  const std::vector<bool> B_rook_moved = {Black::rook.moved[0], Black::rook.moved[1]};
   std::vector<double> scores = {};
   for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=temp.begin();itr!=temp.end();itr++) {
     std::string piece = random_key(moves);
@@ -155,12 +155,12 @@ void gen_move() {
     Black::turn = false;
     White::turn = true;
   #endif
-  White::Rook.moved[0] = W_rook_moved[0];
-  White::Rook.moved[1] = W_rook_moved[1];
-  Black::Rook.moved[0] = B_rook_moved[0];
-  Black::Rook.moved[1] = B_rook_moved[1];
-  White::King.moved = W_king_moved;
-  Black::King.moved = B_king_moved;
+  White::rook.moved[0] = W_rook_moved[0];
+  White::rook.moved[1] = W_rook_moved[1];
+  Black::rook.moved[0] = B_rook_moved[0];
+  Black::rook.moved[1] = B_rook_moved[1];
+  White::king.moved = W_king_moved;
+  Black::king.moved = B_king_moved;
   // get a sorted list of all our scores to make sure we have the right move
   sort(scores.begin(), scores.end());
   #ifdef VERBOSE

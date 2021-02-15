@@ -49,7 +49,7 @@ void Knight_Piece::show() {
   for (int i=0;i<2;i++) {
     if (!alive[i])
       continue;
-    if (!texture.loadFromFile("assets/sprites/whiteKnight.png"))
+    if (!texture.loadFromFile("assets/sprites/whiteknight.png"))
       return;
     sprite.setTexture(texture);
     sprite.setScale(Board.pieces_scale, Board.pieces_scale);

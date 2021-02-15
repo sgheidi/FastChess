@@ -26,24 +26,24 @@ namespace White::Eval {
 double mobility() {
   double reward = 0;
   for (int i=0;i<2;i++) {
-    if (Knight.alive[i]) {
-      for (int k=0;k<Knight.movelist[i].size();k++) {
+    if (knight.alive[i]) {
+      for (int k=0;k<knight.movelist[i].size();k++) {
         reward += MOBILITY;
       }
     }
-    if (Bishop.alive[i]) {
-      for (int k=0;k<Bishop.movelist[i].size();k++) {
+    if (bishop.alive[i]) {
+      for (int k=0;k<bishop.movelist[i].size();k++) {
         reward += MOBILITY;
       }
     }
-    if (Rook.alive[i]) {
-      for (int k=0;k<Rook.movelist[i].size();k++) {
+    if (rook.alive[i]) {
+      for (int k=0;k<rook.movelist[i].size();k++) {
         reward += MOBILITY;
       }
     }
   }
   for (int i=0;i<num_queens;i++) {
-    for (int k=0;k<Queen.movelist[i].size();k++) {
+    for (int k=0;k<queen.movelist[i].size();k++) {
       reward += MOBILITY;
     }
   }
@@ -53,11 +53,11 @@ double mobility() {
 double passed_pawns() {
   double reward = 0;
   for (int i=0;i<8;i++) {
-    if (Pawn.row[i] >= 4)
+    if (pawn.row[i] >= 4)
       reward += PASSED_PAWNS[0];
-    if (Pawn.row[i] >= 5)
+    if (pawn.row[i] >= 5)
       reward += PASSED_PAWNS[1];
-    if (Pawn.row[i] >= 6)
+    if (pawn.row[i] >= 6)
       reward += PASSED_PAWNS[2];
   }
   return reward;
@@ -66,7 +66,7 @@ double passed_pawns() {
 double pawn_promote() {
   double reward = 0;
   for (int i=0;i<8;i++) {
-    if (Pawn.row[i] >= 7)
+    if (pawn.row[i] >= 7)
       reward += 10.0;
   }
   return reward;
@@ -74,7 +74,7 @@ double pawn_promote() {
 
 double bishop_pair() {
   double reward = 0;
-  if (Bishop.alive[0] && Bishop.alive[1])
+  if (bishop.alive[0] && bishop.alive[1])
     reward += BISHOP_PAIR_REWARD;
   return reward;
 }
@@ -83,23 +83,23 @@ double bishop_pair() {
 double RBQ_open_files() {
   double reward = 0;
   for (int i=0;i<num_queens;i++) {
-    if (Queen.alive[i]) {
-      for (int k=0;k<Queen.movelist[i].size();k++) {
-        if (!blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]] && !Black::blocks[Queen.movelist[i][k][0]][Queen.movelist[i][k][1]])
+    if (queen.alive[i]) {
+      for (int k=0;k<queen.movelist[i].size();k++) {
+        if (!blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]] && !Black::blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
   }
   for (int i=0;i<2;i++) {
-    if (Bishop.alive[i]) {
-      for (int k=0;k<Bishop.movelist[i].size();k++) {
-        if (!blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]] && !Black::blocks[Bishop.movelist[i][k][0]][Bishop.movelist[i][k][1]])
+    if (bishop.alive[i]) {
+      for (int k=0;k<bishop.movelist[i].size();k++) {
+        if (!blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]] && !Black::blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
-    if (Rook.alive[i]) {
-      for (int k=0;k<Rook.movelist[i].size();k++) {
-        if (!blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]] && !Black::blocks[Rook.movelist[i][k][0]][Rook.movelist[i][k][1]])
+    if (rook.alive[i]) {
+      for (int k=0;k<rook.movelist[i].size();k++) {
+        if (!blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]] && !Black::blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }

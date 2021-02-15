@@ -26,7 +26,7 @@ public:
   void show();
 };
 
-extern Pawn_Piece Pawn;
+extern Pawn_Piece pawn;
 
 } // namespace White
 

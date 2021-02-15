@@ -45,19 +45,19 @@ Game_Sound Sound;
 Game_Text Text;
 
 namespace Black {
-Bishop_Piece Bishop;
-Knight_Piece Knight;
-Pawn_Piece Pawn;
-Rook_Piece Rook;
-King_Piece King;
-Queen_Piece Queen;
+Bishop_Piece bishop;
+Knight_Piece knight;
+Pawn_Piece pawn;
+Rook_Piece rook;
+King_Piece king;
+Queen_Piece queen;
 }
 
 namespace White {
-Bishop_Piece Bishop;
-Knight_Piece Knight;
-Pawn_Piece Pawn;
-Rook_Piece Rook;
-King_Piece King;
-Queen_Piece Queen;
+Bishop_Piece bishop;
+Knight_Piece knight;
+Pawn_Piece pawn;
+Rook_Piece rook;
+King_Piece king;
+Queen_Piece queen;
 }

@@ -47,9 +47,9 @@ void Pawn_Piece::update_movelist() {
     }
     if (row[i] == 3) {
       for (int k=0;k<8;k++) {
-        if (Black::en_passant[k] && !blocks[2][Black::Pawn.col[k]]) {
-          if (abs(col[i] - Black::Pawn.col[k]) == 1)
-            movelist[i].push_back({2, Black::Pawn.col[k]});
+        if (Black::en_passant[k] && !blocks[2][Black::pawn.col[k]]) {
+          if (abs(col[i] - Black::pawn.col[k]) == 1)
+            movelist[i].push_back({2, Black::pawn.col[k]});
         }
       }
     }
@@ -84,7 +84,7 @@ void Pawn_Piece::show() {
   for (int i=0;i<8;i++) {
     if (!alive[i])
       continue;
-    if (!texture.loadFromFile("assets/sprites/whitePawn.png"))
+    if (!texture.loadFromFile("assets/sprites/whitepawn.png"))
       return;
     sprite.setTexture(texture);
     sprite.setScale(Board.pieces_scale, Board.pieces_scale);

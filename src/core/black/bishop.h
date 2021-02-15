@@ -30,7 +30,7 @@ public:
   void show();
 };
 
-extern Bishop_Piece Bishop;
+extern Bishop_Piece bishop;
 
 } // namespace Black
 

@@ -38,40 +38,40 @@ std::string random_key(const std::map<std::string, std::vector<std::vector<int>>
 
 double evaluate_pos() {
   double score = 0;
-  if (Black::King.alive)
+  if (Black::king.alive)
     score -= 2;
   for (int i=0;i<Black::num_queens;i++) {
-    if (Black::Queen.alive[i])
+    if (Black::queen.alive[i])
       score -= 9;
   }
   for (int i=0;i<8;i++) {
-    if (Black::Pawn.alive[i])
+    if (Black::pawn.alive[i])
       score -= 1;
   }
   for (int i=0;i<2;i++) {
-    if (Black::Bishop.alive[i])
+    if (Black::bishop.alive[i])
       score -= 3;
-    if (Black::Knight.alive[i])
+    if (Black::knight.alive[i])
       score -= 3;
-    if (Black::Rook.alive[i])
+    if (Black::rook.alive[i])
       score -= 5;
   }
-  if (White::King.alive)
+  if (White::king.alive)
     score += 2;
   for (int i=0;i<White::num_queens;i++) {
-    if (White::Queen.alive[i])
+    if (White::queen.alive[i])
       score += 9;
   }
   for (int i=0;i<8;i++) {
-    if (White::Pawn.alive[i])
+    if (White::pawn.alive[i])
       score += 1;
   }
   for (int i=0;i<2;i++) {
-    if (White::Bishop.alive[i])
+    if (White::bishop.alive[i])
       score += 3;
-    if (White::Knight.alive[i])
+    if (White::knight.alive[i])
       score += 3;
-    if (White::Rook.alive[i])
+    if (White::rook.alive[i])
       score += 5;
   }
   // score -= Eval::RBQ_open_files();

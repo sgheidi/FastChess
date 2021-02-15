@@ -23,7 +23,7 @@ public:
   void show();
 };
 
-extern Knight_Piece Knight;
+extern Knight_Piece knight;
 
 } // namespace White
 

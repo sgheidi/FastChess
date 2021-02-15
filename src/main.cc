@@ -52,33 +52,33 @@ int main() {
           Board.selected_row = pos[1];
           Board.selected_col = pos[0];
           if (Board.clicked_piece == "K") {
-            White::King.x = position.x - 3*Board.pieces_paddingx;
-            White::King.y = position.y - 4*Board.pieces_paddingy;
+            White::king.x = position.x - 3*Board.pieces_paddingx;
+            White::king.y = position.y - 4*Board.pieces_paddingy;
           }
           for (int i=0;i<8;i++) {
             if (Board.clicked_piece == "P" + str(i)) {
-              White::Pawn.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::Pawn.y[i] = position.y - 4*Board.pieces_paddingy;
+              White::pawn.x[i] = position.x - 3*Board.pieces_paddingx;
+              White::pawn.y[i] = position.y - 4*Board.pieces_paddingy;
             }
           }
           for (int i=0;i<White::num_queens;i++) {
             if (Board.clicked_piece == "Q" + str(i)) {
-              White::Queen.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::Queen.y[i] = position.y - 4*Board.pieces_paddingy;
+              White::queen.x[i] = position.x - 3*Board.pieces_paddingx;
+              White::queen.y[i] = position.y - 4*Board.pieces_paddingy;
             }
           }
           for (int i=0;i<2;i++) {
             if (Board.clicked_piece == "B" + str(i)) {
-              White::Bishop.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::Bishop.y[i] = position.y - 4*Board.pieces_paddingy;
+              White::bishop.x[i] = position.x - 3*Board.pieces_paddingx;
+              White::bishop.y[i] = position.y - 4*Board.pieces_paddingy;
             }
             else if (Board.clicked_piece == "N" + str(i)) {
-              White::Knight.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::Knight.y[i] = position.y - 4*Board.pieces_paddingy;
+              White::knight.x[i] = position.x - 3*Board.pieces_paddingx;
+              White::knight.y[i] = position.y - 4*Board.pieces_paddingy;
             }
             else if (Board.clicked_piece == "R" + str(i)) {
-              White::Rook.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::Rook.y[i] = position.y - 4*Board.pieces_paddingy;
+              White::rook.x[i] = position.x - 3*Board.pieces_paddingx;
+              White::rook.y[i] = position.y - 4*Board.pieces_paddingy;
             }
           }
         }

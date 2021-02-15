@@ -32,7 +32,7 @@ public:
   void show();
 };
 
-extern Rook_Piece Rook;
+extern Rook_Piece rook;
 
 } // namespace Black
 

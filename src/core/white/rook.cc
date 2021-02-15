@@ -29,19 +29,19 @@ void Rook_Piece::pin(int k, std::string piece) {
   const std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
   for (int i=0;i<Black::num_queens;i++) {
     if (piece == "Q" + std::to_string(i))
-      Black::Queen.movelist[i] = filter(Black::Queen.movelist[i], pinned_movelist);
+      Black::queen.movelist[i] = filter(Black::queen.movelist[i], pinned_movelist);
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i))
-      Black::Bishop.movelist[i] = filter(Black::Bishop.movelist[i], pinned_movelist);
+      Black::bishop.movelist[i] = filter(Black::bishop.movelist[i], pinned_movelist);
     else if (piece == "N" + std::to_string(i))
-      Black::Knight.movelist[i] = filter(Black::Knight.movelist[i], pinned_movelist);
+      Black::knight.movelist[i] = filter(Black::knight.movelist[i], pinned_movelist);
     else if (piece == "R" + std::to_string(i))
-      Black::Rook.movelist[i] = filter(Black::Rook.movelist[i], pinned_movelist);
+      Black::rook.movelist[i] = filter(Black::rook.movelist[i], pinned_movelist);
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i))
-      Black::Pawn.movelist[i] = filter(Black::Pawn.movelist[i], pinned_movelist);
+      Black::pawn.movelist[i] = filter(Black::pawn.movelist[i], pinned_movelist);
   }
 }
 
@@ -55,7 +55,7 @@ void Rook_Piece::check_pin() {
 }
 
 std::string Rook_Piece::get_pinned_piece(int i) {
-  const std::vector<int> pos = {Black::King.row, Black::King.col};
+  const std::vector<int> pos = {Black::king.row, Black::king.col};
   int row_;
   int col_;
   if (pos[0] > row[i]) {
@@ -98,7 +98,7 @@ std::string Rook_Piece::get_pinned_piece(int i) {
 }
 
 int Rook_Piece::num_pieces(int i) {
-  const std::vector<int> pos = {Black::King.row, Black::King.col};
+  const std::vector<int> pos = {Black::king.row, Black::king.col};
   int row_;
   int col_;
   int total = 0;
@@ -150,7 +150,7 @@ int Rook_Piece::num_pieces(int i) {
 }
 
 bool Rook_Piece::king_in_path(int i) {
-  const std::vector<int> pos = {Black::King.row, Black::King.col};
+  const std::vector<int> pos = {Black::king.row, Black::king.col};
   int row_;
   int col_;
   row_ = row[i]+1;
@@ -181,7 +181,7 @@ bool Rook_Piece::king_in_path(int i) {
 }
 
 std::vector<std::vector<int>> Rook_Piece::get_check_movelist(int i) {
-  const std::vector<int> pos = {Black::King.row, Black::King.col};
+  const std::vector<int> pos = {Black::king.row, Black::king.col};
   int row_;
   int col_;
   std::vector<std::vector<int>> ret;
@@ -218,7 +218,7 @@ std::vector<std::vector<int>> Rook_Piece::get_check_movelist(int i) {
 }
 
 std::vector<int> Rook_Piece::get_avoid_move(int i) {
-  const std::vector<int> pos = {Black::King.row, Black::King.col};
+  const std::vector<int> pos = {Black::king.row, Black::king.col};
   std::vector<int> ret;
   if (pos[0] > row[i])
     ret = {pos[0]+1, pos[1]};
@@ -302,7 +302,7 @@ void Rook_Piece::show() {
   for (int i=0;i<2;i++) {
     if (!alive[i])
       continue;
-    if (!texture.loadFromFile("assets/sprites/whiteRook.png"))
+    if (!texture.loadFromFile("assets/sprites/whiterook.png"))
       return;
     sprite.setTexture(texture);
     sprite.setScale(Board.pieces_scale, Board.pieces_scale);

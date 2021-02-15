@@ -30,7 +30,7 @@ public:
   void show();
 };
 
-extern Queen_Piece Queen;
+extern Queen_Piece queen;
 
 } // namespace Black
 

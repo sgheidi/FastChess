@@ -56,38 +56,38 @@ void Game_Board::pop() {
   if (undo.color[last] == "W") {
     if (undo.piece[last] == "CK") {
       castled = true;
-      White::King.move(7, 4);
-      White::Rook.move(1, 7, 7);
-      White::King.moved = 0;
-      White::Rook.moved[1] = 0;
+      White::king.move(7, 4);
+      White::rook.move(1, 7, 7);
+      White::king.moved = 0;
+      White::rook.moved[1] = 0;
     }
     else if (undo.piece[last] == "CQ") {
       castled = true;
-      White::King.move(7, 4);
-      White::Rook.move(0, 7, 0);
-      White::King.moved = 0;
-      White::Rook.moved[0] = 0;
+      White::king.move(7, 4);
+      White::rook.move(0, 7, 0);
+      White::king.moved = 0;
+      White::rook.moved[0] = 0;
     }
     else if (undo.piece[last] == "K")
-      White::King.move(undo.moved_from[last][0], undo.moved_from[last][1]);
+      White::king.move(undo.moved_from[last][0], undo.moved_from[last][1]);
     for (int i=0;i<White::num_queens;i++) {
       if (undo.piece[last] == "Q" + std::to_string(i))
-        White::Queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        White::queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
     for (int i=0;i<8;i++) {
       if (undo.piece[last] == "P" + std::to_string(i)) {
         if (undo.moved_from[last][0] == 1)
           White::handle_undo_promotion(i, undo.moved_from[last][0], undo.moved_from[last][1]);
-        White::Pawn.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        White::pawn.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       }
     }
     for (int i=0;i<2;i++) {
       if (undo.piece[last] == "B" + std::to_string(i))
-        White::Bishop.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        White::bishop.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       else if (undo.piece[last] == "N" + std::to_string(i))
-        White::Knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        White::knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       else if (undo.piece[last] == "R" + std::to_string(i))
-        White::Rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        White::rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
     if (undo.killed[last] && undo.killed_color[last] == "B")
       Black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
@@ -97,38 +97,38 @@ void Game_Board::pop() {
   else if (undo.color[last] == "B") {
     if (undo.piece[last] == "CK") {
       castled = true;
-      Black::King.move(0, 4);
-      Black::Rook.move(1, 0, 7);
-      Black::King.moved = 0;
-      Black::Rook.moved[1] = 0;
+      Black::king.move(0, 4);
+      Black::rook.move(1, 0, 7);
+      Black::king.moved = 0;
+      Black::rook.moved[1] = 0;
     }
     else if (undo.piece[last] == "CQ") {
       castled = true;
-      Black::King.move(0, 4);
-      Black::Rook.move(0, 0, 0);
-      Black::King.moved = 0;
-      Black::Rook.moved[0] = 0;
+      Black::king.move(0, 4);
+      Black::rook.move(0, 0, 0);
+      Black::king.moved = 0;
+      Black::rook.moved[0] = 0;
     }
     if (undo.piece[last] == "K")
-      Black::King.move(undo.moved_from[last][0], undo.moved_from[last][1]);
+      Black::king.move(undo.moved_from[last][0], undo.moved_from[last][1]);
     for (int i=0;i<Black::num_queens;i++) {
       if (undo.piece[last] == "Q" + std::to_string(i))
-        Black::Queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        Black::queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
     for (int i=0;i<8;i++) {
       if (undo.piece[last] == "P" + std::to_string(i)) {
         if (undo.moved_from[last][0] == 6)
           Black::handle_undo_promotion(i, undo.moved_from[last][0], undo.moved_from[last][1]);
-        Black::Pawn.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        Black::pawn.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       }
     }
     for (int i=0;i<2;i++) {
       if (undo.piece[last] == "B" + std::to_string(i))
-        Black::Bishop.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        Black::bishop.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       else if (undo.piece[last] == "N" + std::to_string(i))
-        Black::Knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        Black::knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       else if (undo.piece[last] == "R" + std::to_string(i))
-        Black::Rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        Black::rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
     if (undo.killed[last] && undo.killed_color[last] == "W")
       White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
@@ -181,18 +181,18 @@ void Game_Board::check_end() {
 }
 
 void Game_Board::update_moves() {
-  White::Pawn.update_movelist();
-  White::Queen.update_movelist();
-  White::Bishop.update_movelist();
-  White::Knight.update_movelist();
-  White::Rook.update_movelist();
-  Black::Pawn.update_movelist();
-  Black::Queen.update_movelist();
-  Black::Bishop.update_movelist();
-  Black::Knight.update_movelist();
-  Black::Rook.update_movelist();
-  White::King.update_movelist();
-  Black::King.update_movelist();
+  White::pawn.update_movelist();
+  White::queen.update_movelist();
+  White::bishop.update_movelist();
+  White::knight.update_movelist();
+  White::rook.update_movelist();
+  Black::pawn.update_movelist();
+  Black::queen.update_movelist();
+  Black::bishop.update_movelist();
+  Black::knight.update_movelist();
+  Black::rook.update_movelist();
+  White::king.update_movelist();
+  Black::king.update_movelist();
 }
 
 void Game_Board::play() {
@@ -232,33 +232,33 @@ void Game_Board::show_legal_moves() {
   const std::string selected_piece = get_selected_piece();
   if (selected_piece == "") return;
   else if (selected_piece == "K") {
-    for (int i=0;i<White::King.movelist.size();i++)
-      Circle(White::King.movelist[i][0], White::King.movelist[i][1]);
+    for (int i=0;i<White::king.movelist.size();i++)
+      Circle(White::king.movelist[i][0], White::king.movelist[i][1]);
   }
   for (int i=0;i<8;i++) {
     if (selected_piece == "P" + str(i)) {
-      for (int k=0;k<White::Pawn.movelist[i].size();k++)
-        Circle(White::Pawn.movelist[i][k][0], White::Pawn.movelist[i][k][1]);
+      for (int k=0;k<White::pawn.movelist[i].size();k++)
+        Circle(White::pawn.movelist[i][k][0], White::pawn.movelist[i][k][1]);
     }
   }
   for (int i=0;i<White::num_queens;i++) {
     if (selected_piece == "Q" + str(i)) {
-      for (int k=0;k<White::Queen.movelist[i].size();k++)
-        Circle(White::Queen.movelist[i][k][0], White::Queen.movelist[i][k][1]);
+      for (int k=0;k<White::queen.movelist[i].size();k++)
+        Circle(White::queen.movelist[i][k][0], White::queen.movelist[i][k][1]);
     }
   }
   for (int i=0;i<2;i++) {
     if (selected_piece == "B" + str(i)) {
-      for (int k=0;k<White::Bishop.movelist[i].size();k++)
-        Circle(White::Bishop.movelist[i][k][0], White::Bishop.movelist[i][k][1]);
+      for (int k=0;k<White::bishop.movelist[i].size();k++)
+        Circle(White::bishop.movelist[i][k][0], White::bishop.movelist[i][k][1]);
     }
     else if (selected_piece == "N" + str(i)) {
-      for (int k=0;k<White::Knight.movelist[i].size();k++)
-        Circle(White::Knight.movelist[i][k][0], White::Knight.movelist[i][k][1]);
+      for (int k=0;k<White::knight.movelist[i].size();k++)
+        Circle(White::knight.movelist[i][k][0], White::knight.movelist[i][k][1]);
     }
     else if (selected_piece == "R" + str(i)) {
-      for (int k=0;k<White::Rook.movelist[i].size();k++)
-        Circle(White::Rook.movelist[i][k][0], White::Rook.movelist[i][k][1]);
+      for (int k=0;k<White::rook.movelist[i].size();k++)
+        Circle(White::rook.movelist[i][k][0], White::rook.movelist[i][k][1]);
     }
   }
 }
@@ -272,22 +272,22 @@ std::string Game_Board::get_selected_piece() {
 
 // reset sprites to where they're supposed to be
 void Game_Board::reset_pos() {
-  White::King.move(White::King.row, White::King.col);
+  White::king.move(White::king.row, White::king.col);
   for (int i=0;i<8;i++) {
-    if (White::Pawn.alive[i])
-      White::Pawn.move(i, White::Pawn.row[i], White::Pawn.col[i]);
+    if (White::pawn.alive[i])
+      White::pawn.move(i, White::pawn.row[i], White::pawn.col[i]);
   }
   for (int i=0;i<White::num_queens;i++) {
-    if (White::Queen.alive[i])
-      White::Queen.move(i, White::Queen.row[i], White::Queen.col[i]);
+    if (White::queen.alive[i])
+      White::queen.move(i, White::queen.row[i], White::queen.col[i]);
   }
   for (int i=0;i<2;i++) {
-    if (White::Bishop.alive[i])
-      White::Bishop.move(i, White::Bishop.row[i], White::Bishop.col[i]);
-    if (White::Rook.alive[i])
-      White::Rook.move(i, White::Rook.row[i], White::Rook.col[i]);
-    if (White::Knight.alive[i])
-      White::Knight.move(i, White::Knight.row[i], White::Knight.col[i]);
+    if (White::bishop.alive[i])
+      White::bishop.move(i, White::bishop.row[i], White::bishop.col[i]);
+    if (White::rook.alive[i])
+      White::rook.move(i, White::rook.row[i], White::rook.col[i]);
+    if (White::knight.alive[i])
+      White::knight.move(i, White::knight.row[i], White::knight.col[i]);
   }
 }
 

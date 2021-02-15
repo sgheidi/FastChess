@@ -29,19 +29,19 @@ void Queen_Piece::pin(int k, std::string piece) {
   const std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
   for (int i=0;i<White::num_queens;i++) {
     if (piece == "Q" + std::to_string(i))
-      White::Queen.movelist[i] = filter(White::Queen.movelist[i], pinned_movelist);
+      White::queen.movelist[i] = filter(White::queen.movelist[i], pinned_movelist);
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i))
-      White::Bishop.movelist[i] = filter(White::Bishop.movelist[i], pinned_movelist);
+      White::bishop.movelist[i] = filter(White::bishop.movelist[i], pinned_movelist);
     else if (piece == "N" + std::to_string(i))
-      White::Knight.movelist[i] = filter(White::Knight.movelist[i], pinned_movelist);
+      White::knight.movelist[i] = filter(White::knight.movelist[i], pinned_movelist);
     else if (piece == "R" + std::to_string(i))
-      White::Rook.movelist[i] = filter(White::Rook.movelist[i], pinned_movelist);
+      White::rook.movelist[i] = filter(White::rook.movelist[i], pinned_movelist);
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i))
-      White::Pawn.movelist[i] = filter(White::Pawn.movelist[i], pinned_movelist);
+      White::pawn.movelist[i] = filter(White::pawn.movelist[i], pinned_movelist);
   }
 }
 
@@ -55,7 +55,7 @@ void Queen_Piece::check_pin() {
 }
 
 std::string Queen_Piece::get_pinned_piece(int i) {
-  const std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::king.row, White::king.col};
   int row_;
   int col_;
   if (pos[0] > row[i] && pos[1] > col[i]) {
@@ -139,7 +139,7 @@ std::string Queen_Piece::get_pinned_piece(int i) {
 }
 
 int Queen_Piece::num_pieces(int i) {
-  const std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::king.row, White::king.col};
   int row_;
   int col_;
   int total = 0;
@@ -240,7 +240,7 @@ int Queen_Piece::num_pieces(int i) {
 }
 
 bool Queen_Piece::king_in_path(int i) {
-  const std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::king.row, White::king.col};
   int row_;
   int col_;
   row_ = row[i]+1;
@@ -303,7 +303,7 @@ bool Queen_Piece::king_in_path(int i) {
 }
 
 std::vector<std::vector<int>> Queen_Piece::get_check_movelist(int i) {
-  std::vector<int> pos = {White::King.row, White::King.col};
+  std::vector<int> pos = {White::king.row, White::king.col};
   int row_;
   int col_;
   std::vector<std::vector<int>> ret;
@@ -376,7 +376,7 @@ std::vector<std::vector<int>> Queen_Piece::get_check_movelist(int i) {
 }
 
 std::vector<int> Queen_Piece::get_avoid_move(int i) {
-  const std::vector<int> pos = {White::King.row, White::King.col};
+  const std::vector<int> pos = {White::king.row, White::king.col};
   std::vector<int> ret;
   if (pos[0] > row[i] && pos[1] > col[i])
     ret = {pos[0]+1, pos[1]+1};
@@ -519,7 +519,7 @@ void Queen_Piece::show() {
   for (int i=0;i<num_queens;i++) {
     if (!alive[i])
       continue;
-    if (!texture.loadFromFile("assets/sprites/blackQueen.png"))
+    if (!texture.loadFromFile("assets/sprites/blackqueen.png"))
       return;
     sprite.setTexture(texture);
     sprite.setScale(Board.pieces_scale, Board.pieces_scale);

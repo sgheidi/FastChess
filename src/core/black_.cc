@@ -38,57 +38,57 @@ bool enpassant_check_killed = false;
 
 void pop_last_queen() {
   num_queens --;
-  blocks[Queen.row[num_queens]][Queen.col[num_queens]] = 0;
-  Queen.row.resize(num_queens);
-  Queen.col.resize(num_queens);
-  Queen.x.resize(num_queens);
-  Queen.y.resize(num_queens);
-  Queen.alive.resize(num_queens);
-  Queen.movelist.resize(num_queens);
-  Queen.protecting_movelist.resize(num_queens);
+  blocks[queen.row[num_queens]][queen.col[num_queens]] = 0;
+  queen.row.resize(num_queens);
+  queen.col.resize(num_queens);
+  queen.x.resize(num_queens);
+  queen.y.resize(num_queens);
+  queen.alive.resize(num_queens);
+  queen.movelist.resize(num_queens);
+  queen.protecting_movelist.resize(num_queens);
 }
 
 bool in_opp_movelist(int row, int col) {
   const std::vector<int> pos = {row, col};
-  if (in(White::King.movelist, pos))
+  if (in(White::king.movelist, pos))
     return true;
   for (int i=0;i<White::num_queens;i++) {
-    if (in(White::Queen.movelist[i], pos))
+    if (in(White::queen.movelist[i], pos))
       return true;
   }
   for (int i=0;i<8;i++) {
-    if (in(White::Pawn.hit_movelist[i], pos))
+    if (in(White::pawn.hit_movelist[i], pos))
       return true;
   }
   for (int i=0;i<2;i++) {
-    if (in(White::Bishop.movelist[i], pos) || in(White::Knight.movelist[i], pos) || in(White::Rook.movelist[i], pos))
+    if (in(White::bishop.movelist[i], pos) || in(White::knight.movelist[i], pos) || in(White::rook.movelist[i], pos))
       return true;
   }
   return false;
 }
 
 bool opp_no_moves() {
-  if (!White::King.movelist.empty())
+  if (!White::king.movelist.empty())
     return false;
   for (int i=0;i<White::num_queens;i++) {
-    if (!White::Queen.movelist[i].empty())
+    if (!White::queen.movelist[i].empty())
       return false;
   }
   for (int i=0;i<8;i++) {
-    if (!White::Pawn.movelist[i].empty())
+    if (!White::pawn.movelist[i].empty())
       return false;
   }
   for (int i=0;i<2;i++) {
-    if (!White::Bishop.movelist[i].empty() || !White::Knight.movelist[i].empty() || !White::Rook.movelist[i].empty())
+    if (!White::bishop.movelist[i].empty() || !White::knight.movelist[i].empty() || !White::rook.movelist[i].empty())
       return false;
   }
   return true;
 }
 
 void check_pin() {
-  Bishop.check_pin();
-  Rook.check_pin();
-  Queen.check_pin();
+  bishop.check_pin();
+  rook.check_pin();
+  queen.check_pin();
 }
 
 void check_avoid_move() {
@@ -96,16 +96,16 @@ void check_avoid_move() {
   for (int k=0;k<checker.size();k++) {
     for (int i=0;i<num_queens;i++) {
       if (checker[k] == "Q" + std::to_string(i))
-        avoid_moves.push_back(Queen.get_avoid_move(i));
+        avoid_moves.push_back(queen.get_avoid_move(i));
     }
     for (int i=0;i<2;i++) {
       if (checker[k] == "B" + std::to_string(i))
-        avoid_moves.push_back(Bishop.get_avoid_move(i));
+        avoid_moves.push_back(bishop.get_avoid_move(i));
       if (checker[k] == "R" + std::to_string(i))
-        avoid_moves.push_back(Rook.get_avoid_move(i));
+        avoid_moves.push_back(rook.get_avoid_move(i));
     }
   }
-  White::King.movelist = filter2(White::King.movelist, avoid_moves);
+  White::king.movelist = filter2(White::king.movelist, avoid_moves);
 }
 
 void update_opp_movelists() {
@@ -113,43 +113,43 @@ void update_opp_movelists() {
   std::vector<std::vector<int>> check_movelist;
   for (int i=0;i<num_queens;i++) {
     if (checker[0] == "Q" + std::to_string(i))
-      check_movelist = Queen.get_check_movelist(i);
+      check_movelist = queen.get_check_movelist(i);
   }
   for (int i=0;i<2;i++) {
     if (checker[0] == "B" + std::to_string(i))
-      check_movelist = Bishop.get_check_movelist(i);
+      check_movelist = bishop.get_check_movelist(i);
     else if (checker[0] == "R" + std::to_string(i))
-      check_movelist = Rook.get_check_movelist(i);
+      check_movelist = rook.get_check_movelist(i);
     else if (checker[0] == "N" + std::to_string(i))
-      check_movelist = {{Knight.row[i], Knight.col[i]}};
+      check_movelist = {{knight.row[i], knight.col[i]}};
   }
   for (int i=0;i<8;i++) {
     if (checker[0] == "P" + std::to_string(i))
-      check_movelist = {{Pawn.row[i], Pawn.col[i]}};
+      check_movelist = {{pawn.row[i], pawn.col[i]}};
   }
   for (int i=0;i<White::num_queens;i++) {
-    White::Queen.movelist[i] = filter(White::Queen.movelist[i], check_movelist);
+    White::queen.movelist[i] = filter(White::queen.movelist[i], check_movelist);
   }
   for (int i=0;i<2;i++) {
-    White::Bishop.movelist[i] = filter(White::Bishop.movelist[i], check_movelist);
-    White::Knight.movelist[i] = filter(White::Knight.movelist[i], check_movelist);
-    White::Rook.movelist[i] = filter(White::Rook.movelist[i], check_movelist);
+    White::bishop.movelist[i] = filter(White::bishop.movelist[i], check_movelist);
+    White::knight.movelist[i] = filter(White::knight.movelist[i], check_movelist);
+    White::rook.movelist[i] = filter(White::rook.movelist[i], check_movelist);
   }
   for (int i=0;i<8;i++) {
-    White::Pawn.movelist[i] = filter(White::Pawn.movelist[i], check_movelist);
+    White::pawn.movelist[i] = filter(White::pawn.movelist[i], check_movelist);
   }
   // the rare case of double check: only the oppposite king can move! (this is because no 1 piece can block both checks)
   if (checker.size() > 1) {
     for (int i=0;i<8;i++) {
-      White::Pawn.movelist[i].clear();
+      White::pawn.movelist[i].clear();
     }
     for (int i=0;i<2;i++) {
-      White::Bishop.movelist[i].clear();
-      White::Knight.movelist[i].clear();
-      White::Rook.movelist[i].clear();
+      White::bishop.movelist[i].clear();
+      White::knight.movelist[i].clear();
+      White::rook.movelist[i].clear();
     }
     for (int i=0;i<White::num_queens;i++) {
-      White::Queen.movelist[i].clear();
+      White::queen.movelist[i].clear();
     }
   }
 }
@@ -157,27 +157,27 @@ void update_opp_movelists() {
 bool check_opp_checked() {
   bool checked = false;
   for (int i=0;i<num_queens;i++) {
-    if (in(Queen.movelist[i], {White::King.row, White::King.col})) {
+    if (in(queen.movelist[i], {White::king.row, White::king.col})) {
       checker.push_back("Q" + std::to_string(i));
       checked = true;
     }
   }
   for (int i=0;i<8;i++) {
-    if (in(Pawn.hit_movelist[i], {White::King.row, White::King.col})) {
+    if (in(pawn.hit_movelist[i], {White::king.row, White::king.col})) {
       checker.push_back("P" + std::to_string(i));
       checked = true;
     }
   }
   for (int i=0;i<2;i++) {
-    if (in(Bishop.movelist[i], {White::King.row, White::King.col})) {
+    if (in(bishop.movelist[i], {White::king.row, White::king.col})) {
       checker.push_back("B" + std::to_string(i));
       checked = true;
     }
-    if (in(Knight.movelist[i], {White::King.row, White::King.col})) {
+    if (in(knight.movelist[i], {White::king.row, White::king.col})) {
       checker.push_back("N" + std::to_string(i));
       checked = true;
     }
-    if (in(Rook.movelist[i], {White::King.row, White::King.col})) {
+    if (in(rook.movelist[i], {White::king.row, White::king.col})) {
       checker.push_back("R" + std::to_string(i));
       checked = true;
     }
@@ -186,17 +186,17 @@ bool check_opp_checked() {
 }
 
 void promote(int i, int row_, int col_) {
-  const int row = Pawn.row[i];
-  const int col = Pawn.col[i];
+  const int row = pawn.row[i];
+  const int col = pawn.col[i];
   kill(false, "P" + std::to_string(i), row, col);
   num_queens ++;
-  Queen.row.push_back(row);
-  Queen.col.push_back(col);
-  Queen.x.push_back(col*UNIT);
-  Queen.y.push_back(row*UNIT);
-  Queen.alive.push_back(1);
-  Queen.movelist.resize(num_queens);
-  Queen.protecting_movelist.resize(num_queens);
+  queen.row.push_back(row);
+  queen.col.push_back(col);
+  queen.x.push_back(col*UNIT);
+  queen.y.push_back(row*UNIT);
+  queen.alive.push_back(1);
+  queen.movelist.resize(num_queens);
+  queen.protecting_movelist.resize(num_queens);
   blocks[row_][col_] = 1;
 }
 
@@ -224,23 +224,23 @@ std::map<std::string, std::vector<std::vector<int>>> get_moves() {
     moves["CK"] = {{0, 0}};
   if (castle_criteria_Q())
     moves["CQ"] = {{0, 0}};
-  if (King.alive && !King.movelist.empty())
-    moves["K"] = King.movelist;
+  if (king.alive && !king.movelist.empty())
+    moves["K"] = king.movelist;
   for (int i=0;i<num_queens;i++) {
-    if (Queen.alive[i] && !Queen.movelist[i].empty())
-      moves["Q" + str(i)] = Queen.movelist[i];
+    if (queen.alive[i] && !queen.movelist[i].empty())
+      moves["Q" + str(i)] = queen.movelist[i];
   }
   for (int i=0;i<8;i++) {
-    if (Pawn.alive[i] && !Pawn.movelist[i].empty())
-      moves["P" + str(i)] = Pawn.movelist[i];
+    if (pawn.alive[i] && !pawn.movelist[i].empty())
+      moves["P" + str(i)] = pawn.movelist[i];
   }
   for (int i=0;i<2;i++) {
-    if (Bishop.alive[i] && !Bishop.movelist[i].empty())
-      moves["B" + str(i)] = Bishop.movelist[i];
-    if (Knight.alive[i] && !Knight.movelist[i].empty())
-      moves["N" + str(i)] = Knight.movelist[i];
-    if (Rook.alive[i] && !Rook.movelist[i].empty())
-      moves["R" + str(i)] = Rook.movelist[i];
+    if (bishop.alive[i] && !bishop.movelist[i].empty())
+      moves["B" + str(i)] = bishop.movelist[i];
+    if (knight.alive[i] && !knight.movelist[i].empty())
+      moves["N" + str(i)] = knight.movelist[i];
+    if (rook.alive[i] && !rook.movelist[i].empty())
+      moves["R" + str(i)] = rook.movelist[i];
   }
   return moves;
 }
@@ -267,9 +267,9 @@ void play() {
     move_piece(piece, Queue.row[1], Queue.col[1]);
   }
   if (Queue.row.size() >= 2) {
-    std::vector<int> kingpos = {King.row, King.col};
-    std::vector<int> k_rook = {Rook.row[1], Rook.col[1]};
-    std::vector<int> q_rook = {Rook.row[0], Rook.col[0]};
+    std::vector<int> kingpos = {king.row, king.col};
+    std::vector<int> k_rook = {rook.row[1], rook.col[1]};
+    std::vector<int> q_rook = {rook.row[0], rook.col[0]};
     std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
     std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
     if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
@@ -287,49 +287,49 @@ void handle_undo_promotion(int i, int row, int col) {
 void revive(std::string piece, int row, int col) {
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + str(i)) {
-      Queen.pure_move(i, row, col);
-      Queen.alive[i] = 1;
+      queen.pure_move(i, row, col);
+      queen.alive[i] = 1;
     }
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + str(i)) {
-      Pawn.pure_move(i, row, col);
-      Pawn.alive[i] = 1;
+      pawn.pure_move(i, row, col);
+      pawn.alive[i] = 1;
     }
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + str(i)) {
-      Bishop.pure_move(i, row, col);
-      Bishop.alive[i] = 1;
+      bishop.pure_move(i, row, col);
+      bishop.alive[i] = 1;
     }
     if (piece == "N" + str(i)) {
-      Knight.pure_move(i, row, col);
-      Knight.alive[i] = 1;
+      knight.pure_move(i, row, col);
+      knight.alive[i] = 1;
     }
     if (piece == "R" + str(i)) {
-      Rook.pure_move(i, row, col);
-      Rook.alive[i] = 1;
+      rook.pure_move(i, row, col);
+      rook.alive[i] = 1;
     }
   }
 }
 
 void castle_K(bool is_undo) {
-  undo.moved_from.push_back({King.row, King.col});
-  King.move(0, 6);
-  Rook.move(1, 0, 5);
+  undo.moved_from.push_back({king.row, king.col});
+  king.move(0, 6);
+  rook.move(1, 0, 5);
   valid_move(is_undo, false, "CK", 0, 5);
 }
 
 void castle_Q(bool is_undo) {
-  undo.moved_from.push_back({King.row, King.col});
-  King.move(0, 2);
-  Rook.move(0, 0, 3);
+  undo.moved_from.push_back({king.row, king.col});
+  king.move(0, 2);
+  rook.move(0, 0, 3);
   valid_move(is_undo, false, "CQ", 0, 4);
 }
 
 bool castle_criteria_Q() {
-  if (King.row != 0 || King.col != 4 || Rook.row[0] != 0 || Rook.col[1] != 0) return false;
-  if (King.moved || Rook.moved[0] || !Rook.alive[0])
+  if (king.row != 0 || king.col != 4 || rook.row[0] != 0 || rook.col[1] != 0) return false;
+  if (king.moved || rook.moved[0] || !rook.alive[0])
     return false;
   if (White::blocks[0][2] || White::blocks[0][3] || blocks[0][2] || blocks[0][3])
     return false;
@@ -341,8 +341,8 @@ bool castle_criteria_Q() {
 }
 
 bool castle_criteria_K() {
-  if (King.row != 0 || King.col != 4 || Rook.row[0] != 0 || Rook.col[1] != 7) return false;
-  if (King.moved || Rook.moved[1] || !Rook.alive[1])
+  if (king.row != 0 || king.col != 4 || rook.row[0] != 0 || rook.col[1] != 7) return false;
+  if (king.moved || rook.moved[1] || !rook.alive[1])
     return false;
   if (White::blocks[0][5] || White::blocks[0][6] || blocks[0][5] || blocks[0][6])
     return false;
@@ -359,81 +359,81 @@ void move_piece(std::string piece, int row, int col) {
   bool moved = false;
   checker.clear();
   bool killed = false;
-  if (piece == "K" && in(King.movelist, pos)) {
+  if (piece == "K" && in(king.movelist, pos)) {
     if (!Board.isFrozen) reset_enpassant();
-    undo.moved_from.push_back({King.row, King.col});
-    King.move(row, col);
+    undo.moved_from.push_back({king.row, king.col});
+    king.move(row, col);
     moved = true;
   }
-  else if (piece == "K" && !in(King.movelist, pos)) {
+  else if (piece == "K" && !in(king.movelist, pos)) {
     Sound.error();
     return;
   }
   for (int i=0;i<num_queens;i++) {
-    if (piece == "Q" + std::to_string(i) && in(Queen.movelist[i], pos)) {
+    if (piece == "Q" + std::to_string(i) && in(queen.movelist[i], pos)) {
       if (!Board.isFrozen) reset_enpassant();
-      undo.moved_from.push_back({Queen.row[i], Queen.col[i]});
-      Queen.move(i, row, col);
+      undo.moved_from.push_back({queen.row[i], queen.col[i]});
+      queen.move(i, row, col);
       moved = true;
     }
-    else if (piece == "Q" + std::to_string(i) && !in(Queen.movelist[i], pos)) {
+    else if (piece == "Q" + std::to_string(i) && !in(queen.movelist[i], pos)) {
       Sound.error();
       return;
     }
   }
   for (int i=0;i<8;i++) {
-    if (piece == "P" + std::to_string(i) && in(Pawn.movelist[i], pos)) {
+    if (piece == "P" + std::to_string(i) && in(pawn.movelist[i], pos)) {
       if (!Board.isFrozen) reset_enpassant();
-      undo.moved_from.push_back({Pawn.row[i], Pawn.col[i]});
-      if (Pawn.row[i] == 4) {
+      undo.moved_from.push_back({pawn.row[i], pawn.col[i]});
+      if (pawn.row[i] == 4) {
         for (int k=0;k<8;k++) {
           if (White::en_passant[k]) {
-            if (abs(Pawn.col[i] - White::Pawn.col[k]) == 1 && col == White::Pawn.col[k]) {
-              check_kill(false, 4, White::Pawn.col[k]);
+            if (abs(pawn.col[i] - White::pawn.col[k]) == 1 && col == White::pawn.col[k]) {
+              check_kill(false, 4, White::pawn.col[k]);
               enpassant_check_killed = true;
               killed = true;
             }
           }
         }
       }
-      Pawn.move(i, row, col);
+      pawn.move(i, row, col);
       if (row == 7)
         promote(i, row, col);
       moved = true;
     }
-    else if (piece == "P" + std::to_string(i) && !in(Pawn.movelist[i], pos)) {
+    else if (piece == "P" + std::to_string(i) && !in(pawn.movelist[i], pos)) {
       Sound.error();
       return;
     }
   }
   for (int i=0;i<2;i++) {
-    if (piece == "B" + std::to_string(i) && in(Bishop.movelist[i], pos)) {
+    if (piece == "B" + std::to_string(i) && in(bishop.movelist[i], pos)) {
       if (!Board.isFrozen) reset_enpassant();
-      undo.moved_from.push_back({Bishop.row[i], Bishop.col[i]});
-      Bishop.move(i, row, col);
+      undo.moved_from.push_back({bishop.row[i], bishop.col[i]});
+      bishop.move(i, row, col);
       moved = true;
     }
-    else if (piece == "B" + std::to_string(i) && !in(Bishop.movelist[i], pos)) {
+    else if (piece == "B" + std::to_string(i) && !in(bishop.movelist[i], pos)) {
       Sound.error();
       return;
     }
-    if (piece == "N" + std::to_string(i) && in(Knight.movelist[i], pos)) {
+    if (piece == "N" + std::to_string(i) && in(knight.movelist[i], pos)) {
       if (!Board.isFrozen) reset_enpassant();
-      undo.moved_from.push_back({Knight.row[i], Knight.col[i]});
-      Knight.move(i, row, col);
+      undo.moved_from.push_back({knight.row[i], knight.col[i]});
+      knight.move(i, row, col);
       moved = true;
     }
-    else if (piece == "N" + std::to_string(i) && !in(Knight.movelist[i], pos)) {
+    else if (piece == "N" + std::to_string(i) && !in(knight.movelist[i], pos)) {
       Sound.error();
       return;
     }
-    if (piece == "R" + std::to_string(i) && in(Rook.movelist[i], pos)) {
+    if (piece == "R" + std::to_string(i) && in(rook.movelist[i], pos)) {
       if (!Board.isFrozen) reset_enpassant();
-      undo.moved_from.push_back({Rook.row[i], Rook.col[i]});
-      Rook.move(i, row, col);
+      undo.moved_from.push_back({rook.row[i], rook.col[i]});
+      rook.move(i, row, col);
       moved = true;
     }
-    else if (piece == "R" + std::to_string(i) && !in(Rook.movelist[i], pos)) {
+    else if (piece == "R" + std::to_string(i) && !in(rook.movelist[i], pos)) {
       Sound.error();
       return;
     }
@@ -481,22 +481,22 @@ void reset_enpassant() {
 
 std::string get_piece(int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
-  if (King.row == row && King.col == col)
+  if (king.row == row && king.col == col)
     return "K";
   for (int i=0;i<num_queens;i++) {
-    if (Queen.row[i] == row && Queen.col[i] == col)
+    if (queen.row[i] == row && queen.col[i] == col)
       return "Q" + std::to_string(i);
   }
   for (int i=0;i<8;i++) {
-    if (Pawn.row[i] == row && Pawn.col[i] == col)
+    if (pawn.row[i] == row && pawn.col[i] == col)
       return "P" + std::to_string(i);
   }
   for (int i=0;i<2;i++) {
-    if (Bishop.row[i] == row && Bishop.col[i] == col)
+    if (bishop.row[i] == row && bishop.col[i] == col)
       return "B" + std::to_string(i);
-    else if (Knight.row[i] == row && Knight.col[i] == col)
+    else if (knight.row[i] == row && knight.col[i] == col)
       return "N" + std::to_string(i);
-    else if (Rook.row[i] == row && Rook.col[i] == col)
+    else if (rook.row[i] == row && rook.col[i] == col)
       return "R" + std::to_string(i);
   }
 }
@@ -522,12 +522,12 @@ void print_blocks_Log() {
 #endif
 
 void show() {
-  Bishop.show();
-  Knight.show();
-  Pawn.show();
-  Rook.show();
-  King.show();
-  Queen.show();
+  bishop.show();
+  knight.show();
+  pawn.show();
+  rook.show();
+  king.show();
+  queen.show();
 }
 
 void init() {
@@ -549,62 +549,62 @@ void init() {
 void kill(bool is_undo, std::string piece, int row, int col) {
   blocks[row][col] = 0;
   if (piece == "K") {
-    King.row = -1;
-    King.col = -1;
-    King.x = -1;
-    King.y = -1;
-    King.alive = false;
-    King.movelist.clear();
+    king.row = -1;
+    king.col = -1;
+    king.x = -1;
+    king.y = -1;
+    king.alive = false;
+    king.movelist.clear();
   }
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + std::to_string(i)) {
-      Queen.row[i] = -1;
-      Queen.col[i] = -1;
-      Queen.x[i] = -1;
-      Queen.y[i] = -1;
-      Queen.alive[i] = false;
-      Queen.movelist[i].clear();
-      Queen.protecting_movelist[i].clear();
+      queen.row[i] = -1;
+      queen.col[i] = -1;
+      queen.x[i] = -1;
+      queen.y[i] = -1;
+      queen.alive[i] = false;
+      queen.movelist[i].clear();
+      queen.protecting_movelist[i].clear();
     }
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i)) {
-      Pawn.row[i] = -1;
-      Pawn.col[i] = -1;
-      Pawn.x[i] = -1;
-      Pawn.y[i] = -1;
-      Pawn.alive[i] = false;
-      Pawn.movelist[i].clear();
-      Pawn.hit_movelist[i].clear();
+      pawn.row[i] = -1;
+      pawn.col[i] = -1;
+      pawn.x[i] = -1;
+      pawn.y[i] = -1;
+      pawn.alive[i] = false;
+      pawn.movelist[i].clear();
+      pawn.hit_movelist[i].clear();
     }
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i)) {
-      Bishop.row[i] = -1;
-      Bishop.col[i] = -1;
-      Bishop.x[i] = -1;
-      Bishop.y[i] = -1;
-      Bishop.alive[i] = false;
-      Bishop.movelist[i].clear();
-      Bishop.protecting_movelist[i].clear();
+      bishop.row[i] = -1;
+      bishop.col[i] = -1;
+      bishop.x[i] = -1;
+      bishop.y[i] = -1;
+      bishop.alive[i] = false;
+      bishop.movelist[i].clear();
+      bishop.protecting_movelist[i].clear();
     }
     if (piece == "N" + std::to_string(i)) {
-      Knight.row[i] = -1;
-      Knight.col[i] = -1;
-      Knight.x[i] = -1;
-      Knight.y[i] = -1;
-      Knight.alive[i] = false;
-      Knight.movelist[i].clear();
-      Knight.protecting_movelist[i].clear();
+      knight.row[i] = -1;
+      knight.col[i] = -1;
+      knight.x[i] = -1;
+      knight.y[i] = -1;
+      knight.alive[i] = false;
+      knight.movelist[i].clear();
+      knight.protecting_movelist[i].clear();
     }
     if (piece == "R" + std::to_string(i)) {
-      Rook.row[i] = -1;
-      Rook.col[i] = -1;
-      Rook.x[i] = -1;
-      Rook.y[i] = -1;
-      Rook.alive[i] = false;
-      Rook.movelist[i].clear();
-      Rook.protecting_movelist[i].clear();
+      rook.row[i] = -1;
+      rook.col[i] = -1;
+      rook.x[i] = -1;
+      rook.y[i] = -1;
+      rook.alive[i] = false;
+      rook.movelist[i].clear();
+      rook.protecting_movelist[i].clear();
     }
   }
   if (!is_undo && !Board.isFrozen)

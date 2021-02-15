@@ -44,29 +44,29 @@ void King_Piece::update_movelist() {
 
 void King_Piece::filter_check_pos() {
   for (int i=0;i<White::num_queens;i++) {
-    movelist = filter2(movelist, White::Queen.movelist[i]);
-    movelist = filter2(movelist, White::Queen.protecting_movelist[i]);
+    movelist = filter2(movelist, White::queen.movelist[i]);
+    movelist = filter2(movelist, White::queen.protecting_movelist[i]);
   }
   for (int i=0;i<8;i++) {
-    movelist = filter2(movelist, White::Pawn.hit_movelist[i]);
+    movelist = filter2(movelist, White::pawn.hit_movelist[i]);
   }
   for (int i=0;i<2;i++) {
-    movelist = filter2(movelist, White::Bishop.movelist[i]);
-    movelist = filter2(movelist, White::Bishop.protecting_movelist[i]);
-    movelist = filter2(movelist, White::Knight.movelist[i]);
-    movelist = filter2(movelist, White::Knight.protecting_movelist[i]);
-    movelist = filter2(movelist, White::Rook.movelist[i]);
-    movelist = filter2(movelist, White::Rook.protecting_movelist[i]);
+    movelist = filter2(movelist, White::bishop.movelist[i]);
+    movelist = filter2(movelist, White::bishop.protecting_movelist[i]);
+    movelist = filter2(movelist, White::knight.movelist[i]);
+    movelist = filter2(movelist, White::knight.protecting_movelist[i]);
+    movelist = filter2(movelist, White::rook.movelist[i]);
+    movelist = filter2(movelist, White::rook.protecting_movelist[i]);
   }
 }
 
 void King_Piece::filter_king_pos() {
   const std::vector<std::vector<int>> opposite_pos = {
-      {White::King.row - 1, White::King.col - 1}, {White::King.row - 1, White::King.col}, 
-      {White::King.row - 1, White::King.col + 1}, {White::King.row, White::King.col - 1}, 
-      {White::King.row, White::King.col}, {White::King.row, White::King.col + 1}, 
-      {White::King.row + 1, White::King.col - 1}, {White::King.row + 1, White::King.col}, 
-      {White::King.row + 1, White::King.col + 1}};
+      {White::king.row - 1, White::king.col - 1}, {White::king.row - 1, White::king.col}, 
+      {White::king.row - 1, White::king.col + 1}, {White::king.row, White::king.col - 1}, 
+      {White::king.row, White::king.col}, {White::king.row, White::king.col + 1}, 
+      {White::king.row + 1, White::king.col - 1}, {White::king.row + 1, White::king.col}, 
+      {White::king.row + 1, White::king.col + 1}};
   movelist = filter2(movelist, opposite_pos);
 }
 
@@ -83,7 +83,7 @@ void King_Piece::move(int row_, int col_) {
 void King_Piece::show() {
   if (!alive)
     return;
-  if (!texture.loadFromFile("assets/sprites/blackKing.png"))
+  if (!texture.loadFromFile("assets/sprites/blackking.png"))
     return;
   sprite.setTexture(texture);
   sprite.setScale(Board.pieces_scale, Board.pieces_scale);
