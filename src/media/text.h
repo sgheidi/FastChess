@@ -17,6 +17,6 @@ public:
   void checkmate();
 };
 
-extern Game_Text Text;
+extern Game_Text text;
 
 #endif // MEDIA_TEXT_H

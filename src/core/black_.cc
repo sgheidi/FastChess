@@ -249,11 +249,11 @@ std::map<std::string, std::vector<std::vector<int>>> get_moves() {
 void check_capture_screen() {
   if (screenshot) {
     std::string path = "assets/screenshots/";
-    path += str(Board.screenshot_num);
+    path += str(board.screenshot_num);
     path += ".png";
     take_screenshot(window, path);
     screenshot = false;
-    Board.screenshot_num ++;
+    board.screenshot_num ++;
   }
 }
 #endif
@@ -262,16 +262,16 @@ void play() {
   #ifdef IS_BLACK_AI
   return;
   #endif
-  if (Queue.row.size() >= 2 && blocks[Queue.row[0]][Queue.col[0]] == 1 && blocks[Queue.row[1]][Queue.col[1]] == 0) {
-    std::string piece = get_piece(Queue.row[0], Queue.col[0]);
-    move_piece(piece, Queue.row[1], Queue.col[1]);
+  if (queue.row.size() >= 2 && blocks[queue.row[0]][queue.col[0]] == 1 && blocks[queue.row[1]][queue.col[1]] == 0) {
+    std::string piece = get_piece(queue.row[0], queue.col[0]);
+    move_piece(piece, queue.row[1], queue.col[1]);
   }
-  if (Queue.row.size() >= 2) {
+  if (queue.row.size() >= 2) {
     std::vector<int> kingpos = {king.row, king.col};
     std::vector<int> k_rook = {rook.row[1], rook.col[1]};
     std::vector<int> q_rook = {rook.row[0], rook.col[0]};
-    std::vector<int> queue0 = {Queue.row[0], Queue.col[0]};
-    std::vector<int> queue1 = {Queue.row[1], Queue.col[1]};
+    std::vector<int> queue0 = {queue.row[0], queue.col[0]};
+    std::vector<int> queue1 = {queue.row[1], queue.col[1]};
     if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
       castle_K(false);
     else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q())
@@ -360,7 +360,7 @@ void move_piece(std::string piece, int row, int col) {
   checker.clear();
   bool killed = false;
   if (piece == "K" && in(king.movelist, pos)) {
-    if (!Board.isFrozen) reset_enpassant();
+    if (!board.isFrozen) reset_enpassant();
     undo.moved_from.push_back({king.row, king.col});
     king.move(row, col);
     moved = true;
@@ -371,7 +371,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<num_queens;i++) {
     if (piece == "Q" + std::to_string(i) && in(queen.movelist[i], pos)) {
-      if (!Board.isFrozen) reset_enpassant();
+      if (!board.isFrozen) reset_enpassant();
       undo.moved_from.push_back({queen.row[i], queen.col[i]});
       queen.move(i, row, col);
       moved = true;
@@ -383,7 +383,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i) && in(pawn.movelist[i], pos)) {
-      if (!Board.isFrozen) reset_enpassant();
+      if (!board.isFrozen) reset_enpassant();
       undo.moved_from.push_back({pawn.row[i], pawn.col[i]});
       if (pawn.row[i] == 4) {
         for (int k=0;k<8;k++) {
@@ -408,7 +408,7 @@ void move_piece(std::string piece, int row, int col) {
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i) && in(bishop.movelist[i], pos)) {
-      if (!Board.isFrozen) reset_enpassant();
+      if (!board.isFrozen) reset_enpassant();
       undo.moved_from.push_back({bishop.row[i], bishop.col[i]});
       bishop.move(i, row, col);
       moved = true;
@@ -418,7 +418,7 @@ void move_piece(std::string piece, int row, int col) {
       return;
     }
     if (piece == "N" + std::to_string(i) && in(knight.movelist[i], pos)) {
-      if (!Board.isFrozen) reset_enpassant();
+      if (!board.isFrozen) reset_enpassant();
       undo.moved_from.push_back({knight.row[i], knight.col[i]});
       knight.move(i, row, col);
       moved = true;
@@ -428,7 +428,7 @@ void move_piece(std::string piece, int row, int col) {
       return;
     }
     if (piece == "R" + std::to_string(i) && in(rook.movelist[i], pos)) {
-      if (!Board.isFrozen) reset_enpassant();
+      if (!board.isFrozen) reset_enpassant();
       undo.moved_from.push_back({rook.row[i], rook.col[i]});
       rook.move(i, row, col);
       moved = true;
@@ -443,28 +443,28 @@ void move_piece(std::string piece, int row, int col) {
 }
 
 void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) {
-  if (!killed && !is_undo && !Board.isFrozen)
+  if (!killed && !is_undo && !board.isFrozen)
     Sound.move();
   if (!is_undo) {
-    Board.total_moves ++;
+    board.total_moves ++;
     undo.piece.push_back(piece);
     undo.color.push_back("B");
   }
   if (!enpassant_check_killed)
     check_kill(is_undo, row, col);
-  Board.update_moves();
+  board.update_moves();
   check_pin();
   if (check_opp_checked() && !is_undo) {
-    if (!Board.isFrozen)
+    if (!board.isFrozen)
       Sound.check();
     update_opp_movelists();
     if (opp_no_moves())
-      Board.checkmate = true;
+      board.checkmate = true;
   }
   if (opp_no_moves() && !is_undo)
-    Board.stalemate = true;
+    board.stalemate = true;
   #ifdef SCREENSHOTS_ON
-  if (!Board.isFrozen)
+  if (!board.isFrozen)
     screenshot = true;
   #endif
   #ifndef IS_TESTING
@@ -607,7 +607,7 @@ void kill(bool is_undo, std::string piece, int row, int col) {
       rook.protecting_movelist[i].clear();
     }
   }
-  if (!is_undo && !Board.isFrozen)
+  if (!is_undo && !board.isFrozen)
     Sound.kill();
 }
 

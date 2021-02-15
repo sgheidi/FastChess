@@ -30,7 +30,7 @@ int main() {
   Black::init();
   White::init();
   init(GAME_ENV);
-  Board.update_moves();
+  board.update_moves();
   window.setPosition(sf::Vector2i(950, 180));
   while (window.isOpen()) {
     static sf::Event event;
@@ -41,44 +41,44 @@ int main() {
         switch (event.key.code) {
           case sf::Keyboard::B: Black::print_blocks(); break;
           case sf::Keyboard::W: White::print_blocks(); break;
-          case sf::Keyboard::Z: Board.pop(); break;
-          case sf::Keyboard::U: Board.print_undo(); break;
+          case sf::Keyboard::Z: board.pop(); break;
+          case sf::Keyboard::U: board.print_undo(); break;
         }
       }
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
-          std::vector<int> pos = Board.get_coords(position.x, position.y);
-          Board.selected_row = pos[1];
-          Board.selected_col = pos[0];
-          if (Board.clicked_piece == "K") {
-            White::king.x = position.x - 3*Board.pieces_paddingx;
-            White::king.y = position.y - 4*Board.pieces_paddingy;
+          std::vector<int> pos = board.get_coords(position.x, position.y);
+          board.selected_row = pos[1];
+          board.selected_col = pos[0];
+          if (board.clicked_piece == "K") {
+            White::king.x = position.x - 3*board.pieces_paddingx;
+            White::king.y = position.y - 4*board.pieces_paddingy;
           }
           for (int i=0;i<8;i++) {
-            if (Board.clicked_piece == "P" + str(i)) {
-              White::pawn.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::pawn.y[i] = position.y - 4*Board.pieces_paddingy;
+            if (board.clicked_piece == "P" + str(i)) {
+              White::pawn.x[i] = position.x - 3*board.pieces_paddingx;
+              White::pawn.y[i] = position.y - 4*board.pieces_paddingy;
             }
           }
           for (int i=0;i<White::num_queens;i++) {
-            if (Board.clicked_piece == "Q" + str(i)) {
-              White::queen.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::queen.y[i] = position.y - 4*Board.pieces_paddingy;
+            if (board.clicked_piece == "Q" + str(i)) {
+              White::queen.x[i] = position.x - 3*board.pieces_paddingx;
+              White::queen.y[i] = position.y - 4*board.pieces_paddingy;
             }
           }
           for (int i=0;i<2;i++) {
-            if (Board.clicked_piece == "B" + str(i)) {
-              White::bishop.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::bishop.y[i] = position.y - 4*Board.pieces_paddingy;
+            if (board.clicked_piece == "B" + str(i)) {
+              White::bishop.x[i] = position.x - 3*board.pieces_paddingx;
+              White::bishop.y[i] = position.y - 4*board.pieces_paddingy;
             }
-            else if (Board.clicked_piece == "N" + str(i)) {
-              White::knight.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::knight.y[i] = position.y - 4*Board.pieces_paddingy;
+            else if (board.clicked_piece == "N" + str(i)) {
+              White::knight.x[i] = position.x - 3*board.pieces_paddingx;
+              White::knight.y[i] = position.y - 4*board.pieces_paddingy;
             }
-            else if (Board.clicked_piece == "R" + str(i)) {
-              White::rook.x[i] = position.x - 3*Board.pieces_paddingx;
-              White::rook.y[i] = position.y - 4*Board.pieces_paddingy;
+            else if (board.clicked_piece == "R" + str(i)) {
+              White::rook.x[i] = position.x - 3*board.pieces_paddingx;
+              White::rook.y[i] = position.y - 4*board.pieces_paddingy;
             }
           }
         }
@@ -86,41 +86,41 @@ int main() {
       if (event.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
-          std::vector<int> pos = Board.get_coords(position.x, position.y);
-          Board.selected_row = pos[1];
-          Board.selected_col = pos[0];
-          Board.clicked_piece = White::get_piece(pos[1], pos[0]);
-          Queue.enqueue(pos[1], pos[0]);
-          Board.play();
+          std::vector<int> pos = board.get_coords(position.x, position.y);
+          board.selected_row = pos[1];
+          board.selected_col = pos[0];
+          board.clicked_piece = White::get_piece(pos[1], pos[0]);
+          queue.enqueue(pos[1], pos[0]);
+          board.play();
         }
       }
       if (event.type == sf::Event::MouseButtonReleased) {
-        Board.clicked_piece = "";
-        Board.reset_pos();
+        board.clicked_piece = "";
+        board.reset_pos();
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
-          std::vector<int> pos = Board.get_coords(position.x, position.y);
-          Board.selected_row = pos[1];
-          Board.selected_col = pos[0];
-          Queue.enqueue(pos[1], pos[0]);
-          Board.play();
+          std::vector<int> pos = board.get_coords(position.x, position.y);
+          board.selected_row = pos[1];
+          board.selected_col = pos[0];
+          queue.enqueue(pos[1], pos[0]);
+          board.play();
         }
       }
     }
     window.clear();
-    Board.draw_board();
-    Board.select(Board.selected_row, Board.selected_col);
-    Board.show_legal_moves();
+    board.draw_board();
+    board.select(board.selected_row, board.selected_col);
+    board.show_legal_moves();
     Black::show();
     White::show();
-    Board.check_end();
+    board.check_end();
     window.display();
     #ifdef SCREENSHOTS_ON
     White::check_capture_screen();
     Black::check_capture_screen();
     #endif
     #ifdef IS_BLACK_AI
-    if (Black::turn && !Board.checkmate && !Board.stalemate)
+    if (Black::turn && !board.checkmate && !board.stalemate)
       Black::AI::gen_move();
     #endif
     window.display();

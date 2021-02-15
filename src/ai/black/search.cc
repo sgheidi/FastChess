@@ -44,7 +44,7 @@ static const double minimax(const int& n, double alpha, double beta, std::string
           Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         #endif
         best_move = std::max(best_move, minimax(n-1, alpha, beta, "W"));
-        Board.pop();
+        board.pop();
         alpha = std::max(alpha, best_move);
         if (alpha >= beta)
           return best_move;
@@ -69,7 +69,7 @@ static const double minimax(const int& n, double alpha, double beta, std::string
           Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         #endif
         best_move = std::min(best_move, minimax(n-1, alpha, beta, "B"));
-        Board.pop();
+        board.pop();
         beta = std::min(beta, best_move);
         if (alpha >= beta)
           return best_move;
@@ -90,7 +90,7 @@ void gen_move() {
   std::map<std::string, std::vector<std::vector<int>>> moves = Black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   static double score;
-  Board.isFrozen = true;
+  board.isFrozen = true;
   const bool W_king_moved = White::king.moved;
   const std::vector<bool> W_rook_moved = {White::rook.moved[0], White::rook.moved[1]};
   const bool B_king_moved = Black::king.moved;
@@ -121,7 +121,7 @@ void gen_move() {
       #ifdef VERBOSE 
         std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") " << score << std::endl;
       #endif
-      Board.pop();
+      board.pop();
       if (score >= std::stof(best_move["score"])) {
         best_move["score"] = str(score);
         best_move["piece"] = piece;
@@ -133,7 +133,7 @@ void gen_move() {
     }
     moves.erase(piece);
   }
-  Board.isFrozen = false;
+  board.isFrozen = false;
   if (best_move["piece"] == "") {
     #ifdef DEBUGAI
       Log << "No moves left!" << std::endl;

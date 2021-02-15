@@ -35,7 +35,7 @@ namespace {
 
   void Circle(int row, int col) {
     sf::CircleShape circle(10);
-    circle.setPosition(col*UNIT + 2*Board.pieces_paddingx, row*UNIT + 3*Board.pieces_paddingy);
+    circle.setPosition(col*UNIT + 2*board.pieces_paddingx, row*UNIT + 3*board.pieces_paddingy);
     circle.setFillColor(sf::Color(110, 71, 55));
     window.draw(circle);
   }
@@ -91,7 +91,7 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "B")
       Black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
-    if (!Board.isFrozen) White::reset_enpassant();
+    if (!board.isFrozen) White::reset_enpassant();
     White::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
   else if (undo.color[last] == "B") {
@@ -132,7 +132,7 @@ void Game_Board::pop() {
     }
     if (undo.killed[last] && undo.killed_color[last] == "W")
       White::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
-    if (!Board.isFrozen)
+    if (!board.isFrozen)
       Black::reset_enpassant();
     Black::valid_move(true, undo.killed[last], undo.piece[last], undo.moved_from[last][0], undo.moved_from[last][1]);
   }
@@ -175,9 +175,9 @@ void Game_Board::print_undo() {
 
 void Game_Board::check_end() {
   if (checkmate)
-    Text.checkmate();
+    text.checkmate();
   else if (stalemate)
-    Text.stalemate();
+    text.stalemate();
 }
 
 void Game_Board::update_moves() {

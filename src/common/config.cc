@@ -39,10 +39,10 @@ struct undo_stack undo = {
 sf::RenderWindow window(sf::VideoMode(X_RES, Y_RES), "FastChess");
 
 // Global game objects
-Game_Board Board;
-Click_Queue Queue;
+Game_Board board;
+Click_Queue queue;
 Game_Sound Sound;
-Game_Text Text;
+Game_Text text;
 
 namespace Black {
 Bishop_Piece bishop;

@@ -522,8 +522,8 @@ void Queen_Piece::show() {
     if (!texture.loadFromFile("assets/sprites/blackqueen.png"))
       return;
     sprite.setTexture(texture);
-    sprite.setScale(Board.pieces_scale, Board.pieces_scale);
-    sprite.setPosition(x[i] + Board.pieces_paddingx, y[i] + Board.pieces_paddingy);
+    sprite.setScale(board.pieces_scale, board.pieces_scale);
+    sprite.setPosition(x[i] + board.pieces_paddingx, y[i] + board.pieces_paddingy);
     window.draw(sprite);
   }
 }

@@ -37,6 +37,6 @@ public:
   void select(int row, int col);
 };
 
-extern Game_Board Board;
+extern Game_Board board;
 
 #endif // BOARD_H

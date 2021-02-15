@@ -11,6 +11,6 @@ public:
   void print();
 };
 
-extern Click_Queue Queue;
+extern Click_Queue queue;
 
 #endif // QUEUE_H

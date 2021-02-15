@@ -80,8 +80,8 @@ void King_Piece::show() {
   if (!texture.loadFromFile("assets/sprites/whiteking.png"))
     return;
   sprite.setTexture(texture);
-  sprite.setScale(Board.pieces_scale, Board.pieces_scale);
-  sprite.setPosition(x + Board.pieces_paddingx, y + Board.pieces_paddingy);
+  sprite.setScale(board.pieces_scale, board.pieces_scale);
+  sprite.setPosition(x + board.pieces_paddingx, y + board.pieces_paddingy);
   window.draw(sprite);
 }
 
