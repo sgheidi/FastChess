@@ -14,7 +14,7 @@
 #include "../white_.h"
 #include "../black_.h"
 
-namespace Black {
+namespace black {
 
 void Pawn_Piece::pure_move(int i, int row_, int col_) {
   blocks[row_][col_] = 1;
@@ -30,26 +30,26 @@ void Pawn_Piece::update_movelist() {
       continue;
     movelist[i].clear();
     hit_movelist[i].clear();
-    if (row[i] < 8 && White::blocks[row[i]+1][col[i]] == 0 && blocks[row[i]+1][col[i]] == 0) {
+    if (row[i] < 8 && white::blocks[row[i]+1][col[i]] == 0 && blocks[row[i]+1][col[i]] == 0) {
       movelist[i].push_back({row[i]+1, col[i]});
-      if (row[i] == 1 && White::blocks[row[i]+2][col[i]] == 0 && blocks[row[i]+2][col[i]] == 0)
+      if (row[i] == 1 && white::blocks[row[i]+2][col[i]] == 0 && blocks[row[i]+2][col[i]] == 0)
         movelist[i].push_back({row[i]+2, col[i]});
     }
     if (row[i] < 7 && col[i] < 7) {
-      if (White::blocks[row[i]+1][col[i]+1] == 1 && !blocks[row[i]+1][col[i]+1])
+      if (white::blocks[row[i]+1][col[i]+1] == 1 && !blocks[row[i]+1][col[i]+1])
         movelist[i].push_back({row[i]+1, col[i]+1});
       hit_movelist[i].push_back({row[i]+1, col[i]+1});
     }
     if (row[i] < 7 && col[i] > 0) {
-      if (White::blocks[row[i]+1][col[i]-1] == 1 && !blocks[row[i]+1][col[i]-1])
+      if (white::blocks[row[i]+1][col[i]-1] == 1 && !blocks[row[i]+1][col[i]-1])
         movelist[i].push_back({row[i]+1, col[i]-1});
         hit_movelist[i].push_back({row[i]+1, col[i]-1});
     }
     if (row[i] == 4) {
       for (int k=0;k<8;k++) {
-        if (White::en_passant[k] && !blocks[5][White::pawn.col[k]]) {
-          if (abs(col[i] - White::pawn.col[k]) == 1)
-            movelist[i].push_back({5, White::pawn.col[k]});
+        if (white::en_passant[k] && !blocks[5][white::pawn.col[k]]) {
+          if (abs(col[i] - white::pawn.col[k]) == 1)
+            movelist[i].push_back({5, white::pawn.col[k]});
         }
       }
     }
@@ -80,4 +80,4 @@ void Pawn_Piece::show() {
   }
 }
 
-} // namespace Black
+} // namespace black

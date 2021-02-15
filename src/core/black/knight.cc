@@ -6,7 +6,7 @@
 
 #include "../black_.h"
 
-namespace Black {
+namespace black {
 
 void Knight_Piece::pure_move(int i, int row_, int col_) {
   blocks[row_][col_] = 1;
@@ -57,4 +57,4 @@ void Knight_Piece::show() {
   }
 }
 
-} // namespace Black
+} // namespace black

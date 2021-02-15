@@ -15,7 +15,7 @@
 // flag for toggling no turns
 // #define IS_TESTING
 
-// Black AI
+// black AI
 #define IS_BLACK_AI
 
 // for useful outputs relating to AI eval

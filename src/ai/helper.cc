@@ -28,7 +28,7 @@ const std::vector<double> PASSED_PAWNS = {1.1, 0.5, 0.5};
 const std::vector<double> CONNECTED_PASSED_PAWNS = {0.5, 1.0, 2.0};
 const std::vector<double> PROTECTED_PASSED_PAWNS = {0.2, 0.5, 0.6};
 
-namespace Black::AI {
+namespace black::ai {
 std::string random_key(const std::map<std::string, std::vector<std::vector<int>>>& m) {
   auto it = m.begin();
   std::advance(it, rand() % m.size());
@@ -38,40 +38,40 @@ std::string random_key(const std::map<std::string, std::vector<std::vector<int>>
 
 double evaluate_pos() {
   double score = 0;
-  if (Black::king.alive)
+  if (black::king.alive)
     score -= 2;
-  for (int i=0;i<Black::num_queens;i++) {
-    if (Black::queen.alive[i])
+  for (int i=0;i<black::num_queens;i++) {
+    if (black::queen.alive[i])
       score -= 9;
   }
   for (int i=0;i<8;i++) {
-    if (Black::pawn.alive[i])
+    if (black::pawn.alive[i])
       score -= 1;
   }
   for (int i=0;i<2;i++) {
-    if (Black::bishop.alive[i])
+    if (black::bishop.alive[i])
       score -= 3;
-    if (Black::knight.alive[i])
+    if (black::knight.alive[i])
       score -= 3;
-    if (Black::rook.alive[i])
+    if (black::rook.alive[i])
       score -= 5;
   }
-  if (White::king.alive)
+  if (white::king.alive)
     score += 2;
-  for (int i=0;i<White::num_queens;i++) {
-    if (White::queen.alive[i])
+  for (int i=0;i<white::num_queens;i++) {
+    if (white::queen.alive[i])
       score += 9;
   }
   for (int i=0;i<8;i++) {
-    if (White::pawn.alive[i])
+    if (white::pawn.alive[i])
       score += 1;
   }
   for (int i=0;i<2;i++) {
-    if (White::bishop.alive[i])
+    if (white::bishop.alive[i])
       score += 3;
-    if (White::knight.alive[i])
+    if (white::knight.alive[i])
       score += 3;
-    if (White::rook.alive[i])
+    if (white::rook.alive[i])
       score += 5;
   }
   // score -= Eval::RBQ_open_files();
@@ -79,11 +79,11 @@ double evaluate_pos() {
   // score -= Eval::passed_pawns();
   // score -= Eval::bishop_pair();
   score -= Eval::mobility();
-  // score += White::Eval::RBQ_open_files();
-  // score += White::Eval::pawn_promote();
-  // score += White::Eval::passed_pawns();
-  // score += White::Eval::bishop_pair();
-  score += White::Eval::mobility();
+  // score += white::eval::RBQ_open_files();
+  // score += white::eval::pawn_promote();
+  // score += white::eval::passed_pawns();
+  // score += white::eval::bishop_pair();
+  score += white::eval::mobility();
   return score;
 }
-} // namespace Black::AI
+} // namespace black::ai

@@ -3,7 +3,7 @@
 
 #include "../piece.h"
 
-namespace Black {
+namespace black {
 
 class Rook_Piece : public Piece {
 private:
@@ -34,6 +34,6 @@ public:
 
 extern Rook_Piece rook;
 
-} // namespace Black
+} // namespace black
 
 #endif // CORE_BLACK_ROOK_H

@@ -23,174 +23,174 @@
 void init(const std::string& env) {
   if (env == "") return;
   else if (env == "onlypawns0") {
-    Black::kill(true, "Q0", 0, 3);
-    Black::kill(true, "K", 0, 4);
+    black::kill(true, "Q0", 0, 3);
+    black::kill(true, "K", 0, 4);
     for (int i=0;i<2;i++) {
-      Black::kill(true, "B"+str(i), Black::bishop.row[i], Black::bishop.col[i]);
-      Black::kill(true, "R"+str(i), Black::rook.row[i], Black::rook.col[i]);
-      Black::kill(true, "N"+str(i), Black::knight.row[i], Black::knight.col[i]);
+      black::kill(true, "B"+str(i), black::bishop.row[i], black::bishop.col[i]);
+      black::kill(true, "R"+str(i), black::rook.row[i], black::rook.col[i]);
+      black::kill(true, "N"+str(i), black::knight.row[i], black::knight.col[i]);
     }
-    White::kill(true, "Q0", 7, 3);
-    White::kill(true, "K", 7, 4);
+    white::kill(true, "Q0", 7, 3);
+    white::kill(true, "K", 7, 4);
     for (int i=0;i<2;i++) {
-      White::kill(true, "B"+str(i), White::bishop.row[i], White::bishop.col[i]);
-      White::kill(true, "R"+str(i), White::rook.row[i], White::rook.col[i]);
-      White::kill(true, "N"+str(i), White::knight.row[i], White::knight.col[i]);
+      white::kill(true, "B"+str(i), white::bishop.row[i], white::bishop.col[i]);
+      white::kill(true, "R"+str(i), white::rook.row[i], white::rook.col[i]);
+      white::kill(true, "N"+str(i), white::knight.row[i], white::knight.col[i]);
     }
     for (int i=0;i<8;i++) {
-      Black::blocks.push_back(std::vector<int>());
+      black::blocks.push_back(std::vector<int>());
       for (int k=0;k<8;k++) {
         if (i == 1)
-          Black::blocks[i].push_back(1);
+          black::blocks[i].push_back(1);
         else
-          Black::blocks[i].push_back(0);
+          black::blocks[i].push_back(0);
       }
     }
     for (int i=0;i<8;i++) {
-      White::blocks.push_back(std::vector<int>());
+      white::blocks.push_back(std::vector<int>());
       for (int k=0;k<8;k++) {
         if (i == 6)
-          White::blocks[i].push_back(1);
+          white::blocks[i].push_back(1);
         else
-          White::blocks[i].push_back(0);
+          white::blocks[i].push_back(0);
       }
     }
   }
   else if (env == "enpassant0") {
     init("onlypawns0");
-    Black::kill(true, "P3", Black::pawn.row[3], Black::pawn.col[3]);
+    black::kill(true, "P3", black::pawn.row[3], black::pawn.col[3]);
     for (int i=0;i<3;i++)
-      White::kill(true, "P" + str(i), White::pawn.row[i], White::pawn.col[i]);
+      white::kill(true, "P" + str(i), white::pawn.row[i], white::pawn.col[i]);
     for (int i=4;i<8;i++)
-      White::kill(true, "P" + str(i), White::pawn.row[i], White::pawn.col[i]);
+      white::kill(true, "P" + str(i), white::pawn.row[i], white::pawn.col[i]);
     for (int i=0;i<2;i++)
-      Black::kill(true, "P" + str(i), Black::pawn.row[i], Black::pawn.col[i]);
+      black::kill(true, "P" + str(i), black::pawn.row[i], black::pawn.col[i]);
     for (int i=5;i<8;i++)
-      Black::kill(true, "P" + str(i), Black::pawn.row[i], Black::pawn.col[i]);
-    White::pawn.move(3, 4, 3);
+      black::kill(true, "P" + str(i), black::pawn.row[i], black::pawn.col[i]);
+    white::pawn.move(3, 4, 3);
   }
   else if (env == "KQP") {
     for (int i=0;i<2;i++) {
-      Black::kill(true, "B" + str(i), Black::bishop.row[i], Black::bishop.col[i]);
-      Black::kill(true, "R" + str(i), Black::rook.row[i], Black::rook.col[i]);
-      Black::kill(true, "N" + str(i), Black::knight.row[i], Black::knight.col[i]);
-      White::kill(true, "B" + str(i), White::bishop.row[i], White::bishop.col[i]);
-      White::kill(true, "R" + str(i), White::rook.row[i], White::rook.col[i]);
-      White::kill(true, "N" + str(i), White::knight.row[i], White::knight.col[i]);
+      black::kill(true, "B" + str(i), black::bishop.row[i], black::bishop.col[i]);
+      black::kill(true, "R" + str(i), black::rook.row[i], black::rook.col[i]);
+      black::kill(true, "N" + str(i), black::knight.row[i], black::knight.col[i]);
+      white::kill(true, "B" + str(i), white::bishop.row[i], white::bishop.col[i]);
+      white::kill(true, "R" + str(i), white::rook.row[i], white::rook.col[i]);
+      white::kill(true, "N" + str(i), white::knight.row[i], white::knight.col[i]);
     }
   }
   else if (env == "KRP") {
-    for (int i=0;i<Black::num_queens;i++)
-      Black::kill(true, "Q" + str(i), Black::queen.row[i], Black::queen.col[i]);
-    for (int i=0;i<White::num_queens;i++)
-      White::kill(true, "Q" + str(i), White::queen.row[i], White::queen.col[i]);
+    for (int i=0;i<black::num_queens;i++)
+      black::kill(true, "Q" + str(i), black::queen.row[i], black::queen.col[i]);
+    for (int i=0;i<white::num_queens;i++)
+      white::kill(true, "Q" + str(i), white::queen.row[i], white::queen.col[i]);
     for (int i=0;i<2;i++) {
-      Black::kill(true, "B" + str(i), Black::bishop.row[i], Black::bishop.col[i]);
-      Black::kill(true, "N" + str(i), Black::knight.row[i], Black::knight.col[i]);
-      White::kill(true, "B" + str(i), White::bishop.row[i], White::bishop.col[i]);
-      White::kill(true, "N" + str(i), White::knight.row[i], White::knight.col[i]);
+      black::kill(true, "B" + str(i), black::bishop.row[i], black::bishop.col[i]);
+      black::kill(true, "N" + str(i), black::knight.row[i], black::knight.col[i]);
+      white::kill(true, "B" + str(i), white::bishop.row[i], white::bishop.col[i]);
+      white::kill(true, "N" + str(i), white::knight.row[i], white::knight.col[i]);
     }
   }
   else if (env == "KBPQ") {
     for (int i=0;i<2;i++) {
-      Black::kill(true, "N" + str(i), Black::knight.row[i], Black::knight.col[i]);
-      White::kill(true, "N" + str(i), White::knight.row[i], White::knight.col[i]);
+      black::kill(true, "N" + str(i), black::knight.row[i], black::knight.col[i]);
+      white::kill(true, "N" + str(i), white::knight.row[i], white::knight.col[i]);
     }
     for (int i=0;i<8;i++) {
-      Black::kill(true, "P" + str(i), Black::pawn.row[i], Black::pawn.col[i]);
-      White::kill(true, "P" + str(i), White::pawn.row[i], White::pawn.col[i]);
+      black::kill(true, "P" + str(i), black::pawn.row[i], black::pawn.col[i]);
+      white::kill(true, "P" + str(i), white::pawn.row[i], white::pawn.col[i]);
     }
   }
   else if (env == "KNP") {
-    for (int i=0;i<Black::num_queens;i++)
-      Black::kill(true, "Q" + str(i), Black::queen.row[i], Black::queen.col[i]);
-    for (int i=0;i<White::num_queens;i++)
-      White::kill(true, "Q" + str(i), White::queen.row[i], White::queen.col[i]);
+    for (int i=0;i<black::num_queens;i++)
+      black::kill(true, "Q" + str(i), black::queen.row[i], black::queen.col[i]);
+    for (int i=0;i<white::num_queens;i++)
+      white::kill(true, "Q" + str(i), white::queen.row[i], white::queen.col[i]);
     for (int i=0;i<2;i++) {
-      Black::kill(true, "B" + str(i), Black::bishop.row[i], Black::bishop.col[i]);
-      White::kill(true, "B" + str(i), White::bishop.row[i], White::bishop.col[i]);
-      Black::kill(true, "R" + str(i), Black::rook.row[i], Black::rook.col[i]);
-      White::kill(true, "R" + str(i), White::rook.row[i], White::rook.col[i]);
+      black::kill(true, "B" + str(i), black::bishop.row[i], black::bishop.col[i]);
+      white::kill(true, "B" + str(i), white::bishop.row[i], white::bishop.col[i]);
+      black::kill(true, "R" + str(i), black::rook.row[i], black::rook.col[i]);
+      white::kill(true, "R" + str(i), white::rook.row[i], white::rook.col[i]);
     }
   }
   else if (env == "KN") {
-    for (int i=0;i<Black::num_queens;i++)
-      Black::kill(true, "Q" + str(i), Black::queen.row[i], Black::queen.col[i]);
-    for (int i=0;i<White::num_queens;i++)
-      White::kill(true, "Q" + str(i), White::queen.row[i], White::queen.col[i]);
+    for (int i=0;i<black::num_queens;i++)
+      black::kill(true, "Q" + str(i), black::queen.row[i], black::queen.col[i]);
+    for (int i=0;i<white::num_queens;i++)
+      white::kill(true, "Q" + str(i), white::queen.row[i], white::queen.col[i]);
     for (int i=0;i<2;i++) {
-      Black::kill(true, "B" + str(i), Black::bishop.row[i], Black::bishop.col[i]);
-      White::kill(true, "B" + str(i), White::bishop.row[i], White::bishop.col[i]);
-      Black::kill(true, "R" + str(i), Black::rook.row[i], Black::rook.col[i]);
-      White::kill(true, "R" + str(i), White::rook.row[i], White::rook.col[i]);
+      black::kill(true, "B" + str(i), black::bishop.row[i], black::bishop.col[i]);
+      white::kill(true, "B" + str(i), white::bishop.row[i], white::bishop.col[i]);
+      black::kill(true, "R" + str(i), black::rook.row[i], black::rook.col[i]);
+      white::kill(true, "R" + str(i), white::rook.row[i], white::rook.col[i]);
     }
     for (int i=0;i<8;i++) {
-      Black::kill(true, "P" + str(i), Black::pawn.row[i], Black::pawn.col[i]);
-      White::kill(true, "P" + str(i), White::pawn.row[i], White::pawn.col[i]);
+      black::kill(true, "P" + str(i), black::pawn.row[i], black::pawn.col[i]);
+      white::kill(true, "P" + str(i), white::pawn.row[i], white::pawn.col[i]);
     }
     for (int i=0;i<8;i++) {
-      White::blocks.push_back(std::vector<int>());
-      Black::blocks.push_back(std::vector<int>());
+      white::blocks.push_back(std::vector<int>());
+      black::blocks.push_back(std::vector<int>());
       for (int k=0;k<8;k++) {
-        White::blocks[i].push_back(0);
-        Black::blocks[i].push_back(0);
+        white::blocks[i].push_back(0);
+        black::blocks[i].push_back(0);
       }
     }
-    White::blocks[7][1] = 1;
-    White::blocks[7][6] = 1;
-    White::blocks[7][4] = 1;
-    Black::blocks[0][1] = 1;
-    Black::blocks[0][6] = 1;
-    Black::blocks[0][4] = 1;
+    white::blocks[7][1] = 1;
+    white::blocks[7][6] = 1;
+    white::blocks[7][4] = 1;
+    black::blocks[0][1] = 1;
+    black::blocks[0][6] = 1;
+    black::blocks[0][4] = 1;
   }
   else if (env == "CK0") {
-    Black::kill(true, "B1", Black::bishop.row[1], Black::bishop.col[1]);
-    Black::kill(true, "N1", Black::knight.row[1], Black::knight.col[1]);
+    black::kill(true, "B1", black::bishop.row[1], black::bishop.col[1]);
+    black::kill(true, "N1", black::knight.row[1], black::knight.col[1]);
   }
   else if (env == "CK1") {
-    Black::kill(true, "B1", Black::bishop.row[1], Black::bishop.col[1]);
-    Black::kill(true, "N1", Black::knight.row[1], Black::knight.col[1]);
-    Black::kill(true, "B0", Black::bishop.row[0], Black::bishop.col[0]);
-    Black::kill(true, "N0", Black::knight.row[0], Black::knight.col[0]);
-    Black::kill(true, "R0", Black::rook.row[0], Black::rook.col[0]);
-    Black::kill(true, "Q0", Black::queen.row[0], Black::queen.col[0]);
+    black::kill(true, "B1", black::bishop.row[1], black::bishop.col[1]);
+    black::kill(true, "N1", black::knight.row[1], black::knight.col[1]);
+    black::kill(true, "B0", black::bishop.row[0], black::bishop.col[0]);
+    black::kill(true, "N0", black::knight.row[0], black::knight.col[0]);
+    black::kill(true, "R0", black::rook.row[0], black::rook.col[0]);
+    black::kill(true, "Q0", black::queen.row[0], black::queen.col[0]);
     for (int i=0;i<8;i++) {
-      Black::kill(true, "P" + str(i), Black::pawn.row[i], Black::pawn.col[i]);
+      black::kill(true, "P" + str(i), black::pawn.row[i], black::pawn.col[i]);
     }
   }
   else if (env == "CQ") {
-    Black::kill(true, "B0", Black::bishop.row[0], Black::bishop.col[0]);
-    Black::kill(true, "N0", Black::knight.row[0], Black::knight.col[0]);
-    Black::kill(true, "Q0", Black::queen.row[0], Black::queen.col[0]);
+    black::kill(true, "B0", black::bishop.row[0], black::bishop.col[0]);
+    black::kill(true, "N0", black::knight.row[0], black::knight.col[0]);
+    black::kill(true, "Q0", black::queen.row[0], black::queen.col[0]);
   }
   else if (env == "KR") {
-    for (int i=0;i<Black::num_queens;i++)
-      Black::kill(true, "Q" + str(i), Black::queen.row[i], Black::queen.col[i]);
-    for (int i=0;i<White::num_queens;i++)
-      White::kill(true, "Q" + str(i), White::queen.row[i], White::queen.col[i]);
+    for (int i=0;i<black::num_queens;i++)
+      black::kill(true, "Q" + str(i), black::queen.row[i], black::queen.col[i]);
+    for (int i=0;i<white::num_queens;i++)
+      white::kill(true, "Q" + str(i), white::queen.row[i], white::queen.col[i]);
     for (int i=0;i<2;i++) {
-      Black::kill(true, "B" + str(i), Black::bishop.row[i], Black::bishop.col[i]);
-      White::kill(true, "B" + str(i), White::bishop.row[i], White::bishop.col[i]);
-      Black::kill(true, "N" + str(i), Black::knight.row[i], Black::knight.col[i]);
-      White::kill(true, "N" + str(i), White::knight.row[i], White::knight.col[i]);
+      black::kill(true, "B" + str(i), black::bishop.row[i], black::bishop.col[i]);
+      white::kill(true, "B" + str(i), white::bishop.row[i], white::bishop.col[i]);
+      black::kill(true, "N" + str(i), black::knight.row[i], black::knight.col[i]);
+      white::kill(true, "N" + str(i), white::knight.row[i], white::knight.col[i]);
     }
     for (int i=0;i<8;i++) {
-      Black::kill(true, "P" + str(i), Black::pawn.row[i], Black::pawn.col[i]);
-      White::kill(true, "P" + str(i), White::pawn.row[i], White::pawn.col[i]);
+      black::kill(true, "P" + str(i), black::pawn.row[i], black::pawn.col[i]);
+      white::kill(true, "P" + str(i), white::pawn.row[i], white::pawn.col[i]);
     }
     for (int i=0;i<8;i++) {
-      White::blocks.push_back(std::vector<int>());
-      Black::blocks.push_back(std::vector<int>());
+      white::blocks.push_back(std::vector<int>());
+      black::blocks.push_back(std::vector<int>());
       for (int k=0;k<8;k++) {
-        White::blocks[i].push_back(0);
-        Black::blocks[i].push_back(0);
+        white::blocks[i].push_back(0);
+        black::blocks[i].push_back(0);
       }
     }
-    White::blocks[7][0] = 1;
-    White::blocks[7][4] = 1;
-    White::blocks[7][7] = 1;
-    Black::blocks[0][0] = 1;
-    Black::blocks[0][4] = 1;
-    Black::blocks[0][7] = 1;
+    white::blocks[7][0] = 1;
+    white::blocks[7][4] = 1;
+    white::blocks[7][7] = 1;
+    black::blocks[0][0] = 1;
+    black::blocks[0][4] = 1;
+    black::blocks[0][7] = 1;
   }
 }

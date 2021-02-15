@@ -16,11 +16,11 @@
 #include "eval.h"
 #include "search.h"
 
-namespace Black::AI {
+namespace black::ai {
 namespace {
 static const double minimax(const int& n, double alpha, double beta, std::string player) {
-  std::map<std::string, std::vector<std::vector<int>>> black_moves = Black::get_moves();
-  std::map<std::string, std::vector<std::vector<int>>> white_moves = White::get_moves();
+  std::map<std::string, std::vector<std::vector<int>>> black_moves = black::get_moves();
+  std::map<std::string, std::vector<std::vector<int>>> white_moves = white::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
   std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
   static double best_move;
@@ -34,7 +34,7 @@ static const double minimax(const int& n, double alpha, double beta, std::string
       std::vector<std::vector<int>> value = black_moves[piece];
       for (int i=0;i<value.size();i++) {
         if (piece == "CK" || piece == "CQ") continue;
-        Black::move_piece(piece, value[i][0], value[i][1]);
+        black::move_piece(piece, value[i][0], value[i][1]);
         #ifdef VERBOSE2
           print("INNER BLACK");
           std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
@@ -59,7 +59,7 @@ static const double minimax(const int& n, double alpha, double beta, std::string
       std::string piece = random_key(white_moves);
       std::vector<std::vector<int>> value = white_moves[piece];
       for (int i=0;i<value.size();i++) {
-        White::move_piece(piece, value[i][0], value[i][1]);
+        white::move_piece(piece, value[i][0], value[i][1]);
         #ifdef VERBOSE2
           print("INNER WHITE");
           std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
@@ -87,25 +87,25 @@ void gen_move() {
     Log << "Generating move..." << std::endl;
   #endif
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
-  std::map<std::string, std::vector<std::vector<int>>> moves = Black::get_moves();
+  std::map<std::string, std::vector<std::vector<int>>> moves = black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
   static double score;
   board.isFrozen = true;
-  const bool W_king_moved = White::king.moved;
-  const std::vector<bool> W_rook_moved = {White::rook.moved[0], White::rook.moved[1]};
-  const bool B_king_moved = Black::king.moved;
-  const std::vector<bool> B_rook_moved = {Black::rook.moved[0], Black::rook.moved[1]};
+  const bool W_king_moved = white::king.moved;
+  const std::vector<bool> W_rook_moved = {white::rook.moved[0], white::rook.moved[1]};
+  const bool B_king_moved = black::king.moved;
+  const std::vector<bool> B_rook_moved = {black::rook.moved[0], black::rook.moved[1]};
   std::vector<double> scores = {};
   for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=temp.begin();itr!=temp.end();itr++) {
     std::string piece = random_key(moves);
     std::vector<std::vector<int>> value = moves[piece];
     for (int i=0;i<value.size();i++) {
       if (piece == "CK")
-        Black::castle_K(false);
+        black::castle_K(false);
       if (piece == "CQ")
-        Black::castle_Q(false);
+        black::castle_Q(false);
       else
-        Black::move_piece(piece, value[i][0], value[i][1]);
+        black::move_piece(piece, value[i][0], value[i][1]);
       #ifdef VERBOSE2
         print("******************OUTER******************");
         std::cout << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
@@ -113,10 +113,10 @@ void gen_move() {
       #ifdef DEBUGAI
         Log << "******************OUTER******************" << std::endl;
         Log << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
-        Black::print_blocks_Log();
-        White::print_blocks_Log();
+        black::print_blocks_Log();
+        white::print_blocks_Log();
       #endif
-      score = minimax(Black::depth, -10000, 10000, "W");
+      score = minimax(black::depth, -10000, 10000, "W");
       scores.push_back(score);
       #ifdef VERBOSE 
         std::cout << piece << " (" << value[i][0] << " " << value[i][1] << ") " << score << std::endl;
@@ -142,25 +142,25 @@ void gen_move() {
     exit(1);
   }
   if (best_move["piece"] == "CK")
-    Black::castle_K(false);
+    black::castle_K(false);
   else if (best_move["piece"] == "CQ")
-    Black::castle_Q(false);
+    black::castle_Q(false);
   else
-    Black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
+    black::move_piece(best_move["piece"], best_move["pos"][0]-'0', best_move["pos"][1]-'0');
   #ifdef VERBOSE
   std::cout << "Best move is " << best_move["piece"] << " to " << "(" << best_move["pos"][0] << ", " 
   << best_move["pos"][1] << ")" << std::endl;
   #endif
   #ifndef IS_TESTING
-    Black::turn = false;
-    White::turn = true;
+    black::turn = false;
+    white::turn = true;
   #endif
-  White::rook.moved[0] = W_rook_moved[0];
-  White::rook.moved[1] = W_rook_moved[1];
-  Black::rook.moved[0] = B_rook_moved[0];
-  Black::rook.moved[1] = B_rook_moved[1];
-  White::king.moved = W_king_moved;
-  Black::king.moved = B_king_moved;
+  white::rook.moved[0] = W_rook_moved[0];
+  white::rook.moved[1] = W_rook_moved[1];
+  black::rook.moved[0] = B_rook_moved[0];
+  black::rook.moved[1] = B_rook_moved[1];
+  white::king.moved = W_king_moved;
+  black::king.moved = B_king_moved;
   // get a sorted list of all our scores to make sure we have the right move
   sort(scores.begin(), scores.end());
   #ifdef VERBOSE
@@ -171,4 +171,4 @@ void gen_move() {
   #endif
 }
 
-} // namespace Black::AI
+} // namespace black::ai

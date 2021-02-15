@@ -44,7 +44,7 @@ Click_Queue queue;
 Game_Sound Sound;
 Game_Text text;
 
-namespace Black {
+namespace black {
 Bishop_Piece bishop;
 Knight_Piece knight;
 Pawn_Piece pawn;
@@ -53,7 +53,7 @@ King_Piece king;
 Queen_Piece queen;
 }
 
-namespace White {
+namespace white {
 Bishop_Piece bishop;
 Knight_Piece knight;
 Pawn_Piece pawn;

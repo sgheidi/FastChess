@@ -15,7 +15,7 @@
 #include "../white_.h"
 #include "../black_.h"
 
-namespace Black {
+namespace black {
 
 void Bishop_Piece::pure_move(int i, int row_, int col_) {
   blocks[row_][col_] = 1;
@@ -27,21 +27,21 @@ void Bishop_Piece::pure_move(int i, int row_, int col_) {
 
 void Bishop_Piece::pin(int k, std::string piece) {
   const std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
-  for (int i=0;i<White::num_queens;i++) {
+  for (int i=0;i<white::num_queens;i++) {
     if (piece == "Q" + std::to_string(i))
-      White::queen.movelist[i] = filter(White::queen.movelist[i], pinned_movelist);
+      white::queen.movelist[i] = filter(white::queen.movelist[i], pinned_movelist);
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i))
-      White::bishop.movelist[i] = filter(White::bishop.movelist[i], pinned_movelist);
+      white::bishop.movelist[i] = filter(white::bishop.movelist[i], pinned_movelist);
     else if (piece == "N" + std::to_string(i))
-      White::knight.movelist[i] = filter(White::knight.movelist[i], pinned_movelist);
+      white::knight.movelist[i] = filter(white::knight.movelist[i], pinned_movelist);
     else if (piece == "R" + std::to_string(i))
-      White::rook.movelist[i] = filter(White::rook.movelist[i], pinned_movelist);
+      white::rook.movelist[i] = filter(white::rook.movelist[i], pinned_movelist);
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i))
-      White::pawn.movelist[i] = filter(White::pawn.movelist[i], pinned_movelist);
+      white::pawn.movelist[i] = filter(white::pawn.movelist[i], pinned_movelist);
   }
 }
 
@@ -55,15 +55,15 @@ void Bishop_Piece::check_pin() {
 }
 
 std::string Bishop_Piece::get_pinned_piece(int i) {
-  const std::vector<int> pos = {White::king.row, White::king.col};
+  const std::vector<int> pos = {white::king.row, white::king.col};
   int row_;
   int col_;
   if (pos[0] > row[i] && pos[1] > col[i]) {
     row_ = row[i]+1;
     col_ = col[i]+1;
     while (pos[0] > row_) {
-      if (White::blocks[row_][col_])
-        return White::get_piece(row_, col_);
+      if (white::blocks[row_][col_])
+        return white::get_piece(row_, col_);
       row_ ++;
       col_ ++;
     }
@@ -72,8 +72,8 @@ std::string Bishop_Piece::get_pinned_piece(int i) {
     row_ = row[i]+1;
     col_ = col[i]-1;
     while (pos[0] > row_) {
-      if (White::blocks[row_][col_])
-        return White::get_piece(row_, col_);
+      if (white::blocks[row_][col_])
+        return white::get_piece(row_, col_);
       row_ ++;
       col_ --;
     }
@@ -82,8 +82,8 @@ std::string Bishop_Piece::get_pinned_piece(int i) {
     row_ = row[i]-1;
     col_ = col[i]+1;
     while (pos[0] < row_) {
-      if (White::blocks[row_][col_])
-        return White::get_piece(row_, col_);
+      if (white::blocks[row_][col_])
+        return white::get_piece(row_, col_);
       row_ --;
       col_ ++;
     }
@@ -92,8 +92,8 @@ std::string Bishop_Piece::get_pinned_piece(int i) {
     row_ = row[i]-1;
     col_ = col[i]-1;
     while (pos[0] < row_) {
-      if (White::blocks[row_][col_]) {
-        return White::get_piece(row_, col_);
+      if (white::blocks[row_][col_]) {
+        return white::get_piece(row_, col_);
       }
       row_ --;
       col_ --;
@@ -102,7 +102,7 @@ std::string Bishop_Piece::get_pinned_piece(int i) {
 }
 
 int Bishop_Piece::num_pieces(int i) {
-  const std::vector<int> pos = {White::king.row, White::king.col};
+  const std::vector<int> pos = {white::king.row, white::king.col};
   int row_;
   int col_;
   int total = 0;
@@ -110,7 +110,7 @@ int Bishop_Piece::num_pieces(int i) {
     row_ = row[i]+1;
     col_ = col[i]+1;
     while (pos[0] > row_) {
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         total ++;
       else if (blocks[row_][col_])
         return 0;
@@ -122,7 +122,7 @@ int Bishop_Piece::num_pieces(int i) {
     row_ = row[i]+1;
     col_ = col[i]-1;
     while (pos[0] > row_) {
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         total ++;
       else if (blocks[row_][col_])
         return 0;
@@ -134,7 +134,7 @@ int Bishop_Piece::num_pieces(int i) {
     row_ = row[i]-1;
     col_ = col[i]-1;
     while (pos[0] < row_) {
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         total ++;
       else if (blocks[row_][col_])
         return 0;
@@ -146,7 +146,7 @@ int Bishop_Piece::num_pieces(int i) {
     row_ = row[i]-1;
     col_ = col[i]+1;
     while (pos[0] < row_) {
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         total ++;
       else if (blocks[row_][col_])
         return 0;
@@ -158,7 +158,7 @@ int Bishop_Piece::num_pieces(int i) {
 }
 
 bool Bishop_Piece::king_in_path(int i) {
-  const std::vector<int> pos = {White::king.row, White::king.col};
+  const std::vector<int> pos = {white::king.row, white::king.col};
   int row_;
   int col_;
   row_ = row[i]+1;
@@ -197,7 +197,7 @@ bool Bishop_Piece::king_in_path(int i) {
 }
 
 std::vector<std::vector<int>> Bishop_Piece::get_check_movelist(int i) {
-  const std::vector<int> pos = {White::king.row, White::king.col};
+  const std::vector<int> pos = {white::king.row, white::king.col};
   int row_;
   int col_;
   std::vector<std::vector<int>> ret;
@@ -242,7 +242,7 @@ std::vector<std::vector<int>> Bishop_Piece::get_check_movelist(int i) {
 }
 
 std::vector<int> Bishop_Piece::get_avoid_move(int i) {
-  const std::vector<int> pos = {White::king.row, White::king.col};
+  const std::vector<int> pos = {white::king.row, white::king.col};
   std::vector<int> ret;
   if (pos[0] > row[i] && pos[1] > col[i])
     ret = {pos[0]+1, pos[1]+1};
@@ -269,7 +269,7 @@ void Bishop_Piece::update_movelist() {
         break;
       }
       movelist[i].push_back({row_, col_});
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         break;
       row_ ++;
       col_ ++;
@@ -282,7 +282,7 @@ void Bishop_Piece::update_movelist() {
         break;
       }
       movelist[i].push_back({row_, col_});
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         break;
       row_ --;
       col_ ++;
@@ -295,7 +295,7 @@ void Bishop_Piece::update_movelist() {
         break;
       }
       movelist[i].push_back({row_, col_});
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         break;
       row_ ++;
       col_ --;
@@ -308,7 +308,7 @@ void Bishop_Piece::update_movelist() {
         break;
       }
       movelist[i].push_back({row_, col_});
-      if (White::blocks[row_][col_])
+      if (white::blocks[row_][col_])
         break;
       row_ --;
       col_ --;
@@ -338,4 +338,4 @@ void Bishop_Piece::show() {
   }
 }
 
-} // namespace Black
+} // namespace black

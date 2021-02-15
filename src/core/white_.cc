@@ -24,7 +24,7 @@
 #include "white_.h"
 #include "black_.h"
 
-namespace White {
+namespace white {
 std::vector<std::vector<int>> blocks(8);
 std::vector<bool> en_passant(8);
 bool turn = true;
@@ -37,36 +37,36 @@ bool enpassant_check_killed = false;
 
 bool in_opp_movelist(int row, int col) {
   const std::vector<int> pos = {row, col};
-  if (in(Black::king.movelist, pos))
+  if (in(black::king.movelist, pos))
     return true;
-  for (int i=0;i<Black::num_queens;i++) {
-    if (in(Black::queen.movelist[i], pos))
+  for (int i=0;i<black::num_queens;i++) {
+    if (in(black::queen.movelist[i], pos))
       return true;
   }
   for (int i=0;i<8;i++) {
-    if (in(Black::pawn.hit_movelist[i], pos))
+    if (in(black::pawn.hit_movelist[i], pos))
       return true;
   }
   for (int i=0;i<2;i++) {
-    if (in(Black::bishop.movelist[i], pos) || in(Black::knight.movelist[i], pos) || in(Black::rook.movelist[i], pos))
+    if (in(black::bishop.movelist[i], pos) || in(black::knight.movelist[i], pos) || in(black::rook.movelist[i], pos))
       return true;
   }
   return false;
 }
 
 bool opp_no_moves() {
-  if (!Black::king.movelist.empty())
+  if (!black::king.movelist.empty())
     return false;
-  for (int i=0;i<Black::num_queens;i++) {
-    if (!Black::queen.movelist[i].empty())
+  for (int i=0;i<black::num_queens;i++) {
+    if (!black::queen.movelist[i].empty())
       return false;
   }
   for (int i=0;i<8;i++) {
-    if (!Black::pawn.movelist[i].empty())
+    if (!black::pawn.movelist[i].empty())
       return false;
   }
   for (int i=0;i<2;i++) {
-    if (!Black::bishop.movelist[i].empty() || !Black::knight.movelist[i].empty() || !Black::rook.movelist[i].empty())
+    if (!black::bishop.movelist[i].empty() || !black::knight.movelist[i].empty() || !black::rook.movelist[i].empty())
       return false;
   }
   return true;
@@ -92,7 +92,7 @@ void check_avoid_move() {
         avoid_moves.push_back(rook.get_avoid_move(i));
     }
   }
-  Black::king.movelist = filter2(Black::king.movelist, avoid_moves);
+  black::king.movelist = filter2(black::king.movelist, avoid_moves);
 }
 
 void update_opp_movelists() {
@@ -114,29 +114,29 @@ void update_opp_movelists() {
     if (checker[0] == "P" + std::to_string(i))
       check_movelist = {{pawn.row[i], pawn.col[i]}};
   }
-  for (int i=0;i<Black::num_queens;i++) {
-    Black::queen.movelist[i] = filter(Black::queen.movelist[i], check_movelist);
+  for (int i=0;i<black::num_queens;i++) {
+    black::queen.movelist[i] = filter(black::queen.movelist[i], check_movelist);
   }
   for (int i=0;i<2;i++) {
-    Black::bishop.movelist[i] = filter(Black::bishop.movelist[i], check_movelist);
-    Black::knight.movelist[i] = filter(Black::knight.movelist[i], check_movelist);
-    Black::rook.movelist[i] = filter(Black::rook.movelist[i], check_movelist);
+    black::bishop.movelist[i] = filter(black::bishop.movelist[i], check_movelist);
+    black::knight.movelist[i] = filter(black::knight.movelist[i], check_movelist);
+    black::rook.movelist[i] = filter(black::rook.movelist[i], check_movelist);
   }
   for (int i=0;i<8;i++) {
-    Black::pawn.movelist[i] = filter(Black::pawn.movelist[i], check_movelist);
+    black::pawn.movelist[i] = filter(black::pawn.movelist[i], check_movelist);
   }
   // the rare case of double check: only the oppposite king can move! (this is because no 1 piece can block both checks)
   if (checker.size() > 1) {
     for (int i=0;i<8;i++) {
-      Black::pawn.movelist[i].clear();
+      black::pawn.movelist[i].clear();
     }
     for (int i=0;i<2;i++) {
-      Black::bishop.movelist[i].clear();
-      Black::knight.movelist[i].clear();
-      Black::rook.movelist[i].clear();
+      black::bishop.movelist[i].clear();
+      black::knight.movelist[i].clear();
+      black::rook.movelist[i].clear();
     }
-    for (int i=0;i<Black::num_queens;i++) {
-      Black::queen.movelist[i].clear();
+    for (int i=0;i<black::num_queens;i++) {
+      black::queen.movelist[i].clear();
     }
   }
 }
@@ -144,27 +144,27 @@ void update_opp_movelists() {
 bool check_opp_checked() {
   bool checked = false;
   for (int i=0;i<num_queens;i++) {
-    if (in(queen.movelist[i], {Black::king.row, Black::king.col})) {
+    if (in(queen.movelist[i], {black::king.row, black::king.col})) {
       checker.push_back("Q" + std::to_string(i));
       checked = true;
     }
   }
   for (int i=0;i<8;i++) {
-    if (in(pawn.hit_movelist[i], {Black::king.row, Black::king.col})) {
+    if (in(pawn.hit_movelist[i], {black::king.row, black::king.col})) {
       checker.push_back("P" + std::to_string(i));
       checked = true;
     }
   }
   for (int i=0;i<2;i++) {
-    if (in(bishop.movelist[i], {Black::king.row, Black::king.col})) {
+    if (in(bishop.movelist[i], {black::king.row, black::king.col})) {
       checker.push_back("B" + std::to_string(i));
       checked = true;
     }
-    if (in(knight.movelist[i], {Black::king.row, Black::king.col})) {
+    if (in(knight.movelist[i], {black::king.row, black::king.col})) {
       checker.push_back("N" + std::to_string(i));
       checked = true;
     }
-    if (in(rook.movelist[i], {Black::king.row, Black::king.col})) {
+    if (in(rook.movelist[i], {black::king.row, black::king.col})) {
       checker.push_back("R" + std::to_string(i));
       checked = true;
     }
@@ -188,15 +188,15 @@ void promote(int i, int row_, int col_) {
 }
 
 void check_kill(bool is_undo, int row, int col) {
-  if (Black::blocks[row][col] == 1 && !is_undo) {
-    std::string piece = Black::get_piece(row, col);
-    Black::kill(is_undo, piece, row, col);
+  if (black::blocks[row][col] == 1 && !is_undo) {
+    std::string piece = black::get_piece(row, col);
+    black::kill(is_undo, piece, row, col);
     undo.killed.push_back(1);
     undo.killed_piece.push_back(piece);
     undo.killed_pos.push_back({row, col});
     undo.killed_color.push_back("B");
   }
-  else if (Black::blocks[row][col] == 0 && !is_undo) {
+  else if (black::blocks[row][col] == 0 && !is_undo) {
     undo.killed.push_back(0);
     undo.killed_piece.push_back("X");
     undo.killed_color.push_back("X");
@@ -354,9 +354,9 @@ bool castle_criteria_Q() {
   if (king.row != 7 || king.col != 4 || rook.row[0] != 7 || rook.col[1] != 0) return false;
   if (king.moved || rook.moved[0] || !rook.alive[0])
     return false;
-  if (Black::blocks[7][2] || Black::blocks[7][3] || blocks[7][2] || blocks[7][3])
+  if (black::blocks[7][2] || black::blocks[7][3] || blocks[7][2] || blocks[7][3])
     return false;
-  if (Black::checker.size() >= 1)
+  if (black::checker.size() >= 1)
     return false;
   if (in_opp_movelist(7, 2) || in_opp_movelist(7, 3))
     return false;
@@ -367,9 +367,9 @@ bool castle_criteria_K() {
   if (king.row != 7 || king.col != 4 || rook.row[0] != 7 || rook.col[1] != 7) return false;
   if (king.moved || rook.moved[1] || !rook.alive[1])
     return false;
-  if (Black::blocks[7][6] || Black::blocks[7][5] || blocks[7][6] || blocks[7][5])
+  if (black::blocks[7][6] || black::blocks[7][5] || blocks[7][6] || blocks[7][5])
     return false;
-  if (Black::checker.size() >= 1)
+  if (black::checker.size() >= 1)
     return false;
   if (in_opp_movelist(7, 6) || in_opp_movelist(7, 5))
     return false;
@@ -411,9 +411,9 @@ void move_piece(std::string piece, int row, int col) {
       undo.moved_from.push_back({pawn.row[i], pawn.col[i]});
       if (pawn.row[i] == 3) {
         for (int k=0;k<8;k++) {
-          if (Black::en_passant[k]) {
-            if (abs(pawn.col[i] - Black::pawn.col[k]) == 1 && col == Black::pawn.col[k]) {
-              check_kill(false, 3, Black::pawn.col[k]);
+          if (black::en_passant[k]) {
+            if (abs(pawn.col[i] - black::pawn.col[k]) == 1 && col == black::pawn.col[k]) {
+              check_kill(false, 3, black::pawn.col[k]);
               enpassant_check_killed = true;
               killed = true;
             }
@@ -493,7 +493,7 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   #endif
   #ifndef IS_TESTING
   turn = false;
-  Black::turn = true;
+  black::turn = true;
   #endif
   enpassant_check_killed = false;
 }
@@ -526,7 +526,7 @@ std::string get_piece(int row, int col) {
 }
 
 void print_blocks() {
-  print("--White blocks--");
+  print("--white blocks--");
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
       printf("%d", blocks[i][k]);
@@ -536,7 +536,7 @@ void print_blocks() {
 
 #ifdef DEBUGAI
 void print_blocks_Log() {
-  Log << ("--White blocks--\n");
+  Log << ("--white blocks--\n");
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
       Log << blocks[i][k];
@@ -632,4 +632,4 @@ void kill(bool is_undo, std::string piece, int row, int col) {
     Sound.kill();
 }
 
-} // namespace White
+} // namespace white

@@ -20,7 +20,7 @@
 #include "../helper.h"
 #include "eval.h"
 
-namespace White::Eval {
+namespace white::eval {
 
 // General mobility: the number of open positions available to each piece (non-BRQ).
 double mobility() {
@@ -85,7 +85,7 @@ double RBQ_open_files() {
   for (int i=0;i<num_queens;i++) {
     if (queen.alive[i]) {
       for (int k=0;k<queen.movelist[i].size();k++) {
-        if (!blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]] && !Black::blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]])
+        if (!blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]] && !black::blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
@@ -93,17 +93,17 @@ double RBQ_open_files() {
   for (int i=0;i<2;i++) {
     if (bishop.alive[i]) {
       for (int k=0;k<bishop.movelist[i].size();k++) {
-        if (!blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]] && !Black::blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]])
+        if (!blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]] && !black::blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
     if (rook.alive[i]) {
       for (int k=0;k<rook.movelist[i].size();k++) {
-        if (!blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]] && !Black::blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]])
+        if (!blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]] && !black::blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]])
           reward += RBQ_OPEN_FILES_REWARD;
       }
     }
   }
   return reward;
 }
-} // namespace White::Eval
+} // namespace white::eval

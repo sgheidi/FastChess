@@ -6,7 +6,7 @@
 
 #include "../white_.h"
 
-namespace White {
+namespace white {
 
 void Knight_Piece::pure_move(int i, int row_, int col_) {
   blocks[row_][col_] = 1;
@@ -58,4 +58,4 @@ void Knight_Piece::show() {
   }
 }
 
-} // namespace White
+} // namespace white

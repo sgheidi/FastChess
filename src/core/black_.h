@@ -1,7 +1,7 @@
 #ifndef CORE_BLACK__H
 #define CORE_BLACK__H
 
-namespace Black {
+namespace black {
 extern std::vector<std::vector<int>> blocks;
 extern bool turn;
 extern int num_queens;
@@ -31,6 +31,6 @@ void print_blocks_Log();
 void show();
 void init();
 
-} // namespace Black
+} // namespace black
 
 #endif // CORE_BLACK__H

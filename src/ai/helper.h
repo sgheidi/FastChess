@@ -10,13 +10,13 @@ extern const std::vector<double> PASSED_PAWNS;
 extern const std::vector<double> CONNECTED_PASSED_PAWNS;
 extern const std::vector<double> PROTECTED_PASSED_PAWNS;
 
-namespace Black::AI {
+namespace black::ai {
 std::string random_key(const std::map<std::string, std::vector<std::vector<int>>>& m);
 double RBQ_open_files();
 double evaluate_pos();
 double passed_pawns();
 double pawn_promote();
 double bishop_pair();
-} // namespace Black::AI
+} // namespace black::ai
 
 #endif // AI_HELPER_H

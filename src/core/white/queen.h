@@ -3,7 +3,7 @@
 
 #include "../piece.h"
 
-namespace White {
+namespace white {
 
 class Queen_Piece : public Piece {
 private:
@@ -32,6 +32,6 @@ public:
 
 extern Queen_Piece queen;
 
-} // namespace White
+} // namespace white
 
 #endif // CORE_WHITE_QUEEN_H

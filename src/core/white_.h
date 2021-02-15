@@ -1,7 +1,7 @@
 #ifndef CORE_WHITE__H
 #define CORE_WHITE__H
 
-namespace White {
+namespace white {
 extern std::vector<std::vector<int>> blocks;
 extern int num_queens;
 extern std::vector<std::string> checker;
@@ -31,6 +31,6 @@ void print_blocks_Log();
 void show();
 void init();
 
-} // namespace White
+} // namespace white
 
 #endif // CORE_WHITE__H

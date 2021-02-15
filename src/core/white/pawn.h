@@ -3,7 +3,7 @@
 
 #include "../piece.h"
 
-namespace White {
+namespace white {
 
 class Pawn_Piece : public Piece {
 private:
@@ -28,6 +28,6 @@ public:
 
 extern Pawn_Piece pawn;
 
-} // namespace White
+} // namespace white
 
 #endif // CORE_WHITE_PAWN_H

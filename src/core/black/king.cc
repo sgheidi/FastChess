@@ -15,7 +15,7 @@
 #include "../white_.h"
 #include "../black_.h"
 
-namespace Black {
+namespace black {
 
 void King_Piece::update_movelist() {
   if (!alive)
@@ -43,30 +43,30 @@ void King_Piece::update_movelist() {
 }
 
 void King_Piece::filter_check_pos() {
-  for (int i=0;i<White::num_queens;i++) {
-    movelist = filter2(movelist, White::queen.movelist[i]);
-    movelist = filter2(movelist, White::queen.protecting_movelist[i]);
+  for (int i=0;i<white::num_queens;i++) {
+    movelist = filter2(movelist, white::queen.movelist[i]);
+    movelist = filter2(movelist, white::queen.protecting_movelist[i]);
   }
   for (int i=0;i<8;i++) {
-    movelist = filter2(movelist, White::pawn.hit_movelist[i]);
+    movelist = filter2(movelist, white::pawn.hit_movelist[i]);
   }
   for (int i=0;i<2;i++) {
-    movelist = filter2(movelist, White::bishop.movelist[i]);
-    movelist = filter2(movelist, White::bishop.protecting_movelist[i]);
-    movelist = filter2(movelist, White::knight.movelist[i]);
-    movelist = filter2(movelist, White::knight.protecting_movelist[i]);
-    movelist = filter2(movelist, White::rook.movelist[i]);
-    movelist = filter2(movelist, White::rook.protecting_movelist[i]);
+    movelist = filter2(movelist, white::bishop.movelist[i]);
+    movelist = filter2(movelist, white::bishop.protecting_movelist[i]);
+    movelist = filter2(movelist, white::knight.movelist[i]);
+    movelist = filter2(movelist, white::knight.protecting_movelist[i]);
+    movelist = filter2(movelist, white::rook.movelist[i]);
+    movelist = filter2(movelist, white::rook.protecting_movelist[i]);
   }
 }
 
 void King_Piece::filter_king_pos() {
   const std::vector<std::vector<int>> opposite_pos = {
-      {White::king.row - 1, White::king.col - 1}, {White::king.row - 1, White::king.col}, 
-      {White::king.row - 1, White::king.col + 1}, {White::king.row, White::king.col - 1}, 
-      {White::king.row, White::king.col}, {White::king.row, White::king.col + 1}, 
-      {White::king.row + 1, White::king.col - 1}, {White::king.row + 1, White::king.col}, 
-      {White::king.row + 1, White::king.col + 1}};
+      {white::king.row - 1, white::king.col - 1}, {white::king.row - 1, white::king.col}, 
+      {white::king.row - 1, white::king.col + 1}, {white::king.row, white::king.col - 1}, 
+      {white::king.row, white::king.col}, {white::king.row, white::king.col + 1}, 
+      {white::king.row + 1, white::king.col - 1}, {white::king.row + 1, white::king.col}, 
+      {white::king.row + 1, white::king.col + 1}};
   movelist = filter2(movelist, opposite_pos);
 }
 
@@ -91,4 +91,4 @@ void King_Piece::show() {
   window.draw(sprite);
 }
 
-} // namespace Black
+} // namespace black
