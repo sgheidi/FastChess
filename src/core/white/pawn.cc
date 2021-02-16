@@ -1,16 +1,12 @@
 #include "../../common/config.h"
-
 #include "../../board.h"
-
 #include "../black/bishop.h"
 #include "../black/knight.h"
 #include "../black/pawn.h"
 #include "../black/rook.h"
 #include "../black/queen.h"
 #include "../black/king.h"
-
 #include "pawn.h"
-
 #include "../white_.h"
 #include "../black_.h"
 

@@ -1,22 +1,18 @@
 #include "../common/config.h"
-
 #include "../core/black/bishop.h"
 #include "../core/black/knight.h"
 #include "../core/black/pawn.h"
 #include "../core/black/rook.h"
 #include "../core/black/queen.h"
 #include "../core/black/king.h"
-
 #include "../core/white/bishop.h"
 #include "../core/white/knight.h"
 #include "../core/white/pawn.h"
 #include "../core/white/rook.h"
 #include "../core/white/queen.h"
 #include "../core/white/king.h"
-
 #include "../core/white_.h"
 #include "../core/black_.h"
-
 #include "helper.h"
 #include "black/eval.h"
 #include "white/eval.h"
@@ -28,7 +24,8 @@ const std::vector<double> PASSED_PAWNS = {1.1, 0.5, 0.5};
 const std::vector<double> CONNECTED_PASSED_PAWNS = {0.5, 1.0, 2.0};
 const std::vector<double> PROTECTED_PASSED_PAWNS = {0.2, 0.5, 0.6};
 
-namespace black::ai {
+namespace black {
+namespace ai {
 std::string random_key(const std::map<std::string, std::vector<std::vector<int>>>& m) {
   auto it = m.begin();
   std::advance(it, rand() % m.size());
@@ -86,4 +83,5 @@ double evaluate_pos() {
   score += white::eval::mobility();
   return score;
 }
-} // namespace black::ai
+} // namespace ai
+} // namespace black

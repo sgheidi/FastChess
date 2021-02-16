@@ -1,9 +1,6 @@
 #include "../../common/config.h"
-
 #include "../../board.h"
-
 #include "knight.h"
-
 #include "../black_.h"
 
 namespace black {

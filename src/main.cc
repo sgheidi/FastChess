@@ -1,23 +1,19 @@
 #include "common/config.h"
 #include "common/util.h"
-
 #include "board.h"
 #include "queue.h"
 #include "media/text.h"
-
 #include "core/black/knight.h"
 #include "core/black/pawn.h"
 #include "core/black/rook.h"
 #include "core/black/queen.h"
 #include "core/black/king.h"
-
 #include "core/white/bishop.h"
 #include "core/white/knight.h"
 #include "core/white/pawn.h"
 #include "core/white/rook.h"
 #include "core/white/queen.h"
 #include "core/white/king.h"
-
 #include "core/white_.h"
 #include "core/black_.h"
 
@@ -25,13 +21,16 @@
 #include "ai/black/search.h"
 #endif
 
+#define WINDOW_X_POS 950
+#define WINDOW_Y_POS 180
+
 int main() {
   srand(time(NULL));
   black::init();
   white::init();
   init(GAME_ENV);
   board.update_moves();
-  window.setPosition(sf::Vector2i(950, 180));
+  window.setPosition(sf::Vector2i(WINDOW_X_POS, WINDOW_Y_POS));
   while (window.isOpen()) {
     static sf::Event event;
     while (window.pollEvent(event)) {

@@ -4,19 +4,16 @@
 #include <SFML/Graphics.hpp>
 
 #include "config.h"
-
 #include "../board.h"
 #include "../queue.h"
 #include "../media/text.h"
 #include "../media/sound.h"
-
 #include "../core/black/bishop.h"
 #include "../core/black/knight.h"
 #include "../core/black/pawn.h"
 #include "../core/black/rook.h"
 #include "../core/black/queen.h"
 #include "../core/black/king.h"
-
 #include "../core/white/bishop.h"
 #include "../core/white/knight.h"
 #include "../core/white/pawn.h"

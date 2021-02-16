@@ -1,24 +1,29 @@
 #include "../../common/config.h"
 #include "../../common/util.h"
-
 #include "../../board.h"
-
 #include "../../core/black/rook.h"
 #include "../../core/black/king.h"
 #include "../../core/white/rook.h"
 #include "../../core/white/king.h"
-
 #include "../../core/white_.h"
 #include "../../core/black_.h"
-
 #include "../helper.h"
 #include "../white/eval.h"
 #include "eval.h"
 #include "search.h"
 
-namespace black::ai {
+namespace black {
+namespace ai {
+
 namespace {
-static const double minimax(const int& n, double alpha, double beta, std::string player) {
+
+constexpr int NEG_INF = -9999;
+constexpr int POS_INF = 9999;
+
+static const double minimax(const int& n, 
+                            double alpha, 
+                            double beta,
+                             std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> black_moves = black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> white_moves = white::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
@@ -28,7 +33,7 @@ static const double minimax(const int& n, double alpha, double beta, std::string
     return -evaluate_pos();
   // minimizing player
   if (player == "B") {
-    best_move = -9999;
+    best_move = NEG_INF;
     for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=btemp.begin();itr!=btemp.end();itr++) {
       std::string piece = random_key(black_moves);
       std::vector<std::vector<int>> value = black_moves[piece];
@@ -54,7 +59,7 @@ static const double minimax(const int& n, double alpha, double beta, std::string
   }
   // maximizing player
   else {
-    best_move = 9999;
+    best_move = POS_INF;
     for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=wtemp.begin();itr!=wtemp.end();itr++) {
       std::string piece = random_key(white_moves);
       std::vector<std::vector<int>> value = white_moves[piece];
@@ -170,5 +175,5 @@ void gen_move() {
   std::cout << "Obtained highest score of " << best_move["score"] << std::endl;
   #endif
 }
-
-} // namespace black::ai
+} // namespace ai
+} // namespace black
