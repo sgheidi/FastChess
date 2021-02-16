@@ -34,4 +34,4 @@ extern Bishop_Piece bishop;
 
 } // namespace black
 
-#endif // BLACK_BICORE_BLACK_BISHOP_HSHOP_H
+#endif // CORE_BLACK_BISHOP_H
