@@ -23,7 +23,7 @@ constexpr int POS_INF = 9999;
 static const double minimax(const int& n, 
                             double alpha, 
                             double beta,
-                             std::string player) {
+                            std::string player) {
   std::map<std::string, std::vector<std::vector<int>>> black_moves = black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> white_moves = white::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
