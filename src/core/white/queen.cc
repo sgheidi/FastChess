@@ -29,19 +29,19 @@ void Queen_Piece::pin(int k, std::string piece) {
   const std::vector<std::vector<int>> pinned_movelist = get_check_movelist(k);
   for (int i=0;i<black::num_queens;i++) {
     if (piece == "Q" + std::to_string(i))
-      black::queen.movelist[i] = filter(black::queen.movelist[i], pinned_movelist);
+      filter(black::queen.movelist[i], pinned_movelist);
   }
   for (int i=0;i<2;i++) {
     if (piece == "B" + std::to_string(i))
-      black::bishop.movelist[i] = filter(black::bishop.movelist[i], pinned_movelist);
+      filter(black::bishop.movelist[i], pinned_movelist);
     else if (piece == "N" + std::to_string(i))
-      black::knight.movelist[i] = filter(black::knight.movelist[i], pinned_movelist);
+      filter(black::knight.movelist[i], pinned_movelist);
     else if (piece == "R" + std::to_string(i))
-      black::rook.movelist[i] = filter(black::rook.movelist[i], pinned_movelist);
+      filter(black::rook.movelist[i], pinned_movelist);
   }
   for (int i=0;i<8;i++) {
     if (piece == "P" + std::to_string(i))
-      black::pawn.movelist[i] = filter(black::pawn.movelist[i], pinned_movelist);
+      filter(black::pawn.movelist[i], pinned_movelist);
   }
 }
 

@@ -105,7 +105,7 @@ void check_avoid_move() {
         avoid_moves.push_back(rook.get_avoid_move(i));
     }
   }
-  white::king.movelist = filter2(white::king.movelist, avoid_moves);
+  filter2(white::king.movelist, avoid_moves);
 }
 
 void update_opp_movelists() {
@@ -128,15 +128,15 @@ void update_opp_movelists() {
       check_movelist = {{pawn.row[i], pawn.col[i]}};
   }
   for (int i=0;i<white::num_queens;i++) {
-    white::queen.movelist[i] = filter(white::queen.movelist[i], check_movelist);
+    filter(white::queen.movelist[i], check_movelist);
   }
   for (int i=0;i<2;i++) {
-    white::bishop.movelist[i] = filter(white::bishop.movelist[i], check_movelist);
-    white::knight.movelist[i] = filter(white::knight.movelist[i], check_movelist);
-    white::rook.movelist[i] = filter(white::rook.movelist[i], check_movelist);
+    filter(white::bishop.movelist[i], check_movelist);
+    filter(white::knight.movelist[i], check_movelist);
+    filter(white::rook.movelist[i], check_movelist);
   }
   for (int i=0;i<8;i++) {
-    white::pawn.movelist[i] = filter(white::pawn.movelist[i], check_movelist);
+    filter(white::pawn.movelist[i], check_movelist);
   }
   // the rare case of double check: only the oppposite king can move! (this is because no 1 piece can block both checks)
   if (checker.size() > 1) {
@@ -355,7 +355,7 @@ bool castle_criteria_K() {
 
 void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
-  std::vector<int> pos = {row, col};
+  const std::vector<int> pos = {row, col};
   bool moved = false;
   checker.clear();
   bool killed = false;

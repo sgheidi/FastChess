@@ -9,11 +9,11 @@
 
 void take_screenshot(const sf::RenderWindow& window, const std::string& filename);
 void init(const std::string& env);
-std::string str(int n);
+std::string str(const int& n);
 void print_map(std::map<std::string, std::vector<std::vector<int>>> map);
-void print(std::string s);
-std::vector<std::vector<int>> filter2(std::vector<std::vector<int>> v1, const std::vector<std::vector<int>>& v2);
-std::vector<std::vector<int>> filter(std::vector<std::vector<int>> v1, const std::vector<std::vector<int>>& v2);
+void print(const std::string& s);
+void filter2(std::vector<std::vector<int>>& v1, const std::vector<std::vector<int>>& v2);
+void filter(std::vector<std::vector<int>>& v1, const std::vector<std::vector<int>>& v2);
 void print_v2(std::vector<std::vector<int>> v);
 void print_v3(std::vector<std::vector<std::vector<int>>> v);
 bool in(std::vector<std::vector<int>> v, std::vector<int> item);

@@ -20,36 +20,34 @@ void print_map(std::map<std::string, std::vector<std::vector<int>>> map) {
   }
 }
 
-std::string str(int n) {
+std::string str(const int& n) {
   return std::to_string(n);
 }
 
-void print(std::string s) {
+void print(const std::string& s) {
   std::cout << s << std::endl;
 }
 
-// This function removes any elements in v1 that are in v2
-std::vector<std::vector<int>>
-filter2(std::vector<std::vector<int>> v1, const std::vector<std::vector<int>>& v2) {
+// This function removes any elements in v1 that are in v2.
+// implemented as a reference, no need to return anything here
+void filter2(std::vector<std::vector<int>>& v1, const std::vector<std::vector<int>>& v2) {
   for (int i=0;i<v1.size();i++) {
     if (in(v2, v1[i])) {
       v1.erase(v1.begin() + i);
       i--;
     }
   }
-  return v1;
 }
 
-// This function removes any elements in v1 that are not in v2
-std::vector<std::vector<int>>
-filter(std::vector<std::vector<int>> v1, const std::vector<std::vector<int>>& v2) {
+// This function removes any elements in v1 that are not in v2.
+// implemented as a reference, no need to return anything here
+void filter(std::vector<std::vector<int>>& v1, const std::vector<std::vector<int>>& v2) {
   for (int i=0;i<v1.size();i++) {
     if (!in(v2, v1[i])) {
       v1.erase(v1.begin() + i);
       i--;
     }
   }
-  return v1;
 }
 
 void print_v3(std::vector<std::vector<std::vector<int>>> v) {
@@ -78,6 +76,6 @@ void print_v2(std::vector<std::vector<int>> v) {
 }
 
 // return true if 1d vector in 2d vector
-bool in(std::vector<std::vector<int>> v, std::vector<int> item) {
+bool in(std::vector<std::vector<int>> v, const std::vector<int> item) {
   return std::find(v.begin(), v.end(), item) != v.end() ? true : false;
 }

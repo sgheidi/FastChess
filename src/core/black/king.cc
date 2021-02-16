@@ -44,19 +44,19 @@ void King_Piece::update_movelist() {
 
 void King_Piece::filter_check_pos() {
   for (int i=0;i<white::num_queens;i++) {
-    movelist = filter2(movelist, white::queen.movelist[i]);
-    movelist = filter2(movelist, white::queen.protecting_movelist[i]);
+    filter2(movelist, white::queen.movelist[i]);
+    filter2(movelist, white::queen.protecting_movelist[i]);
   }
   for (int i=0;i<8;i++) {
-    movelist = filter2(movelist, white::pawn.hit_movelist[i]);
+    filter2(movelist, white::pawn.hit_movelist[i]);
   }
   for (int i=0;i<2;i++) {
-    movelist = filter2(movelist, white::bishop.movelist[i]);
-    movelist = filter2(movelist, white::bishop.protecting_movelist[i]);
-    movelist = filter2(movelist, white::knight.movelist[i]);
-    movelist = filter2(movelist, white::knight.protecting_movelist[i]);
-    movelist = filter2(movelist, white::rook.movelist[i]);
-    movelist = filter2(movelist, white::rook.protecting_movelist[i]);
+    filter2(movelist, white::bishop.movelist[i]);
+    filter2(movelist, white::bishop.protecting_movelist[i]);
+    filter2(movelist, white::knight.movelist[i]);
+    filter2(movelist, white::knight.protecting_movelist[i]);
+    filter2(movelist, white::rook.movelist[i]);
+    filter2(movelist, white::rook.protecting_movelist[i]);
   }
 }
 
@@ -67,7 +67,7 @@ void King_Piece::filter_king_pos() {
       {white::king.row, white::king.col}, {white::king.row, white::king.col + 1}, 
       {white::king.row + 1, white::king.col - 1}, {white::king.row + 1, white::king.col}, 
       {white::king.row + 1, white::king.col + 1}};
-  movelist = filter2(movelist, opposite_pos);
+  filter2(movelist, opposite_pos);
 }
 
 void King_Piece::move(int row_, int col_) {

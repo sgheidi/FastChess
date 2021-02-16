@@ -74,11 +74,11 @@ double evaluate_pos() {
     if (white::rook.alive[i])
       score += 5;
   }
-  // score -= Eval::RBQ_open_files();
-  // score -= Eval::pawn_promote();
-  // score -= Eval::passed_pawns();
-  // score -= Eval::bishop_pair();
-  score -= Eval::mobility();
+  // score -= eval::RBQ_open_files();
+  // score -= eval::pawn_promote();
+  // score -= eval::passed_pawns();
+  // score -= eval::bishop_pair();
+  score -= eval::mobility();
   // score += white::eval::RBQ_open_files();
   // score += white::eval::pawn_promote();
   // score += white::eval::passed_pawns();
