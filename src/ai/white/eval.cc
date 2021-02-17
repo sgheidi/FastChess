@@ -20,7 +20,8 @@
 #include "../helper.h"
 #include "eval.h"
 
-namespace white::eval {
+namespace white {
+namespace eval {
 
 // General mobility: the number of open positions available to each piece (non-BRQ).
 double mobility() {
@@ -106,4 +107,5 @@ double RBQ_open_files() {
   }
   return reward;
 }
-} // namespace white::eval
+} // namespace eval
+} // namespace white
