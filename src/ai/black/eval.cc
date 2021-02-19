@@ -92,5 +92,5 @@ double RBQ_open_files() {
   }
   return reward;
 }
-} // namespace ai
+} // namespace eval
 } // namespace black

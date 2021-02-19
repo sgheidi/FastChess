@@ -28,7 +28,7 @@ static const double minimax(const int& n,
   std::map<std::string, std::vector<std::vector<int>>> white_moves = white::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> btemp = black_moves;
   std::map<std::string, std::vector<std::vector<int>>> wtemp = white_moves;
-  static double best_move;
+  double best_move;
   if (n == 0)
     return -evaluate_pos();
   // minimizing player
