@@ -16,7 +16,7 @@ namespace white {
 void King_Piece::update_movelist() {
   if (!alive) return;
   movelist.clear();
-  std::vector<std::vector<int>> pos = {
+  const std::vector<std::vector<int>> pos = {
   {row-1, col-1}, {row-1, col}, {row-1, col+1},
   {row, col-1}, {row, col}, {row, col+1},
   {row+1, col-1}, {row+1, col}, {row+1, col+1},
@@ -50,7 +50,7 @@ void King_Piece::filter_check_pos() {
 }
 
 void King_Piece::filter_king_pos() {
-  std::vector<std::vector<int>> opposite_pos = {
+  const std::vector<std::vector<int>> opposite_pos = {
   {black::king.row-1, black::king.col-1}, {black::king.row-1, black::king.col},
   {black::king.row-1, black::king.col+1}, {black::king.row, black::king.col-1},
   {black::king.row, black::king.col}, {black::king.row, black::king.col+1},
