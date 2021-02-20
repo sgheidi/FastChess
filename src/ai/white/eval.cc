@@ -1,22 +1,18 @@
 #include "../../common/config.h"
-
 #include "../../core/black/bishop.h"
 #include "../../core/black/knight.h"
 #include "../../core/black/pawn.h"
 #include "../../core/black/rook.h"
 #include "../../core/black/queen.h"
 #include "../../core/black/king.h"
-
 #include "../../core/white/bishop.h"
 #include "../../core/white/knight.h"
 #include "../../core/white/pawn.h"
 #include "../../core/white/rook.h"
 #include "../../core/white/queen.h"
 #include "../../core/white/king.h"
-
 #include "../../core/white_.h"
 #include "../../core/black_.h"
-
 #include "../helper.h"
 #include "eval.h"
 
