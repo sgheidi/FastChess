@@ -14,7 +14,7 @@ void take_screenshot(const sf::RenderWindow& window, const std::string& filename
 }
 
 void print_map(const std::map<std::string, std::vector<std::vector<int>>>& m) {
-  for (const auto &[k, v] : m) {
+  for (const auto& [k, v] : m) {
     std::cout << k << std::endl;
     print_v2(v);
   }
