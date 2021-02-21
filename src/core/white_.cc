@@ -65,25 +65,19 @@ bool castle_criteria_Q() {
 }
 
 bool castle_criteria_K() {
-  using namespace std;
   if (king.row != 7 || king.col != 4 || rook.row[1] != 7 || rook.col[1] != 7) {
-    std::cout << "1" << std::endl;
     return false;
   }
   if (king.moved || rook.moved[1] || !rook.alive[1]) {
-    std::cout << "2" << std::endl;
     return false;
   }
   if (black::blocks[7][6] || black::blocks[7][5] || blocks[7][6] || blocks[7][5]) {
-    std::cout << "3" << std::endl;
     return false;
   }
   if (black::checker.size() >= 1) {
-    std::cout << "4" << std::endl;
     return false;
   }
   if (in_opp_movelist(7, 6) || in_opp_movelist(7, 5)) {
-    std::cout << "5" << std::endl;
     return false;
   }
   return true;

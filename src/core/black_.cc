@@ -63,8 +63,7 @@ bool in_opp_movelist(int row, int col) {
   return false;
 }
 
-bool castle_criteria_Q()
-{
+bool castle_criteria_Q() {
   if (king.row != 0 || king.col != 4 || rook.row[0] != 0 || rook.col[0] != 0)
     return false;
   if (king.moved || rook.moved[0] || !rook.alive[0])
@@ -78,8 +77,7 @@ bool castle_criteria_Q()
   return true;
 }
 
-bool castle_criteria_K()
-{
+bool castle_criteria_K() {
   if (king.row != 0 || king.col != 4 || rook.row[1] != 0 || rook.col[1] != 7)
     return false;
   if (king.moved || rook.moved[1] || !rook.alive[1])
