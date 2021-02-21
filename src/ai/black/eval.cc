@@ -52,7 +52,7 @@ double pawn_promote() {
   double reward = 0;
   for (int i=0;i<8;i++) {
     if (pawn.row[i] >= 7)
-      reward += 10.0;
+      reward += PROMOTION_REWARD;
   }
   return reward;
 }
@@ -61,35 +61,6 @@ double bishop_pair() {
   double reward = 0;
   if (bishop.alive[0] && bishop.alive[1])
     reward += BISHOP_PAIR_REWARD;
-  return reward;
-}
-
-// RBQ reward for having 'open' movelists. That is, positions where no piece is placed.
-double RBQ_open_files() {
-  double reward = 0;
-  for (int i=0;i<num_queens;i++) {
-    if (queen.alive[i]) {
-      for (int k=0;k<queen.movelist[i].size();k++) {
-        if (!blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]] && !white::blocks[queen.movelist[i][k][0]][queen.movelist[i][k][1]])
-          reward += RBQ_OPEN_FILES_REWARD;
-      }
-    }
-  }
-  for (int i=0;i<2;i++) {
-    if (bishop.alive[i]) {
-      for (int k=0;k<bishop.movelist[i].size();k++) {
-        if (!blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]] && !white::blocks[bishop.movelist[i][k][0]][bishop.movelist[i][k][1]])
-          reward += RBQ_OPEN_FILES_REWARD;
-      }
-    }
-    if (rook.alive[i]) {
-      for (int k=0;k<rook.movelist[i].size();k++) {
-        if (!blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]] &&
-        !white::blocks[rook.movelist[i][k][0]][rook.movelist[i][k][1]])
-          reward += RBQ_OPEN_FILES_REWARD;
-      }
-    }
-  }
   return reward;
 }
 } // namespace eval
