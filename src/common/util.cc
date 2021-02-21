@@ -13,10 +13,10 @@ void take_screenshot(const sf::RenderWindow& window, const std::string& filename
       std::cout << "Failed to capture screen" << std::endl;
 }
 
-void print_map(std::map<std::string, std::vector<std::vector<int>>> map) {
-  for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=map.begin();itr!=map.end();itr++) {
-    std::cout << itr->first << std::endl;
-    print_v2(itr->second);
+void print_map(const std::map<std::string, std::vector<std::vector<int>>>& m) {
+  for (const auto &[k, v] : m) {
+    std::cout << k << std::endl;
+    print_v2(v);
   }
 }
 

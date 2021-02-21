@@ -27,6 +27,7 @@
 // #define VERBOSE2
 
 // game environments can be used to test AI at a particular position
+// see ai/env.cc for envs
 #define GAME_ENV ""
 
 #define X_RES 600

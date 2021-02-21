@@ -34,7 +34,7 @@ static const double minimax(const int& n,
   // minimizing player
   if (player == "B") {
     best_move = NEG_INF;
-    for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=btemp.begin();itr!=btemp.end();itr++) {
+    for (const auto &[k, v] : btemp) {
       std::string piece = random_key(black_moves);
       std::vector<std::vector<int>> value = black_moves[piece];
       for (int i=0;i<value.size();i++) {
@@ -60,7 +60,7 @@ static const double minimax(const int& n,
   // maximizing player
   else {
     best_move = POS_INF;
-    for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=wtemp.begin();itr!=wtemp.end();itr++) {
+    for (const auto &[k, v] : wtemp) {
       std::string piece = random_key(white_moves);
       std::vector<std::vector<int>> value = white_moves[piece];
       for (int i=0;i<value.size();i++) {
@@ -101,7 +101,7 @@ void gen_move() {
   const bool B_king_moved = black::king.moved;
   const std::vector<bool> B_rook_moved = {black::rook.moved[0], black::rook.moved[1]};
   std::vector<double> scores = {};
-  for (std::map<std::string, std::vector<std::vector<int>>>::iterator itr=temp.begin();itr!=temp.end();itr++) {
+  for (const auto &[k, v] : temp) {
     std::string piece = random_key(moves);
     std::vector<std::vector<int>> value = moves[piece];
     for (int i=0;i<value.size();i++) {

@@ -13,3 +13,4 @@ test_namespace
 *.mp4
 FastChess
 old_todo
+.vscode

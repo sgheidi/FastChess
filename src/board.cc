@@ -268,7 +268,8 @@ std::string Game_Board::get_selected_piece() {
 
 // reset sprites to where they're supposed to be
 void Game_Board::reset_pos() {
-  white::king.move(true, white::king.row, white::king.col);
+  if (white::king.alive)
+    white::king.move(true, white::king.row, white::king.col);
   for (int i=0;i<8;i++) {
     if (white::pawn.alive[i])
       white::pawn.move(i, white::pawn.row[i], white::pawn.col[i]);

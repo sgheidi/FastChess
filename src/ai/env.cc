@@ -16,7 +16,6 @@
 #include "../core/black_.h"
 
 // Initialize the board with a custom environment for testing the AI.
-// TODO: blocks needs to be set as well (i think?)
 void init(const std::string& env) {
   if (env == "") return;
   else if (env == "onlypawns0") {
@@ -33,24 +32,6 @@ void init(const std::string& env) {
       white::kill(true, "B"+str(i), white::bishop.row[i], white::bishop.col[i]);
       white::kill(true, "R"+str(i), white::rook.row[i], white::rook.col[i]);
       white::kill(true, "N"+str(i), white::knight.row[i], white::knight.col[i]);
-    }
-    for (int i=0;i<8;i++) {
-      black::blocks.push_back(std::vector<int>());
-      for (int k=0;k<8;k++) {
-        if (i == 1)
-          black::blocks[i].push_back(1);
-        else
-          black::blocks[i].push_back(0);
-      }
-    }
-    for (int i=0;i<8;i++) {
-      white::blocks.push_back(std::vector<int>());
-      for (int k=0;k<8;k++) {
-        if (i == 6)
-          white::blocks[i].push_back(1);
-        else
-          white::blocks[i].push_back(0);
-      }
     }
   }
   else if (env == "enpassant0") {
