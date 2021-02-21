@@ -1,1 +1,2 @@
-./pch.sh; make clean; make; ./FastChess
+# Compile with 4 threads & run
+./pch.sh; make clean; make -j4; ./FastChess

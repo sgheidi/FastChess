@@ -44,6 +44,7 @@ int main() {
           case sf::Keyboard::U: board.print_undo(); break;
         }
       }
+      // Drag and drop (left mouse button is held)
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
@@ -82,15 +83,20 @@ int main() {
           }
         }
       }
+      // Click a piece to enqueue it to the game (clicking) queue
       if (event.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
           std::vector<int> pos = board.get_coords(position.x, position.y);
           board.selected_row = pos[1];
           board.selected_col = pos[0];
-          board.clicked_piece = white::get_piece(pos[1], pos[0]);
-          queue.enqueue(pos[1], pos[0]);
-          board.play();
+          if (white::blocks[board.selected_row][board.selected_col]) {
+            board.clicked_piece = white::get_piece(pos[1], pos[0]);
+            if (board.clicked_piece != "") {
+              queue.enqueue(pos[1], pos[0]);
+              board.play();
+            }
+          }
         }
       }
       if (event.type == sf::Event::MouseButtonReleased) {

@@ -18,15 +18,15 @@ void King_Piece::update_movelist() {
     return;
   movelist.clear();
   const std::vector<std::vector<int>> pos = {
-      {row - 1, col - 1},
-      {row - 1, col},
-      {row - 1, col + 1},
-      {row, col - 1},
-      {row, col},
-      {row, col + 1},
-      {row + 1, col - 1},
-      {row + 1, col},
-      {row + 1, col + 1},
+    {row - 1, col - 1},
+    {row - 1, col},
+    {row - 1, col + 1},
+    {row, col - 1},
+    {row, col},
+    {row, col + 1},
+    {row + 1, col - 1},
+    {row + 1, col},
+    {row + 1, col + 1},
   };
   for (int k=0;k<pos.size();k++) {
     if (pos[k][0] >= 0 && pos[k][0] < 8 && pos[k][1] >= 0 && pos[k][1] < 8) {
@@ -58,11 +58,11 @@ void King_Piece::filter_check_pos() {
 
 void King_Piece::filter_king_pos() {
   const std::vector<std::vector<int>> opposite_pos = {
-      {white::king.row - 1, white::king.col - 1}, {white::king.row - 1, white::king.col}, 
-      {white::king.row - 1, white::king.col + 1}, {white::king.row, white::king.col - 1}, 
-      {white::king.row, white::king.col}, {white::king.row, white::king.col + 1}, 
-      {white::king.row + 1, white::king.col - 1}, {white::king.row + 1, white::king.col}, 
-      {white::king.row + 1, white::king.col + 1}};
+    {white::king.row - 1, white::king.col - 1}, {white::king.row - 1, white::king.col}, 
+    {white::king.row - 1, white::king.col + 1}, {white::king.row, white::king.col - 1}, 
+    {white::king.row, white::king.col}, {white::king.row, white::king.col + 1}, 
+    {white::king.row + 1, white::king.col - 1}, {white::king.row + 1, white::king.col}, 
+    {white::king.row + 1, white::king.col + 1}};
   filter2(movelist, opposite_pos);
 }
 

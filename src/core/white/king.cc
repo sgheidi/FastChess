@@ -17,10 +17,10 @@ void King_Piece::update_movelist() {
   if (!alive) return;
   movelist.clear();
   const std::vector<std::vector<int>> pos = {
-  {row-1, col-1}, {row-1, col}, {row-1, col+1},
-  {row, col-1}, {row, col}, {row, col+1},
-  {row+1, col-1}, {row+1, col}, {row+1, col+1},
-  };
+    {row-1, col-1}, {row-1, col}, {row-1, col+1},
+    {row, col-1}, {row, col}, {row, col+1},
+    {row+1, col-1}, {row+1, col}, {row+1, col+1},
+    };
   for (int k=0;k<pos.size();k++) {
     if (pos[k][0] >= 0 && pos[k][0] < 8 && pos[k][1] >= 0 && pos[k][1] < 8) {
       if (!blocks[pos[k][0]][pos[k][1]])
@@ -51,17 +51,18 @@ void King_Piece::filter_check_pos() {
 
 void King_Piece::filter_king_pos() {
   const std::vector<std::vector<int>> opposite_pos = {
-  {black::king.row-1, black::king.col-1}, {black::king.row-1, black::king.col},
-  {black::king.row-1, black::king.col+1}, {black::king.row, black::king.col-1},
-  {black::king.row, black::king.col}, {black::king.row, black::king.col+1},
-  {black::king.row+1, black::king.col-1}, {black::king.row+1, black::king.col},
-  {black::king.row+1, black::king.col+1}
-  };
+    {black::king.row-1, black::king.col-1}, {black::king.row-1, black::king.col},
+    {black::king.row-1, black::king.col+1}, {black::king.row, black::king.col-1},
+    {black::king.row, black::king.col}, {black::king.row, black::king.col+1},
+    {black::king.row+1, black::king.col-1}, {black::king.row+1, black::king.col},
+    {black::king.row+1, black::king.col+1}
+    };
   filter2(movelist, opposite_pos);
 }
 
-void King_Piece::move(int row_, int col_) {
-  moved = true;
+void King_Piece::move(bool isResetting, int row_, int col_) {
+  if (!isResetting)
+    moved = true;
   blocks[row][col] = 0;
   blocks[row_][col_] = 1;
   row = row_;

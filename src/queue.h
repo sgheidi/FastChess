@@ -9,6 +9,7 @@ public:
   Click_Queue() {};
   void enqueue(int row_, int col_);
   void print();
+  void clear();
 };
 
 extern Click_Queue queue;

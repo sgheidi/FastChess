@@ -3,6 +3,11 @@
 
 #include "queue.h"
 
+void Click_Queue::clear() {
+  row.clear();
+  col.clear();
+}
+
 void Click_Queue::enqueue(int row_, int col_) {
   if (row.size() >= 2) {
     row.erase(row.begin());

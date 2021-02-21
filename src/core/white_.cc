@@ -50,6 +50,45 @@ bool in_opp_movelist(int row, int col) {
   return false;
 }
 
+bool castle_criteria_Q() {
+  if (king.row != 7 || king.col != 4 || rook.row[0] != 7 || rook.col[0] != 0)
+    return false;
+  if (king.moved || rook.moved[0] || !rook.alive[0])
+    return false;
+  if (black::blocks[7][2] || black::blocks[7][3] || blocks[7][2] || blocks[7][3])
+    return false;
+  if (black::checker.size() >= 1)
+    return false;
+  if (in_opp_movelist(7, 2) || in_opp_movelist(7, 3))
+    return false;
+  return true;
+}
+
+bool castle_criteria_K() {
+  using namespace std;
+  if (king.row != 7 || king.col != 4 || rook.row[1] != 7 || rook.col[1] != 7) {
+    std::cout << "1" << std::endl;
+    return false;
+  }
+  if (king.moved || rook.moved[1] || !rook.alive[1]) {
+    std::cout << "2" << std::endl;
+    return false;
+  }
+  if (black::blocks[7][6] || black::blocks[7][5] || blocks[7][6] || blocks[7][5]) {
+    std::cout << "3" << std::endl;
+    return false;
+  }
+  if (black::checker.size() >= 1) {
+    std::cout << "4" << std::endl;
+    return false;
+  }
+  if (in_opp_movelist(7, 6) || in_opp_movelist(7, 5)) {
+    std::cout << "5" << std::endl;
+    return false;
+  }
+  return true;
+}
+
 bool opp_no_moves() {
   if (!black::king.movelist.empty())
     return false;
@@ -291,11 +330,13 @@ void play() {
     std::vector<int> q_rook = {rook.row[0], rook.col[0]};
     std::vector<int> queue0 = {queue.row[0], queue.col[0]};
     std::vector<int> queue1 = {queue.row[1], queue.col[1]};
-    if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K())
+    if (queue0 == kingpos && queue1 == k_rook && castle_criteria_K()) {
       castle_K(false);
-    else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q())
+    }
+    else if (queue0 == kingpos && queue1 == q_rook && castle_criteria_Q()) {
       castle_Q(false);
     }
+  }
 }
 
 void handle_undo_promotion(int i, int row, int col) {
@@ -332,46 +373,19 @@ void revive(std::string piece, int row, int col) {
   }
 }
 
-void castle_K(bool is_undo) {
+void castle_K(const bool is_undo) {
   undo.moved_from.push_back({king.row, king.col});
-  king.move(7, 6);
-  rook.move(1, 7, 5);
+  king.move(false, 7, 6);
+  rook.move(false, 1, 7, 5);
   valid_move(is_undo, false, "CK", 7, 5);
 }
 
-void castle_Q(bool is_undo) {
+void castle_Q(const bool is_undo) {
   undo.moved_from.push_back({king.row, king.col});
-  king.move(7, 2);
-  rook.move(0, 7, 3);
+  king.move(false, 7, 2);
+  rook.move(false, 0, 7, 3);
   valid_move(is_undo, false, "CQ", 7, 3);
 }
-
-bool castle_criteria_Q() {
-  if (king.row != 7 || king.col != 4 || rook.row[0] != 7 || rook.col[1] != 0) return false;
-  if (king.moved || rook.moved[0] || !rook.alive[0])
-    return false;
-  if (black::blocks[7][2] || black::blocks[7][3] || blocks[7][2] || blocks[7][3])
-    return false;
-  if (black::checker.size() >= 1)
-    return false;
-  if (in_opp_movelist(7, 2) || in_opp_movelist(7, 3))
-    return false;
-  return true;
-}
-
-bool castle_criteria_K() {
-  if (king.row != 7 || king.col != 4 || rook.row[0] != 7 || rook.col[1] != 7) return false;
-  if (king.moved || rook.moved[1] || !rook.alive[1])
-    return false;
-  if (black::blocks[7][6] || black::blocks[7][5] || blocks[7][6] || blocks[7][5])
-    return false;
-  if (black::checker.size() >= 1)
-    return false;
-  if (in_opp_movelist(7, 6) || in_opp_movelist(7, 5))
-    return false;
-  return true;
-}
-
 
 void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
@@ -382,7 +396,7 @@ void move_piece(std::string piece, int row, int col) {
   if (piece == "K" && in(king.movelist, pos)) {
     if (!board.isFrozen) reset_enpassant();
     undo.moved_from.push_back({king.row, king.col});
-    king.move(row, col);
+    king.move(false, row, col);
     moved = true;
   }
   else if (piece == "K" && !in(king.movelist, pos)) {
@@ -450,7 +464,7 @@ void move_piece(std::string piece, int row, int col) {
     if (piece == "R" + std::to_string(i) && in(rook.movelist[i], pos)) {
       if (!board.isFrozen) reset_enpassant();
       undo.moved_from.push_back({rook.row[i], rook.col[i]});
-      rook.move(i, row, col);
+      rook.move(false, i, row, col);
       moved = true;
     }
     else if (piece == "R" + std::to_string(i) && !in(rook.movelist[i], pos)) {
@@ -492,6 +506,9 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   black::turn = true;
   #endif
   enpassant_check_killed = false;
+  queue.clear();
+  board.selected_col = -1;
+  board.selected_row = -1;
 }
 
 void reset_enpassant() {

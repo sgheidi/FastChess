@@ -52,20 +52,20 @@ void Game_Board::pop() {
   if (undo.color[last] == "W") {
     if (undo.piece[last] == "CK") {
       castled = true;
-      white::king.move(7, 4);
-      white::rook.move(1, 7, 7);
+      white::king.move(false, 7, 4);
+      white::rook.move(false, 1, 7, 7);
       white::king.moved = 0;
       white::rook.moved[1] = 0;
     }
     else if (undo.piece[last] == "CQ") {
       castled = true;
-      white::king.move(7, 4);
-      white::rook.move(0, 7, 0);
+      white::king.move(false, 7, 4);
+      white::rook.move(false, 0, 7, 0);
       white::king.moved = 0;
       white::rook.moved[0] = 0;
     }
     else if (undo.piece[last] == "K")
-      white::king.move(undo.moved_from[last][0], undo.moved_from[last][1]);
+      white::king.move(false, undo.moved_from[last][0], undo.moved_from[last][1]);
     for (int i=0;i<white::num_queens;i++) {
       if (undo.piece[last] == "Q" + std::to_string(i))
         white::queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
@@ -83,7 +83,7 @@ void Game_Board::pop() {
       else if (undo.piece[last] == "N" + std::to_string(i))
         white::knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       else if (undo.piece[last] == "R" + std::to_string(i))
-        white::rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        white::rook.move(false, i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
     if (undo.killed[last] && undo.killed_color[last] == "B")
       black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
@@ -196,7 +196,7 @@ void Game_Board::play() {
     return;
   if (black::turn)
     black::play();
-  else if (white::turn)
+  if (white::turn)
     white::play();
 }
 
@@ -268,7 +268,7 @@ std::string Game_Board::get_selected_piece() {
 
 // reset sprites to where they're supposed to be
 void Game_Board::reset_pos() {
-  white::king.move(white::king.row, white::king.col);
+  white::king.move(true, white::king.row, white::king.col);
   for (int i=0;i<8;i++) {
     if (white::pawn.alive[i])
       white::pawn.move(i, white::pawn.row[i], white::pawn.col[i]);
@@ -281,7 +281,7 @@ void Game_Board::reset_pos() {
     if (white::bishop.alive[i])
       white::bishop.move(i, white::bishop.row[i], white::bishop.col[i]);
     if (white::rook.alive[i])
-      white::rook.move(i, white::rook.row[i], white::rook.col[i]);
+      white::rook.move(true, i, white::rook.row[i], white::rook.col[i]);
     if (white::knight.alive[i])
       white::knight.move(i, white::knight.row[i], white::knight.col[i]);
   }

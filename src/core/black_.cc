@@ -63,6 +63,36 @@ bool in_opp_movelist(int row, int col) {
   return false;
 }
 
+bool castle_criteria_Q()
+{
+  if (king.row != 0 || king.col != 4 || rook.row[0] != 0 || rook.col[0] != 0)
+    return false;
+  if (king.moved || rook.moved[0] || !rook.alive[0])
+    return false;
+  if (white::blocks[0][2] || white::blocks[0][3] || blocks[0][2] || blocks[0][3])
+    return false;
+  if (white::checker.size() >= 1)
+    return false;
+  if (in_opp_movelist(0, 2) || in_opp_movelist(0, 3))
+    return false;
+  return true;
+}
+
+bool castle_criteria_K()
+{
+  if (king.row != 0 || king.col != 4 || rook.row[1] != 0 || rook.col[1] != 7)
+    return false;
+  if (king.moved || rook.moved[1] || !rook.alive[1])
+    return false;
+  if (white::blocks[0][5] || white::blocks[0][6] || blocks[0][5] || blocks[0][6])
+    return false;
+  if (white::checker.size() >= 1)
+    return false;
+  if (in_opp_movelist(0, 5) || in_opp_movelist(0, 6))
+    return false;
+  return true;
+}
+
 bool opp_no_moves() {
   if (!white::king.movelist.empty())
     return false;
@@ -323,32 +353,6 @@ void castle_Q(bool is_undo) {
   valid_move(is_undo, false, "CQ", 0, 4);
 }
 
-bool castle_criteria_Q() {
-  if (king.row != 0 || king.col != 4 || rook.row[0] != 0 || rook.col[1] != 0) return false;
-  if (king.moved || rook.moved[0] || !rook.alive[0])
-    return false;
-  if (white::blocks[0][2] || white::blocks[0][3] || blocks[0][2] || blocks[0][3])
-    return false;
-  if (white::checker.size() >= 1)
-    return false;
-  if (in_opp_movelist(0, 2) || in_opp_movelist(0, 3))
-    return false;
-  return true;
-}
-
-bool castle_criteria_K() {
-  if (king.row != 0 || king.col != 4 || rook.row[0] != 0 || rook.col[1] != 7) return false;
-  if (king.moved || rook.moved[1] || !rook.alive[1])
-    return false;
-  if (white::blocks[0][5] || white::blocks[0][6] || blocks[0][5] || blocks[0][6])
-    return false;
-  if (white::checker.size() >= 1)
-    return false;
-  if (in_opp_movelist(0, 5) || in_opp_movelist(0, 6))
-    return false;
-  return true;
-}
-
 void move_piece(std::string piece, int row, int col) {
   assert(row >= 0 && row < 8 && col >= 0 && col < 8);
   const std::vector<int> pos = {row, col};
@@ -468,6 +472,9 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   white::turn = true;
   #endif
   enpassant_check_killed = false;
+  queue.clear();
+  board.selected_col = -1;
+  board.selected_row = -1;
 }
 
 void reset_enpassant() {
