@@ -28,6 +28,7 @@ int num_queens = 1;
 std::vector<std::string> checker = {};
 const int depth = 2;
 bool screenshot = false;
+std::string last_clicked_piece = "";
 
 namespace {
 bool enpassant_check_killed = false;
@@ -512,12 +513,12 @@ void print_blocks() {
 }
 
 #ifdef DEBUGAI
-void print_blocks_Log() {
-  Log << ("--black blocks--\n");
+void print_blocks_log() {
+  log << ("--black blocks--\n");
   for (int i=0;i<8;i++) {
     for (int k=0;k<8;k++)
-      Log << blocks[i][k];
-    Log << std::endl;
+      log << blocks[i][k];
+    log << std::endl;
   }
 }
 #endif
@@ -610,6 +611,103 @@ void kill(bool is_undo, std::string piece, int row, int col) {
   }
   if (!is_undo && !board.isFrozen)
     sound.kill();
+}
+
+// show legal moves of selected piece
+void show_legal_moves() {
+  const std::string selected_piece = last_clicked_piece;
+  if (selected_piece == "") return;
+  else if (selected_piece == "K") {
+    for (int i=0;i<king.movelist.size();i++)
+      board.Circle(king.movelist[i][0], king.movelist[i][1]);
+  }
+  for (int i=0;i<8;i++) {
+    if (selected_piece == "P" + str(i)) {
+      for (int k=0;k<pawn.movelist[i].size();k++)
+        board.Circle(pawn.movelist[i][k][0], pawn.movelist[i][k][1]);
+    }
+  }
+  for (int i=0;i<num_queens;i++) {
+    if (selected_piece == "Q" + str(i)) {
+      for (int k=0;k<queen.movelist[i].size();k++)
+        board.Circle(queen.movelist[i][k][0], queen.movelist[i][k][1]);
+    }
+  }
+  for (int i=0;i<2;i++) {
+    if (selected_piece == "B" + str(i)) {
+      for (int k=0;k<bishop.movelist[i].size();k++)
+        board.Circle(bishop.movelist[i][k][0], bishop.movelist[i][k][1]);
+    }
+    else if (selected_piece == "N" + str(i)) {
+      for (int k=0;k<knight.movelist[i].size();k++)
+        board.Circle(knight.movelist[i][k][0], knight.movelist[i][k][1]);
+    }
+    else if (selected_piece == "R" + str(i)) {
+      for (int k=0;k<rook.movelist[i].size();k++)
+        board.Circle(rook.movelist[i][k][0], rook.movelist[i][k][1]);
+    }
+  }
+}
+
+void drag_and_drop() {
+  sf::Vector2i position = sf::Mouse::getPosition(window);
+  if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
+    std::vector<int> pos = board.get_coords(position.x, position.y);
+    board.selected_row = pos[1];
+    board.selected_col = pos[0];
+    if (board.clicked_piece == "K") {
+      king.x = position.x - 3*board.pieces_paddingx;
+      king.y = position.y - 4*board.pieces_paddingy;
+    }
+    for (int i=0;i<8;i++) {
+      if (board.clicked_piece == "P" + str(i)) {
+        pawn.x[i] = position.x - 3*board.pieces_paddingx;
+        pawn.y[i] = position.y - 4*board.pieces_paddingy;
+      }
+    }
+    for (int i=0;i<num_queens;i++) {
+      if (board.clicked_piece == "Q" + str(i)) {
+        queen.x[i] = position.x - 3*board.pieces_paddingx;
+        queen.y[i] = position.y - 4*board.pieces_paddingy;
+      }
+    }
+    for (int i=0;i<2;i++) {
+      if (board.clicked_piece == "B" + str(i)) {
+        bishop.x[i] = position.x - 3*board.pieces_paddingx;
+        bishop.y[i] = position.y - 4*board.pieces_paddingy;
+      }
+      else if (board.clicked_piece == "N" + str(i)) {
+        knight.x[i] = position.x - 3*board.pieces_paddingx;
+        knight.y[i] = position.y - 4*board.pieces_paddingy;
+      }
+      else if (board.clicked_piece == "R" + str(i)) {
+        rook.x[i] = position.x - 3*board.pieces_paddingx;
+        rook.y[i] = position.y - 4*board.pieces_paddingy;
+      }
+    }
+  }
+}
+
+// reset sprites to where they're supposed to be
+void reset_sprite_pos() {
+  if (king.alive)
+    king.move(king.row, king.col);
+  for (int i=0;i<8;i++) {
+    if (pawn.alive[i])
+      pawn.move(i, pawn.row[i], pawn.col[i]);
+  }
+  for (int i=0;i<num_queens;i++) {
+    if (queen.alive[i])
+      queen.move(i, queen.row[i], queen.col[i]);
+  }
+  for (int i=0;i<2;i++) {
+    if (bishop.alive[i])
+      bishop.move(i, bishop.row[i], bishop.col[i]);
+    if (rook.alive[i])
+      rook.move(i, rook.row[i], rook.col[i]);
+    if (knight.alive[i])
+      knight.move(i, knight.row[i], knight.col[i]);
+  }
 }
 
 } // namespace black

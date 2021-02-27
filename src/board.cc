@@ -20,30 +20,13 @@
 #include "core/white_.h"
 #include "core/black_.h"
 
-namespace {
-  // Draw a rectangle at (x, y) with 'width' and 'height'
-  void drawRect(int*color, int x, int y, int width, int height) {
-    sf::RectangleShape rectangle(sf::Vector2f(width, height));
-    rectangle.setPosition(x, y);
-    rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
-    window.draw(rectangle);
-  }
-
-  void Circle(int row, int col) {
-    sf::CircleShape circle(10);
-    circle.setPosition(col*UNIT + 2*board.pieces_paddingx, row*UNIT + 3*board.pieces_paddingy);
-    circle.setFillColor(sf::Color(110, 71, 55));
-    window.draw(circle);
-  }
-} // namespace
-
 void Game_Board::pop() {
   int last = total_moves-1;
   #ifdef VERBOSE2 
     std::cout << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
   #endif
   #ifdef DEBUGAI
-    Log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
+    log << "Undoing " << undo.piece[last] << " " << undo.moved_from[last][0] << " " << undo.moved_from[last][1] << std::endl;
   #endif
   if (last < 0)
     return;
@@ -52,20 +35,20 @@ void Game_Board::pop() {
   if (undo.color[last] == "W") {
     if (undo.piece[last] == "CK") {
       castled = true;
-      white::king.move(false, 7, 4);
-      white::rook.move(false, 1, 7, 7);
+      white::king.move(7, 4);
+      white::rook.move(1, 7, 7);
       white::king.moved = 0;
       white::rook.moved[1] = 0;
     }
     else if (undo.piece[last] == "CQ") {
       castled = true;
-      white::king.move(false, 7, 4);
-      white::rook.move(false, 0, 7, 0);
+      white::king.move(7, 4);
+      white::rook.move(0, 7, 0);
       white::king.moved = 0;
       white::rook.moved[0] = 0;
     }
     else if (undo.piece[last] == "K")
-      white::king.move(false, undo.moved_from[last][0], undo.moved_from[last][1]);
+      white::king.move(undo.moved_from[last][0], undo.moved_from[last][1]);
     for (int i=0;i<white::num_queens;i++) {
       if (undo.piece[last] == "Q" + std::to_string(i))
         white::queen.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
@@ -83,7 +66,7 @@ void Game_Board::pop() {
       else if (undo.piece[last] == "N" + std::to_string(i))
         white::knight.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
       else if (undo.piece[last] == "R" + std::to_string(i))
-        white::rook.move(false, i, undo.moved_from[last][0], undo.moved_from[last][1]);
+        white::rook.move(i, undo.moved_from[last][0], undo.moved_from[last][1]);
     }
     if (undo.killed[last] && undo.killed_color[last] == "B")
       black::revive(undo.killed_piece[last], undo.killed_pos[last][0], undo.killed_pos[last][1]);
@@ -142,7 +125,7 @@ void Game_Board::pop() {
   undo.killed_piece.resize(total_moves);
   undo.killed_pos.resize(total_moves);
   undo.killed_color.resize(total_moves);
-  #ifdef IS_TESTING
+  #ifndef IS_TESTING
   if (black::turn) {
     white::turn = true;
     black::turn = false;
@@ -223,71 +206,6 @@ void Game_Board::draw_board() {
   }
 }
 
-// show legal moves of selected piece
-void Game_Board::show_legal_moves() {
-  const std::string selected_piece = get_selected_piece();
-  if (selected_piece == "") return;
-  else if (selected_piece == "K") {
-    for (int i=0;i<white::king.movelist.size();i++)
-      Circle(white::king.movelist[i][0], white::king.movelist[i][1]);
-  }
-  for (int i=0;i<8;i++) {
-    if (selected_piece == "P" + str(i)) {
-      for (int k=0;k<white::pawn.movelist[i].size();k++)
-        Circle(white::pawn.movelist[i][k][0], white::pawn.movelist[i][k][1]);
-    }
-  }
-  for (int i=0;i<white::num_queens;i++) {
-    if (selected_piece == "Q" + str(i)) {
-      for (int k=0;k<white::queen.movelist[i].size();k++)
-        Circle(white::queen.movelist[i][k][0], white::queen.movelist[i][k][1]);
-    }
-  }
-  for (int i=0;i<2;i++) {
-    if (selected_piece == "B" + str(i)) {
-      for (int k=0;k<white::bishop.movelist[i].size();k++)
-        Circle(white::bishop.movelist[i][k][0], white::bishop.movelist[i][k][1]);
-    }
-    else if (selected_piece == "N" + str(i)) {
-      for (int k=0;k<white::knight.movelist[i].size();k++)
-        Circle(white::knight.movelist[i][k][0], white::knight.movelist[i][k][1]);
-    }
-    else if (selected_piece == "R" + str(i)) {
-      for (int k=0;k<white::rook.movelist[i].size();k++)
-        Circle(white::rook.movelist[i][k][0], white::rook.movelist[i][k][1]);
-    }
-  }
-}
-
-std::string Game_Board::get_selected_piece() {
-  if (clicked_piece != "") return clicked_piece;
-  if (selected_row == -1 || selected_col == -1) return "";
-  else if (!white::blocks[selected_row][selected_col]) return "";
-  return white::get_piece(selected_row, selected_col);
-}
-
-// reset sprites to where they're supposed to be
-void Game_Board::reset_pos() {
-  if (white::king.alive)
-    white::king.move(true, white::king.row, white::king.col);
-  for (int i=0;i<8;i++) {
-    if (white::pawn.alive[i])
-      white::pawn.move(i, white::pawn.row[i], white::pawn.col[i]);
-  }
-  for (int i=0;i<white::num_queens;i++) {
-    if (white::queen.alive[i])
-      white::queen.move(i, white::queen.row[i], white::queen.col[i]);
-  }
-  for (int i=0;i<2;i++) {
-    if (white::bishop.alive[i])
-      white::bishop.move(i, white::bishop.row[i], white::bishop.col[i]);
-    if (white::rook.alive[i])
-      white::rook.move(true, i, white::rook.row[i], white::rook.col[i]);
-    if (white::knight.alive[i])
-      white::knight.move(i, white::knight.row[i], white::knight.col[i]);
-  }
-}
-
 // Return (row, col) of pixel coords (x, y)
 std::vector<int> Game_Board::get_coords(const int x, const int y) {
   if (x >= 0 && y >= 0 && x <= X_RES && y <= Y_RES)
@@ -303,3 +221,19 @@ void Game_Board::select(const int row, const int col) {
   int y = row*UNIT;
   drawRect(color, x, y, UNIT, UNIT);
 }
+
+// Draw a rectangle at (x, y) with 'width' and 'height'
+void Game_Board::drawRect(int* color, int x, int y, int width, int height) {
+  sf::RectangleShape rectangle(sf::Vector2f(width, height));
+  rectangle.setPosition(x, y);
+  rectangle.setFillColor(sf::Color(color[0], color[1], color[2]));
+  window.draw(rectangle);
+}
+
+void Game_Board::Circle(int row, int col) {
+  sf::CircleShape circle(10);
+  circle.setPosition(col*UNIT + 2*board.pieces_paddingx, row*UNIT + 3*board.pieces_paddingy);
+  circle.setFillColor(sf::Color(110, 71, 55));
+  window.draw(circle);
+}
+

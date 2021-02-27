@@ -16,7 +16,7 @@
 // #define IS_TESTING
 
 // Black AI
-#define IS_BLACK_AI
+// #define IS_BLACK_AI
 
 // for useful outputs relating to AI eval
 #ifdef IS_BLACK_AI
@@ -35,7 +35,7 @@
 #define UNIT (X_RES/8)
 
 // DEBUGAI log file
-extern std::ofstream Log;
+extern std::ofstream log;
 
 // stack used for undoing moves
 struct undo_stack {
