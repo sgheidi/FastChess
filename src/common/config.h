@@ -13,10 +13,10 @@
 // #define SCREENSHOTS_ON
 
 // flag for toggling no turns
-#define IS_TESTING
+// #define IS_TESTING
 
 // Black AI
-// #define IS_BLACK_AI
+#define IS_BLACK_AI
 
 // for useful outputs relating to AI eval
 #ifdef IS_BLACK_AI

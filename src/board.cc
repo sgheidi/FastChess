@@ -232,7 +232,7 @@ void Game_Board::drawRect(int* color, int x, int y, int width, int height) {
 
 void Game_Board::Circle(int row, int col) {
   sf::CircleShape circle(6);
-  circle.setPosition(col*UNIT + 2.5*board.pieces_paddingx, row*UNIT + 3.8*board.pieces_paddingy);
+  circle.setPosition(col*UNIT + 2.3*board.pieces_paddingx, row*UNIT + 3.8*board.pieces_paddingy);
   circle.setFillColor(sf::Color(130, 91, 75));
   window.draw(circle);
 }

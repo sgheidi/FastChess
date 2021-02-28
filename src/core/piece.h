@@ -1,7 +1,7 @@
 #ifndef CORE_PIECE_H
 #define CORE_PIECE_H
 
-// The interface for all piece classes.
+// The abstract interface for all piece classes.
 class Piece {
 public:
   sf::Sprite sprite;
