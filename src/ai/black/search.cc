@@ -94,7 +94,7 @@ void gen_move() {
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
   std::map<std::string, std::vector<std::vector<int>>> moves = black::get_moves();
   std::map<std::string, std::vector<std::vector<int>>> temp = moves;
-  static double score;
+  double score;
   board.isFrozen = true;
   const bool W_king_moved = white::king.moved;
   const std::vector<bool> W_rook_moved = {white::rook.moved[0], white::rook.moved[1]};
