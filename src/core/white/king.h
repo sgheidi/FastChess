@@ -23,7 +23,7 @@ public:
     x = col*UNIT;
   };
   void update_movelist();
-  void move(bool isResetting, int row_, int col_);
+  void move(int row_, int col_);
   void show();
 };
 

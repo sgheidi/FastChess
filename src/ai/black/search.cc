@@ -45,8 +45,8 @@ static const double minimax(const int& n,
           std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         #endif
         #ifdef DEBUGAI
-          Log << "INNER BLACK" << std::endl;
-          Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+          log << "INNER BLACK" << std::endl;
+          log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         #endif
         best_move = std::max(best_move, minimax(n-1, alpha, beta, "W"));
         board.pop();
@@ -70,8 +70,8 @@ static const double minimax(const int& n,
           std::cout << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         #endif
         #ifdef DEBUGAI
-          Log << "INNER WHITE" << std::endl;
-          Log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
+          log << "INNER WHITE" << std::endl;
+          log << piece << " " << value[i][0] << " " << value[i][1] << std::endl;
         #endif
         best_move = std::min(best_move, minimax(n-1, alpha, beta, "B"));
         board.pop();
@@ -89,7 +89,7 @@ static const double minimax(const int& n,
 void gen_move() {
   print("Generating move...");
   #ifdef DEBUGAI
-    Log << "Generating move..." << std::endl;
+    log << "Generating move..." << std::endl;
   #endif
   std::map<std::string, std::string> best_move = {{"score", "-9999"}, {"piece", ""}, {"pos", ""}};
   std::map<std::string, std::vector<std::vector<int>>> moves = black::get_moves();
@@ -116,10 +116,10 @@ void gen_move() {
         std::cout << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
       #endif
       #ifdef DEBUGAI
-        Log << "******************OUTER******************" << std::endl;
-        Log << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
-        black::print_blocks_Log();
-        white::print_blocks_Log();
+        log << "******************OUTER******************" << std::endl;
+        log << "****************** "<< piece << " " << value[i][0] << " " << value[i][1] << "******************" << std::endl;
+        black::print_blocks_log();
+        white::print_blocks_log();
       #endif
       score = minimax(black::depth, -10000, 10000, "W");
       scores.push_back(score);
@@ -141,7 +141,7 @@ void gen_move() {
   board.isFrozen = false;
   if (best_move["piece"] == "") {
     #ifdef DEBUGAI
-      Log << "No moves left!" << std::endl;
+      log << "No moves left!" << std::endl;
     #endif
     print("No moves left!");
     exit(1);

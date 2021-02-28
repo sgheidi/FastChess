@@ -60,9 +60,8 @@ void King_Piece::filter_king_pos() {
   filter2(movelist, opposite_pos);
 }
 
-void King_Piece::move(bool isResetting, int row_, int col_) {
-  if (!isResetting)
-    moved = true;
+void King_Piece::move(int row_, int col_) {
+  moved = true;
   blocks[row][col] = 0;
   blocks[row_][col_] = 1;
   row = row_;

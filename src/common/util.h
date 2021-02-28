@@ -28,10 +28,10 @@ inline void print_v1(T v) {
 
 #ifdef DEBUGAI
 template <typename T>
-inline void print_v1_Log(T v) {
+inline void print_v1_log(T v) {
   for (auto el : v)
-    Log << el;
-  Log << std::endl;
+    log << el;
+  log << std::endl;
 }
 #endif
 

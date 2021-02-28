@@ -1,0 +1,16 @@
+main
+*.swp
+todo*
+other
+src/test.cc
+src/test.h
+test.sh
+py.sh
+test_namespace
+*.gch
+*.log
+*.py
+*.mp4
+FastChess
+old_todo
+.vscode
