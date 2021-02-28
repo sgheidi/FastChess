@@ -22,7 +22,7 @@
 #include "../core/white/king.h"
 
 #ifdef DEBUGAI
-std::ofstream Log("debug.log");
+std::ofstream log("debug.log");
 #endif
 struct undo_stack undo = {
   {},
