@@ -1,17 +1,21 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include <vector>
+
 class Game_Board {
 public:
   int total_moves;
-  int selected_row, selected_col;
   int pieces_paddingx, pieces_paddingy;
   float pieces_scale;
   bool checkmate, stalemate;
   bool isFrozen;
   int screenshot_num;
   std::string clicked_piece;
+  int selected_row, selected_col;
+  std::vector<int> clicked_coords;
   Game_Board() {
+    clicked_coords = {-1, -1};
     clicked_piece = "";
     screenshot_num = 1;
     selected_row = selected_col = -1;

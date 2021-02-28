@@ -474,6 +474,7 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
   queue.clear();
   board.selected_col = -1;
   board.selected_row = -1;
+  white::last_clicked_piece = "";
 }
 
 void reset_enpassant() {
@@ -650,9 +651,9 @@ void show_legal_moves() {
 }
 
 void drag_and_drop() {
-  sf::Vector2i position = sf::Mouse::getPosition(window);
+  const sf::Vector2i position = sf::Mouse::getPosition(window);
   if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
-    std::vector<int> pos = board.get_coords(position.x, position.y);
+    const std::vector<int> pos = board.get_coords(position.x, position.y);
     board.selected_row = pos[1];
     board.selected_col = pos[0];
     if (board.clicked_piece == "K") {

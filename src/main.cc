@@ -46,11 +46,18 @@ int main() {
       }
       // Drag and drop (left mouse button is held)
       else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        if (board.selected_row != -1 && board.selected_col != -1) {
-          // if (white::turn && white::blocks[board.selected_row][board.selected_col]) {
-          //   white::drag_and_drop();
-          // }
+        if (board.selected_row != -1 && board.selected_col != -1 && board.clicked_coords[0] != -1
+        && board.clicked_coords[1] != -1) {
+          if (white::turn && white::blocks[board.clicked_coords[0]][board.clicked_coords[1]])
+            white::drag_and_drop();
         }
+        #ifndef IS_BLACK_AI
+        if (board.selected_row != -1 && board.selected_col != -1 && board.clicked_coords[0] != -1
+        && board.clicked_coords[1] != -1) {
+          if (black::turn && black::blocks[board.clicked_coords[0]][board.clicked_coords[1]])
+            black::drag_and_drop();
+        }
+        #endif
       }
       // Click a piece to enqueue it to the game (clicking) queue
       if (event.type == sf::Event::MouseButtonPressed) {
@@ -61,25 +68,30 @@ int main() {
           board.selected_col = pos[0];
           if (white::blocks[board.selected_row][board.selected_col]) {
             board.clicked_piece = white::get_piece(pos[1], pos[0]);
+            board.clicked_coords = {pos[1], pos[0]};
             white::last_clicked_piece = white::get_piece(pos[1], pos[0]);
             if (board.clicked_piece != "") {
               queue.enqueue(pos[1], pos[0]);
               board.play();
             }
           }
+          #ifndef IS_BLACK_AI
           else if (black::blocks[board.selected_row][board.selected_col]) {
             board.clicked_piece = black::get_piece(pos[1], pos[0]);
+            board.clicked_coords = {pos[1], pos[0]};
             black::last_clicked_piece = black::get_piece(pos[1], pos[0]);
             if (board.clicked_piece != "") {
               queue.enqueue(pos[1], pos[0]);
               board.play();
             }
-          } 
+          }
+          #endif
         }
       }
       if (event.type == sf::Event::MouseButtonReleased) {
         board.clicked_piece = "";
-        // white::reset_sprite_pos();
+        white::reset_sprite_pos();
+        black::reset_sprite_pos();
         sf::Vector2i position = sf::Mouse::getPosition(window);
         if (position.x >= 1 && position.x <= X_RES-1 && position.y >= 1 && position.y <= Y_RES-1) {
           std::vector<int> pos = board.get_coords(position.x, position.y);
@@ -93,10 +105,16 @@ int main() {
     window.clear();
     board.draw_board();
     board.select(board.selected_row, board.selected_col);
-    if (white::turn)
-      white::show_legal_moves();
     black::show();
     white::show();
+    if (white::turn && board.clicked_coords[0] != -1 && board.clicked_coords[1] != -1)
+      if (white::blocks[board.clicked_coords[0]][board.clicked_coords[1]])
+        white::show_legal_moves();
+    #if !defined(IS_BLACK_AI)
+    if (black::turn && board.clicked_coords[0] != -1 && board.clicked_coords[1] != -1)
+      if (black::blocks[board.clicked_coords[0]][board.clicked_coords[1]])
+        black::show_legal_moves();
+    #endif
     board.check_end();
     window.display();
     #ifdef SCREENSHOTS_ON

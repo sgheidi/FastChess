@@ -13,7 +13,7 @@
 // #define SCREENSHOTS_ON
 
 // flag for toggling no turns
-// #define IS_TESTING
+#define IS_TESTING
 
 // Black AI
 // #define IS_BLACK_AI
