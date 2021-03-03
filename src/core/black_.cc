@@ -179,7 +179,7 @@ void update_opp_movelists() {
   }
 }
 
-bool check_opp_checked() {
+bool isOpponentChecked() {
   bool checked = false;
   for (int i=0;i<num_queens;i++) {
     if (in(queen.movelist[i], {white::king.row, white::king.col})) {
@@ -453,7 +453,7 @@ void valid_move(bool is_undo, bool killed, std::string piece, int row, int col) 
     check_kill(is_undo, row, col);
   board.update_moves();
   check_pin();
-  if (check_opp_checked() && !is_undo) {
+  if (isOpponentChecked() && !is_undo) {
     if (!board.isFrozen)
       sound.check();
     update_opp_movelists();
