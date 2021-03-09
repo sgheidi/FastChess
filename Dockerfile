@@ -1,6 +1,9 @@
 FROM gcc:latest
+
 COPY . /usr/local/bin/fastchess
+
 WORKDIR /usr/local/bin/fastchess
+
 RUN apt update && apt upgrade -y; apt install -y libsfml-dev; \
 apt-get install -y --no-install-recommends \
         # required for curl
@@ -9,7 +12,8 @@ apt-get install -y --no-install-recommends \
         curl \
         # required for X forwarding
         xauth; \
-        chmod +x pch.sh; \
-        chmod +x run.sh; 
+        chmod 777 pch.sh; \
+        chmod 777 run.sh; 
 
-# CMD [ "echo DISPLAY; ./run.sh" ]
+# need to have X11 enabled
+CMD [ "./run.sh" ]
